@@ -15,6 +15,7 @@ type PlayerOptions = { id: PlayerColor }
 export type BiotopesOptions = {
   players: PlayerOptions[]
   antSide: EnvironmentalConditionsBoardSide
+  advancedBiotopes: boolean
 }
 
 /**
@@ -34,6 +35,10 @@ export const BiotopesOptionsSpec: OptionsSpec<BiotopesOptions> = {
     help: (t: TFunction) => t('option.environmentalConditions.antSide.help'),
     values: environmentalConditionsBoardSide,
     valueSpec: (side) => ({ label: (t) => getEnvironmentalConditionsBoardSide(side, t) })
+  },
+  advancedBiotopes: {
+    label: (t: TFunction) => t('option.advancedBioptopes'),
+    help: (t: TFunction) => t('option.advancedBioptopes.help')
   }
 }
 
