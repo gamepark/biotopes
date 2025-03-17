@@ -27,3 +27,11 @@ const panelPosition = (index: number) => css`
   top: ${8.5 + index * 16}em;
   width: 28em;
 `
+
+export const playerColorCode: Record<PlayerColor, string> = {
+  [PlayerColor.Fox]: 'orange',
+  [PlayerColor.Ibex]: 'pink',
+  [PlayerColor.Owl]: 'grey',
+  [PlayerColor.Salamander]: 'teal',
+  [PlayerColor.Woodpecker]: 'green'
+}
