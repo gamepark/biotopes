@@ -1,1 +1,27 @@
-export enum LocationType {}
+export enum LocationType {
+  EcosystemBoardSpot = 1,
+  TerritoryTokenSpotOnEcosystemBoard,
+  CubeSpotOnEcosystemBoard,
+  PlayerBiotopesCardSpot,
+  PlayerSpeciesCardTableauSpot,
+  PlayerInitiativeTokenSpot,
+  CubeSpotOnPlayerBiotopesCard,
+  CubeSpotOnPlayerSpeciesCard,
+  EnvironmentalConditionsBoardSpot,
+  EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard,
+  CycleTokenSpotOnEnviromnentalConditionsBoard,
+  PlayerClothBagSpot,
+  CubeSpotUnderPlayerClothBag,
+  HerbivoreDeckSpot,
+  HerbivoreDiscardSpot,
+  HerbivoreRiverSpot,
+  InsectivoreDeckSpot,
+  InsectivoreDiscardSpot,
+  InsectivoreRiverSpot,
+  CarnivoreDeckSpot,
+  CarnivoreDiscardSpot,
+  CarnivoreRiverSpot,
+  CentralLandscapeSpot,
+  TerritoryTokenSpotOnCentralLandscape,
+  PlayerSpeciesCardHandSpot
+}
