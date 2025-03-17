@@ -1,6 +1,6 @@
-import { GameTemplateOptionsSpec } from '@gamepark/game-template/GameTemplateOptions'
-import { GameTemplateRules } from '@gamepark/game-template/GameTemplateRules'
-import { GameTemplateSetup } from '@gamepark/game-template/GameTemplateSetup'
+import { BiotopesOptionsSpec } from '@gamepark/biotopes/BiotopesOptions'
+import { BiotopesRules } from '@gamepark/biotopes/BiotopesRules'
+import { BiotopesSetup } from '@gamepark/biotopes/BiotopesSetup'
 import { GameProvider } from '@gamepark/react-game'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
@@ -12,10 +12,10 @@ import { Material } from './material/Material'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <GameProvider
-      game="game-template"
-      Rules={GameTemplateRules}
-      optionsSpec={GameTemplateOptionsSpec}
-      GameSetup={GameTemplateSetup}
+      game="biotopes"
+      Rules={BiotopesRules}
+      optionsSpec={BiotopesOptionsSpec}
+      GameSetup={BiotopesSetup}
       material={Material}
       locators={Locators}
       animations={gameAnimations}

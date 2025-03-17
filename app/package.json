@@ -1,9 +1,9 @@
 {
-  "name": "@gamepark/game-template-app",
+  "name": "@gamepark/biotopes-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "The user interface of Game Template adaptation for Game Park",
+  "description": "The user interface of Biotopes adaptation for Game Park",
   "author": "Romain Fromi <romain@game-park.com> (https://game-park.com/)",
   "license": "ISC",
   "scripts": {

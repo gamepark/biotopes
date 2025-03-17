@@ -1,3 +1,3 @@
-export { GameTemplateRules } from './GameTemplateRules'
-export { GameTemplateOptionsSpec } from './GameTemplateOptions'
-export { GameTemplateSetup } from './GameTemplateSetup'
+export { BiotopesRules } from './BiotopesRules'
+export { BiotopesOptionsSpec } from './BiotopesOptions'
+export { BiotopesSetup } from './BiotopesSetup'
