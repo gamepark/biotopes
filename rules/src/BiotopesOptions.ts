@@ -35,15 +35,20 @@ export const BiotopesOptionsSpec: OptionsSpec<BiotopesOptions> = {
     label: (t: TFunction) => t('option.environmentalConditions.antSide'),
     help: (t: TFunction) => t('option.environmentalConditions.antSide.help'),
     values: environmentalConditionsBoardSide,
-    valueSpec: (side) => ({ label: (t) => getEnvironmentalConditionsBoardSide(side, t) })
+    valueSpec: (side) => ({
+      label: (t) => getEnvironmentalConditionsBoardSide(side, t),
+      warn: (t) => (side === EnvironmentalConditionsBoardSide.Butterfly ? t('option.environmentalConditions.butterflySide.beginnerSuggestion') : '')
+    })
   },
   advancedBiotopes: {
     label: (t: TFunction) => t('option.advancedBioptopes'),
-    help: (t: TFunction) => t('option.advancedBioptopes.help')
+    help: (t: TFunction) => t('option.advancedBioptopes.help'),
+    warn: (t: TFunction) => t('option.advancedBioptopes.advancedSuggestion')
   },
   customCentralLandscape: {
     label: (t: TFunction) => t('option.customCentralLandscape'),
-    help: (t: TFunction) => t('option.customCentralLandscape.help')
+    help: (t: TFunction) => t('option.customCentralLandscape.help'),
+    warn: (t: TFunction) => t('option.customCentralLandscape.advancedSuggestion')
   }
 }
 
