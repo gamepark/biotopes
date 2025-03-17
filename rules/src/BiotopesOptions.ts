@@ -16,6 +16,7 @@ export type BiotopesOptions = {
   players: PlayerOptions[]
   antSide: EnvironmentalConditionsBoardSide
   advancedBiotopes: boolean
+  customCentralLandscape: boolean
 }
 
 /**
@@ -39,6 +40,10 @@ export const BiotopesOptionsSpec: OptionsSpec<BiotopesOptions> = {
   advancedBiotopes: {
     label: (t: TFunction) => t('option.advancedBioptopes'),
     help: (t: TFunction) => t('option.advancedBioptopes.help')
+  },
+  customCentralLandscape: {
+    label: (t: TFunction) => t('option.customCentralLandscape'),
+    help: (t: TFunction) => t('option.customCentralLandscape.help')
   }
 }
 
