@@ -7,7 +7,7 @@ import { Coordinates, HexGridSystem, MaterialItem } from '@gamepark/rules-api'
 
 class CentralLandscapeSpotLocator extends HexagonalGridLocator {
   coordinatesSystem = HexGridSystem.Axial
-  size = { x: 1.75, y: 1.8 }
+  size = 1.75
 
   getItemRotateZ(item: MaterialItem<PlayerColor, LocationType, LandscapeTile>, _context: ItemContext<PlayerColor, MaterialType, LocationType>): number {
     return item.location.rotation as number
