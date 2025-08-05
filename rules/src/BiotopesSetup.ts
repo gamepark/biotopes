@@ -9,10 +9,10 @@ import { LandscapeTile } from './material/LandscapeTile'
 
 const landscapeSetupCoordinate: Record<number, (XYCoordinates & { rotation?: number } & { id?: LandscapeTile })[]> = {
   2: [
-    { x: -2, y: -1, id: LandscapeTile.A1 },
-    { x: 1, y: -2, rotation: 60, id: LandscapeTile.A2 },
-    { x: -1, y: 1, rotation: 180, id: LandscapeTile.A3 },
-    { x: 0, y: 2, rotation: 60, id: LandscapeTile.A4 }
+    { x: -2, y: -1, rotation: 0, id: LandscapeTile.A1 },
+    { x: 1, y: -2, rotation: 1, id: LandscapeTile.A2 },
+    { x: -1, y: 1, rotation: 3, id: LandscapeTile.A3 },
+    { x: 2, y: 0, rotation: 1, id: LandscapeTile.A4 }
   ],
   3: [
     { x: -3, y: -1 },

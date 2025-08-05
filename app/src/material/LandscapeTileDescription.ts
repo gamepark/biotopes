@@ -30,16 +30,15 @@ import { PolyhexDescription } from '@gamepark/react-game'
 import { HexGridSystem, Polyhex } from '@gamepark/rules-api'
 
 class LandscapeTileDescription extends PolyhexDescription<PlayerColor, MaterialType, LocationType, LandscapeTile> {
-  heigth = 9
+  height = 9
   width = 8.8
   polyhex = new Polyhex(
-    // Todo : Set correct values
     [
-      [1, 1],
+      [undefined, 1, 1],
       [1, 1, 1],
       [1, 1]
     ],
-    { system: HexGridSystem.Axial }
+    { system: HexGridSystem.Axial, xMin: -1, yMin: -1 }
   )
 
   images = {
