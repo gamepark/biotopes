@@ -26,11 +26,22 @@ import C1 from '../images/Hexes/Hexes-C1.png'
 import C2 from '../images/Hexes/Hexes-C2.png'
 import D1 from '../images/Hexes/Hexes-D1.png'
 import D2 from '../images/Hexes/Hexes-D2.png'
-import { CardDescription } from '@gamepark/react-game'
+import { PolyhexDescription } from '@gamepark/react-game'
+import { HexGridSystem, Polyhex } from '@gamepark/rules-api'
 
-class LandscapeTileDescription extends CardDescription<PlayerColor, MaterialType, LocationType, LandscapeTile> {
+class LandscapeTileDescription extends PolyhexDescription<PlayerColor, MaterialType, LocationType, LandscapeTile> {
   heigth = 9
   width = 8.8
+  polyhex = new Polyhex(
+    // Todo : Set correct values
+    [
+      [1, 1],
+      [1, 1, 1],
+      [1, 1]
+    ],
+    { system: HexGridSystem.Axial }
+  )
+
   images = {
     [LandscapeTile.A1]: A1,
     [LandscapeTile.A2]: A2,
