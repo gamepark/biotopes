@@ -17,7 +17,8 @@
     "build": "tsc",
     "prepublishOnly": "tsc",
     "publish": "lerna publish",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "jest"
   },
   "peerDependencies": {
     "@gamepark/rules-api": ">=6.36.9",
@@ -25,7 +26,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
-    "@gamepark/rules-api": "~6.36.9",
+    "@gamepark/rules-api": "~6.37.8",
+    "@types/jest": "27.5.2",
     "@types/lodash": "^4.17.7",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
@@ -33,6 +35,7 @@
     "globals": "^16.0.0",
     "i18next": "^22.0.3",
     "lodash": "^4.17.21",
-    "typescript-eslint": "^8.26.1"
+    "typescript-eslint": "^8.26.1",
+    "ts-node": "^10.9.2"
   }
 }
