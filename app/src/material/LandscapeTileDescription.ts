@@ -31,7 +31,7 @@ import { HexGridSystem, Polyhex } from '@gamepark/rules-api'
 
 class LandscapeTileDescription extends PolyhexDescription<PlayerColor, MaterialType, LocationType, LandscapeTile> {
   height = 9
-  width = 8.8
+  width = 8.78
   polyhex = new Polyhex(
     [
       [undefined, 1, 1],
