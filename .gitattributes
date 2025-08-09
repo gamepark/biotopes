@@ -1,0 +1,4 @@
+app/src/images/**/*.png filter=lfs diff=lfs merge=lfs -text
+app/src/images/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+app/src/images/**/*.webp filter=lfs diff=lfs merge=lfs -text
+app/public/rules-*.pdf filter=lfs diff=lfs merge=lfs -text
