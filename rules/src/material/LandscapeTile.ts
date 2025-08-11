@@ -1,4 +1,5 @@
 import { getEnumValues } from '@gamepark/rules-api'
+import { Biotope } from './Biotope'
 
 export enum LandscapeTile {
   A1 = 1,
@@ -28,3 +29,27 @@ export enum LandscapeTile {
 }
 
 export const landscapeTiles = getEnumValues(LandscapeTile)
+
+export const Mo = Biotope.Mountain
+export const Fo = Biotope.Forest
+export const Me = Biotope.Meadows
+export const We = Biotope.Wetland
+export const _ = undefined
+
+export function getLandscape(tile: LandscapeTile) {
+  switch (tile) {
+    // TODO : Complete missing cases in #11
+    case LandscapeTile.A1:
+      return [
+        [_, Fo, We],
+        [Fo, Me, Me],
+        [Fo, Me]
+      ]
+    default:
+      return [
+        [_, 1, 1],
+        [1, 1, 1],
+        [1, 1]
+      ]
+  }
+}
