@@ -6,7 +6,7 @@ import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
 import { PlayerColor } from '@gamepark/biotopes/PlayerColor'
 import { LandscapeHelper } from '@gamepark/biotopes/rules/helpers/LandscapeHelper'
 
-class CentralLandscapeSpotLocator extends HexagonalGridLocator {
+class CentralLandscapeLocator extends HexagonalGridLocator {
   coordinatesSystem = HexGridSystem.Axial
   orientation = HexOrientation.Flat
   size = { x: landscapeTileDescription.width / 5, y: landscapeTileDescription.height / 5.125 }
@@ -25,4 +25,4 @@ class CentralLandscapeSpotLocator extends HexagonalGridLocator {
   // }
 }
 
-export const centralLandscapeSpotLocator = new CentralLandscapeSpotLocator()
+export const centralLandscapeLocator = new CentralLandscapeLocator()
