@@ -3,7 +3,9 @@ import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
 import { PlayerColor } from '@gamepark/biotopes/PlayerColor'
 import { Locator } from '@gamepark/react-game'
 import { centralLandscapeLocator } from './CentralLandscapeLocator'
+import { ecosystemBoardLocator } from './EcosystemBoardLocator'
 
 export const Locators: Partial<Record<LocationType, Locator<PlayerColor, MaterialType, LocationType>>> = {
-  [LocationType.CentralLandscapeSpot]: centralLandscapeLocator
+  [LocationType.CentralLandscapeSpot]: centralLandscapeLocator,
+  [LocationType.EcosystemBoardSpot]: ecosystemBoardLocator
 }
