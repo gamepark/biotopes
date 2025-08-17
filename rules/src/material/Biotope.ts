@@ -1,6 +1,6 @@
 export enum Biotope {
   Mountain = 1,
   Forest,
-  Meadows,
+  Meadow,
   Wetland
 }

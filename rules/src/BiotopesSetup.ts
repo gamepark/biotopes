@@ -54,7 +54,6 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
 
   setupMaterial(_options: BiotopesOptions) {
     this.setupLandscape()
-    this.setupPlayerBoard()
   }
 
   start() {
@@ -68,12 +67,6 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
         id: id ?? 1,
         location: { type: LocationType.CentralLandscapeSpot, x: x, y: y, rotation: rotation ?? 0 }
       })
-    })
-  }
-
-  setupPlayerBoard() {
-    this.players.forEach((player) => {
-      this.material(MaterialType.EcosystemBoard).createItem({ id: player, location: { type: LocationType.EcosystemBoardSpot, player: player } })
     })
   }
 }
