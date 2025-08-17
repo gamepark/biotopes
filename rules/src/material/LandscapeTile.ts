@@ -32,7 +32,7 @@ export const landscapeTiles = getEnumValues(LandscapeTile)
 
 export const Mo = Biotope.Mountain
 export const Fo = Biotope.Forest
-export const Me = Biotope.Meadows
+export const Me = Biotope.Meadow
 export const We = Biotope.Wetland
 export const _ = undefined
 

@@ -10,11 +10,7 @@ class EcosystemBoardLocator extends Locator<PlayerColor, MaterialType, LocationT
   getCoordinates(location: Location<PlayerColor, LocationType>, context: MaterialContext<PlayerColor, MaterialType, LocationType>): Partial<Coordinates> {
     const index = getRelativePlayerIndex(context, location.player)
     const landscapeSize = centralLandscapeLocator.getLandscapeSize(context.rules.game)
-    const coord = [
-      { x: 0, y: (landscapeSize.height + ecosystemBoardDescription.height) / 2 + 1 },
-      { x: 0, y: -(landscapeSize.height + ecosystemBoardDescription.height) / 2 - 1 }
-    ]
-    return coord[index]
+    return { x: index < 2 ? -30 : 20, y: (index === 0 || index === 3 ? 1 : -1) * ((landscapeSize.height + ecosystemBoardDescription.height) / 2 + 1) }
   }
 }
 
