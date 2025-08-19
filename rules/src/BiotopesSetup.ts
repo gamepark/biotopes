@@ -6,6 +6,8 @@ import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
 import { RuleId } from './rules/RuleId'
 import { LandscapeTile } from './material/LandscapeTile'
+import { EnvironmentalConditionsBoardSide } from './EnvironmentalConditionsBoardSide'
+import { Memory } from './Memory'
 
 const landscapeSetupCoordinate: Record<number, (XYCoordinates & { rotation?: number } & { id?: LandscapeTile })[]> = {
   2: [
@@ -52,7 +54,8 @@ const landscapeSetupCoordinate: Record<number, (XYCoordinates & { rotation?: num
 export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, LocationType, BiotopesOptions> {
   Rules = BiotopesRules
 
-  setupMaterial(_options: BiotopesOptions) {
+  setupMaterial(_options: Partial<BiotopesOptions>) {
+    this.memorize<EnvironmentalConditionsBoardSide>(Memory.AntSide, _options.antSide ?? EnvironmentalConditionsBoardSide.Butterfly)
     this.setupLandscape()
     this.setupInitiativeToken()
   }
