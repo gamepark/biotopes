@@ -1,4 +1,4 @@
-import { MaterialGame, MaterialMove, MaterialRules, TimeLimit } from '@gamepark/rules-api'
+import { MaterialGame, MaterialMove, MaterialRules, PositiveSequenceStrategy, TimeLimit } from '@gamepark/rules-api'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
@@ -13,6 +13,12 @@ export class BiotopesRules
   extends MaterialRules<PlayerColor, MaterialType, LocationType>
   implements TimeLimit<MaterialGame<PlayerColor, MaterialType, LocationType>, MaterialMove<PlayerColor, MaterialType, LocationType>, PlayerColor>
 {
+  locationsStrategies = {
+    [MaterialType.EnvironmentalConditionToken]: {
+      [LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard]: new PositiveSequenceStrategy()
+    }
+  }
+
   rules = {
     [RuleId.TheFirstStep]: TheFirstStepRule
   }
