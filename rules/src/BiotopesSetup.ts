@@ -8,6 +8,8 @@ import { RuleId } from './rules/RuleId'
 import { LandscapeTile } from './material/LandscapeTile'
 import { EnvironmentalConditionsBoardSide } from './EnvironmentalConditionsBoardSide'
 import { Memory } from './Memory'
+import { sampleSize } from 'lodash'
+import { biotopeEnvironmentalConditionTokens, speciesTypeEnvironmentalConditionTokens } from './material/EnvironmentalConditionToken'
 
 const landscapeSetupCoordinate: Record<number, (XYCoordinates & { rotation?: number } & { id?: LandscapeTile })[]> = {
   2: [
@@ -57,7 +59,7 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
   setupMaterial(_options: Partial<BiotopesOptions>) {
     this.memorize<EnvironmentalConditionsBoardSide>(Memory.AntSide, _options.antSide ?? EnvironmentalConditionsBoardSide.Butterfly)
     this.setupLandscape()
-    this.setupInitiativeToken()
+    this.setupTokens()
   }
 
   start() {
@@ -74,12 +76,20 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
     })
   }
 
-  setupInitiativeToken() {
+  setupTokens() {
     this.material(MaterialType.InitiativeToken).createItem({
       location: { type: LocationType.PlayerInitiativeTokenSpot, player: this.players[0] }
     })
     this.material(MaterialType.CycleToken).createItem({
       location: { type: LocationType.CycleTokenSpotOnEnviromnentalConditionsBoard, x: 1 }
     })
+    this.material(MaterialType.EnvironmentalConditionToken).createItems(
+      sampleSize(biotopeEnvironmentalConditionTokens, 2)
+        .concat(sampleSize(speciesTypeEnvironmentalConditionTokens, 2))
+        .map((id) => ({
+          id: id,
+          location: { type: LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard }
+        }))
+    )
   }
 }
