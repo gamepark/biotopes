@@ -2,8 +2,7 @@ import { LocationType } from '@gamepark/biotopes/material/LocationType'
 import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
 import { PlayerColor } from '@gamepark/biotopes/PlayerColor'
 import { TokenDescription } from '@gamepark/react-game'
-import { Biotope } from '@gamepark/biotopes/material/Biotope'
-import { SpecieType } from '@gamepark/biotopes/material/SpecieType'
+import { EnvironmentalConditionToken } from '@gamepark/biotopes/material/EnvironmentalConditionToken'
 import MountainToken from '../images/Token/EnvironmentalConditionsToken/MountainToken.jpg'
 import ForestToken from '../images/Token/EnvironmentalConditionsToken/ForestToken.jpg'
 import MeadowToken from '../images/Token/EnvironmentalConditionsToken/MeadowToken.jpg'
@@ -18,14 +17,14 @@ class EnvironmentalConditionTokenDescription extends TokenDescription<PlayerColo
   width = 2.1
 
   images = {
-    [Biotope.Mountain]: MountainToken,
-    [Biotope.Forest]: ForestToken,
-    [Biotope.Meadow]: MeadowToken,
-    [Biotope.Wetland]: WetlandToken,
-    [SpecieType.AmphibianReptile]: AmphibianReptileToken,
-    [SpecieType.Bird]: BirdToken,
-    [SpecieType.Insect]: InsectToken,
-    [SpecieType.Mammal]: MammalToken
+    [EnvironmentalConditionToken.BiotopeMountain]: MountainToken,
+    [EnvironmentalConditionToken.BiotopeForest]: ForestToken,
+    [EnvironmentalConditionToken.BiotopeMeadow]: MeadowToken,
+    [EnvironmentalConditionToken.BiotopeWetland]: WetlandToken,
+    [EnvironmentalConditionToken.SpeciesTypeAmphibianReptile]: AmphibianReptileToken,
+    [EnvironmentalConditionToken.SpeciesTypeBird]: BirdToken,
+    [EnvironmentalConditionToken.SpeciesTypeInsect]: InsectToken,
+    [EnvironmentalConditionToken.SpeciesTypeMammal]: MammalToken
   }
 }
 
