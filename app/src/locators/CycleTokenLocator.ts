@@ -1,4 +1,4 @@
-import { ListLocator, MaterialContext } from '@gamepark/react-game'
+import { Locator, MaterialContext } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
 import { Location, MaterialItem } from '@gamepark/rules-api'
 import { PlayerColor } from '@gamepark/biotopes/PlayerColor'
@@ -6,7 +6,7 @@ import { environmentalConditionsBoardDescription } from '../material/Environment
 import { Memory } from '@gamepark/biotopes/Memory'
 import { EnvironmentalConditionsBoardSide } from '@gamepark/biotopes/EnvironmentalConditionsBoardSide'
 
-class CycleTokenLocator extends ListLocator {
+class CycleTokenLocator extends Locator {
   parentItemType = MaterialType.EnvironmentalConditionsBoard
 
   getParentItem(_location: Location, context: MaterialContext): MaterialItem<PlayerColor> | undefined {
