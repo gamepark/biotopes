@@ -6,9 +6,11 @@ import { centralLandscapeLocator } from './CentralLandscapeLocator'
 import { ecosystemBoardLocator } from './EcosystemBoardLocator'
 import { environmentalConditionsBoardLocator } from './EnvironmentalConditionsBoardLocator'
 import { initiativeTokenLocator } from './InitiativeTokenLocator'
+import { cycleTokenLocator } from './CycleTokenLocator'
 
 export const Locators: Partial<Record<LocationType, Locator<PlayerColor, MaterialType, LocationType>>> = {
   [LocationType.CentralLandscapeSpot]: centralLandscapeLocator,
+  [LocationType.CycleTokenSpotOnEnviromnentalConditionsBoard]: cycleTokenLocator,
   [LocationType.EcosystemBoardSpot]: ecosystemBoardLocator,
   [LocationType.EnvironmentalConditionsBoardSpot]: environmentalConditionsBoardLocator,
   [LocationType.PlayerInitiativeTokenSpot]: initiativeTokenLocator
