@@ -78,5 +78,8 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
     this.material(MaterialType.InitiativeToken).createItem({
       location: { type: LocationType.PlayerInitiativeTokenSpot, player: this.players[0] }
     })
+    this.material(MaterialType.CycleToken).createItem({
+      location: { type: LocationType.CycleTokenSpotOnEnviromnentalConditionsBoard, x: 1 }
+    })
   }
 }
