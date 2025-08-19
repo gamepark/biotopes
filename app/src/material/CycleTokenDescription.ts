@@ -5,7 +5,7 @@ import { RoundTokenDescription } from '@gamepark/react-game'
 import CycleToken from '../images/Token/CycleToken.jpg'
 
 class CycleTokenDescription extends RoundTokenDescription<PlayerColor, MaterialType, LocationType> {
-  diameter = 2
+  diameter = 1.7
   image = CycleToken
 }
 

@@ -5,7 +5,7 @@ import { RoundTokenDescription } from '@gamepark/react-game'
 import InitiativeToken from '../images/Token/InitiativeToken.jpg'
 
 class InitiativeTokenDescription extends RoundTokenDescription<PlayerColor, MaterialType, LocationType> {
-  diameter = 2
+  diameter = 1.7
   image = InitiativeToken
 }
 
