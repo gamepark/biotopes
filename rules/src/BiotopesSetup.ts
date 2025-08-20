@@ -10,6 +10,8 @@ import { EnvironmentalConditionsBoardSide } from './EnvironmentalConditionsBoard
 import { Memory } from './Memory'
 import { sampleSize } from 'lodash'
 import { biotopeEnvironmentalConditionTokens, speciesTypeEnvironmentalConditionTokens } from './material/EnvironmentalConditionToken'
+import { advancedCardsByBiotope, basicBiotopeCards } from './material/BiotopeCard'
+import { biotopeType } from './material/BiotopeType'
 
 const landscapeSetupCoordinate: Record<number, (XYCoordinates & { rotation?: number } & { id?: LandscapeTile })[]> = {
   2: [
@@ -60,6 +62,7 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
     this.memorize<EnvironmentalConditionsBoardSide>(Memory.AntSide, _options.antSide ?? EnvironmentalConditionsBoardSide.Butterfly)
     this.setupLandscape()
     this.setupTokens()
+    this.setupBiotopeCards(_options.advancedBiotopes ?? false)
   }
 
   start() {
@@ -91,5 +94,27 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
           location: { type: LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard }
         }))
     )
+  }
+
+  setupBiotopeCards(advancedBiotopes: boolean) {
+    if (advancedBiotopes) {
+      this.material(MaterialType.BiotopesCard).createItems(
+        biotopeType.flatMap((biotope) =>
+          sampleSize(advancedCardsByBiotope[biotope], this.players.length).map((card, index) => ({
+            id: card,
+            location: { type: LocationType.PlayerBiotopesCardSpot, player: this.players[index], y: biotope }
+          }))
+        )
+      )
+    } else {
+      this.material(MaterialType.BiotopesCard).createItems(
+        this.rules.players.flatMap((player) =>
+          basicBiotopeCards.map((card, index) => ({
+            id: card,
+            location: { type: LocationType.PlayerBiotopesCardSpot, player: player, y: index + 1 }
+          }))
+        )
+      )
+    }
   }
 }
