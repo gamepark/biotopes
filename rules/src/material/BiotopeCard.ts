@@ -1,5 +1,5 @@
 import { getEnumValues } from '@gamepark/rules-api'
-import { Biotope, biotope } from './Biotope'
+import { BiotopeType, biotopeType } from './BiotopeType'
 
 export enum BiotopeEffect {
   BasicEnvironment = 0,
@@ -45,7 +45,6 @@ export const getBiotopeCardEffect = (cardId : BiotopeCard) => cardId % 10
 
 export const basicBiotopeCards = biotopeCards.filter(id => getBiotopeCardEffect(id) === 0)
 
-export const advancedCardsByBiotope = biotope.reduce(
+export const advancedCardsByBiotope = biotopeType.reduce(
   (previousRecord, currentType) => ({ ...previousRecord, [currentType]: biotopeCards.slice((currentType-1) * 6 + 1, 6 * currentType) }),
-  {} as Record<Biotope, BiotopeCard[]>)
-
+  {} as Record<BiotopeType, BiotopeCard[]>)
