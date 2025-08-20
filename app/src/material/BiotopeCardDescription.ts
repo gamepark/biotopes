@@ -28,8 +28,8 @@ import WetlandsPreserved from '../images/Cards/en/BiotopeCards/Wetlands-Preserve
 import WetlandsPropitious from '../images/Cards/en/BiotopeCards/Wetlands-PropitiousEnvironment.jpeg'
 
 class BiotopeCardDescription extends CardDescription<BiotopeCard, MaterialType, LocationType> {
-  height = 6.7
-  width = 4.4
+  height = 4.4
+  width = 6.7
 
   images = {
     [BiotopeCard.Mountain]: Mountains,
