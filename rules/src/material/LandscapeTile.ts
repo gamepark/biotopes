@@ -1,5 +1,5 @@
 import { getEnumValues } from '@gamepark/rules-api'
-import { Biotope } from './Biotope'
+import { BiotopeType } from './BiotopeType'
 
 export enum LandscapeTile {
   A1 = 1,
@@ -30,10 +30,10 @@ export enum LandscapeTile {
 
 export const landscapeTiles = getEnumValues(LandscapeTile)
 
-export const Mo = Biotope.Mountain
-export const Fo = Biotope.Forest
-export const Me = Biotope.Meadow
-export const We = Biotope.Wetland
+export const Mo = BiotopeType.Mountain
+export const Fo = BiotopeType.Forest
+export const Me = BiotopeType.Meadow
+export const We = BiotopeType.Wetland
 export const _ = undefined
 
 export function getLandscape(tile: LandscapeTile) {
