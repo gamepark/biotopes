@@ -7,6 +7,7 @@ import { environmentalConditionsBoardDescription } from './EnvironmentalConditio
 import { environmentalConditionTokenDescription } from './EnvironmentalConditionTokenDescription'
 import { initiativeTokenDescription } from './InitiativeTokenDescription'
 import { landscapeTileDescription } from './LandscapeTileDescription'
+import { specieCardDescription } from './SpecieCardDescription'
 
 export const Material: Partial<Record<MaterialType, MaterialDescription>> = {
   [MaterialType.BiotopesCard]: biotopeCardDescription,
@@ -15,7 +16,8 @@ export const Material: Partial<Record<MaterialType, MaterialDescription>> = {
   [MaterialType.EnvironmentalConditionsBoard]: environmentalConditionsBoardDescription,
   [MaterialType.EnvironmentalConditionToken]: environmentalConditionTokenDescription,
   [MaterialType.InitiativeToken]: initiativeTokenDescription,
-  [MaterialType.LandscapeTile]: landscapeTileDescription
+  [MaterialType.LandscapeTile]: landscapeTileDescription,
+  [MaterialType.SpeciesCard]: specieCardDescription
 }
 
 export const materialI18n: Record<string, Partial<Record<MaterialType, MaterialDescription>>> = {
