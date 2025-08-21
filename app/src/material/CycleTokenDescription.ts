@@ -2,11 +2,11 @@ import { LocationType } from '@gamepark/biotopes/material/LocationType'
 import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
 import { PlayerColor } from '@gamepark/biotopes/PlayerColor'
 import { RoundTokenDescription } from '@gamepark/react-game'
-import InitiativeToken from '../images/Token/InitiativeToken.jpg'
+import CycleToken from '../images/Token/CycleToken.jpg'
 
-class InitiativeTokenDescription extends RoundTokenDescription<PlayerColor, MaterialType, LocationType> {
+class CycleTokenDescription extends RoundTokenDescription<PlayerColor, MaterialType, LocationType> {
   diameter = 1.7
-  image = InitiativeToken
+  image = CycleToken
 }
 
-export const initiativeTokenDescription = new InitiativeTokenDescription()
+export const cycleTokenDescription = new CycleTokenDescription()
