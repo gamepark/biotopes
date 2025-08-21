@@ -14,7 +14,7 @@ export function GameDisplay({ game }: { game: MaterialGame }) {
   const yMin = -yMax
   return (
     <>
-      <GameTable xMin={-50} xMax={50} yMin={yMin} yMax={yMax} margin={margin} css={process.env.NODE_ENV === 'development' && tableBorder}>
+      <GameTable xMin={-50} xMax={70} yMin={yMin} yMax={yMax} margin={margin} css={process.env.NODE_ENV === 'development' && tableBorder}>
         <GameTableNavigation />
         <PlayerPanels />
       </GameTable>
