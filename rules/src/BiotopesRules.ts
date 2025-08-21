@@ -1,4 +1,4 @@
-import { FillGapStrategy, MaterialGame, MaterialMove, MaterialRules, PositiveSequenceStrategy, TimeLimit } from '@gamepark/rules-api'
+import { FillGapStrategy, HiddenMaterialRules, hideFront, MaterialGame, MaterialMove, PositiveSequenceStrategy, TimeLimit } from '@gamepark/rules-api'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
@@ -10,7 +10,7 @@ import { RuleId } from './rules/RuleId'
  * It must follow Game Park "Rules" API so that the Game Park server can enforce the rules.
  */
 export class BiotopesRules
-  extends MaterialRules<PlayerColor, MaterialType, LocationType>
+  extends HiddenMaterialRules<PlayerColor, MaterialType, LocationType>
   implements TimeLimit<MaterialGame<PlayerColor, MaterialType, LocationType>, MaterialMove<PlayerColor, MaterialType, LocationType>, PlayerColor>
 {
   locationsStrategies = {
@@ -29,6 +29,14 @@ export class BiotopesRules
       [LocationType.HerbivoreRiverSpot]: new PositiveSequenceStrategy(),
       [LocationType.InsectivoreRiverSpot]: new PositiveSequenceStrategy(),
       [LocationType.CarnivoreRiverSpot]: new PositiveSequenceStrategy()
+    }
+  }
+
+  hidingStrategies = {
+    [MaterialType.SpeciesCard]: {
+      [LocationType.HerbivoreDeckSpot]: hideFront,
+      [LocationType.InsectivoreDeckSpot]: hideFront,
+      [LocationType.CarnivoreDeckSpot]: hideFront
     }
   }
 

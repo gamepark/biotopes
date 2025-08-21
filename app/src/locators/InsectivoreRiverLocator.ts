@@ -10,7 +10,7 @@ class InsectivoreRiverLocator extends ListLocator<PlayerColor, MaterialType, Loc
   gap = { x: -8 }
   getCoordinates(_location: Location<PlayerColor, LocationType>, context: MaterialContext<PlayerColor, MaterialType, LocationType>): Partial<Coordinates> {
     const landscapeSize = centralLandscapeLocator.getLandscapeSize(context.rules.game)
-    return { x: landscapeSize.width / 2 + 40, y: 6 }
+    return { x: landscapeSize.width / 2 + 40, y: 0 }
   }
 }
 
