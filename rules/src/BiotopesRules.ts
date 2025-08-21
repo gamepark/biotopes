@@ -18,7 +18,10 @@ export class BiotopesRules
       [LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard]: new PositiveSequenceStrategy()
     },
     [MaterialType.BiotopesCard]: {
-      [LocationType.AdvancedBiotopesSelectionSpot]: new FillGapStrategy()
+      [LocationType.AdvancedBiotopesSelectionSpot]: new FillGapStrategy(),
+      [LocationType.HerbivoreDeckSpot]: new PositiveSequenceStrategy(),
+      [LocationType.InsectivoreDeckSpot]: new PositiveSequenceStrategy(),
+      [LocationType.CarnivoreDeckSpot]: new PositiveSequenceStrategy()
     }
   }
 
