@@ -1,11 +1,17 @@
 import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
 import { MaterialDescription } from '@gamepark/react-game'
-import { landscapeTileDescription } from './LandscapeTileDescription'
+import { cycleTokenDescription } from './CycleTokenDescription'
 import { ecosystemBoardDescription } from './EcosystemBoardDescription'
+import { environmentalConditionsBoardDescription } from './EnvironmentalConditionsBoardDescription'
 import { initiativeTokenDescription } from './InitiativeTokenDescription'
+import { landscapeTileDescription } from './LandscapeTileDescription'
+import { environmentalConditionTokenDescription } from './EnvironmentalConditionTokenDescription'
 
 export const Material: Partial<Record<MaterialType, MaterialDescription>> = {
-  [MaterialType.LandscapeTile]: landscapeTileDescription,
+  [MaterialType.CycleToken]: cycleTokenDescription,
   [MaterialType.EcosystemBoard]: ecosystemBoardDescription,
-  [MaterialType.InitiativeToken]: initiativeTokenDescription
+  [MaterialType.EnvironmentalConditionsBoard]: environmentalConditionsBoardDescription,
+  [MaterialType.EnvironmentalConditionToken]: environmentalConditionTokenDescription,
+  [MaterialType.InitiativeToken]: initiativeTokenDescription,
+  [MaterialType.LandscapeTile]: landscapeTileDescription
 }
