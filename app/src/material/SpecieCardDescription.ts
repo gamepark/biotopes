@@ -5,7 +5,7 @@ import Apollo from '../images/Cards/en/SpeciesCards/Mountain/Mountain-Apollo.jpg
 import CitrilFinch from '../images/Cards/en/SpeciesCards/Mountain/Mountain-CitrilFinch.jpg'
 import GreenGrasshopper from '../images/Cards/en/SpeciesCards/Mountain/Mountain-GreenGrasshopper.jpg'
 import MountainHare from '../images/Cards/en/SpeciesCards/Mountain/Mountain-MountainHare.jpg'
-import RedheadedMillipede from '../images/Cards/en/SpeciesCards/Mountain/Mountain-RedheadedMillipede.jpg'
+import RedHeadedMillipede from '../images/Cards/en/SpeciesCards/Mountain/Mountain-RedHeadedMillipede.jpg'
 import RosaliaLongicorn from '../images/Cards/en/SpeciesCards/Mountain/Mountain-RosaliaLongicorn.jpg'
 import WesternCapercaillie from '../images/Cards/en/SpeciesCards/Mountain/Mountain-WesternCapercaillie.jpg'
 import RedDeer from '../images/Cards/en/SpeciesCards/Mountain/Mountain-RedDeer.jpg'
@@ -16,7 +16,7 @@ import Hawfinch from '../images/Cards/en/SpeciesCards/Forest/Forest-Hawfinch.jpg
 import HazelDormouse from '../images/Cards/en/SpeciesCards/Forest/Forest-HazelDormouse.jpg'
 import MammothWasp from '../images/Cards/en/SpeciesCards/Forest/Forest-MammothWasp.jpg'
 import StagBeetle from '../images/Cards/en/SpeciesCards/Forest/Forest-StagBeetle.jpg'
-import TwotailedPasha from '../images/Cards/en/SpeciesCards/Forest/Forest-TwotailedPasha.jpg'
+import TwoTailedPasha from '../images/Cards/en/SpeciesCards/Forest/Forest-TwoTailedPasha.jpg'
 import WildBoar from '../images/Cards/en/SpeciesCards/Forest/Forest-WildBoar.jpg'
 import BrownRat from '../images/Cards/en/SpeciesCards/Meadow/Meadow-BrownRat.jpg'
 import CommonLinnet from '../images/Cards/en/SpeciesCards/Meadow/Meadow-CommonLinnet.jpg'
@@ -26,7 +26,7 @@ import EuropeanHarvesterAnt from '../images/Cards/en/SpeciesCards/Meadow/Meadow-
 import EuropeanRabbit from '../images/Cards/en/SpeciesCards/Meadow/Meadow-EuropeanRabbit.jpg'
 import MinotaurBeetle from '../images/Cards/en/SpeciesCards/Meadow/Meadow-MinotaurBeetle.jpg'
 import SpanishFestoon from '../images/Cards/en/SpeciesCards/Meadow/Meadow-SpanishFestoon.jpg'
-import WesternHoneybee from '../images/Cards/en/SpeciesCards/Meadow/Meadow-WesternHoneybee.jpg'
+import WesternHoneyBee from '../images/Cards/en/SpeciesCards/Meadow/Meadow-WesternHoneyBee.jpg'
 import CanadaThistleGallFly from '../images/Cards/en/SpeciesCards/Wetland/Wetland-CanadaThistleGallFly.jpg'
 import CommonHouseMosquito from '../images/Cards/en/SpeciesCards/Wetland/Wetland-CommonHouseMosquito.jpg'
 import CommonBladderSnail from '../images/Cards/en/SpeciesCards/Wetland/Wetland-CommonBladderSnail.jpg'
@@ -40,7 +40,7 @@ import AlpineMarmot from '../images/Cards/en/SpeciesCards/Mountain/Mountain-Alpi
 import AlpineNewt from '../images/Cards/en/SpeciesCards/Mountain/Mountain-AlpineNewt.jpg'
 import LadybirdSpider from '../images/Cards/en/SpeciesCards/Mountain/Mountain-LadybirdSpider.jpg'
 import PyreneanDesman from '../images/Cards/en/SpeciesCards/Mountain/Mountain-PyreneanDesman.jpg'
-import RedbilledChough from '../images/Cards/en/SpeciesCards/Mountain/Mountain-RedbilledChough.jpg'
+import RedBilledChough from '../images/Cards/en/SpeciesCards/Mountain/Mountain-RedBilledChough.jpg'
 import ViviparousLizard from '../images/Cards/en/SpeciesCards/Mountain/Mountain-ViviparousLizard.jpg'
 import Wallcreeper from '../images/Cards/en/SpeciesCards/Mountain/Mountain-Wallcreeper.jpg'
 import EuropeanCrestedTit from '../images/Cards/en/SpeciesCards/Forest/Forest-EuropeanCrestedTit.jpg'
@@ -48,7 +48,7 @@ import EuropeanHornet from '../images/Cards/en/SpeciesCards/Forest/Forest-Europe
 import EuropeanTreeFrog from '../images/Cards/en/SpeciesCards/Forest/Forest-EuropeanTreeFrog.jpg'
 import GreenWoodpecker from '../images/Cards/en/SpeciesCards/Forest/Forest-GreenWoodpecker.jpg'
 import MarbledNewt from '../images/Cards/en/SpeciesCards/Forest/Forest-MarbledNewt.jpg'
-import RedwoodAnt from '../images/Cards/en/SpeciesCards/Forest/Forest-RedwoodAnt.jpg'
+import RedWoodAnt from '../images/Cards/en/SpeciesCards/Forest/Forest-RedWoodAnt.jpg'
 import WesternGreenLizard from '../images/Cards/en/SpeciesCards/Forest/Forest-WesternGreenLizard.jpg'
 import CommonParsleyFrog from '../images/Cards/en/SpeciesCards/Meadow/Meadow-CommonParsleyFrog.jpg'
 import EuropeanBeeEater from '../images/Cards/en/SpeciesCards/Meadow/Meadow-EuropeanBeeEater.jpg'
@@ -78,7 +78,7 @@ import EuropeanRoller from '../images/Cards/en/SpeciesCards/Forest/Forest-Europe
 import TawnyOwl from '../images/Cards/en/SpeciesCards/Forest/Forest-TawnyOwl.jpg'
 import GreenWhipSnake from '../images/Cards/en/SpeciesCards/Meadow/Meadow-GreenWhipSnake.jpg'
 import Merlin from '../images/Cards/en/SpeciesCards/Meadow/Meadow-Merlin.jpg'
-import OccelatedLizard from '../images/Cards/en/SpeciesCards/Meadow/Meadow-OccelatedLizard.jpg'
+import OcellatedLizard from '../images/Cards/en/SpeciesCards/Meadow/Meadow-OcellatedLizard.jpg'
 import RedFox from '../images/Cards/en/SpeciesCards/Meadow/Meadow-RedFox.jpg'
 import RedKite from '../images/Cards/en/SpeciesCards/Meadow/Meadow-RedKite.jpg'
 import WhiteStork from '../images/Cards/en/SpeciesCards/Meadow/Meadow-WhiteStork.jpg'
@@ -110,7 +110,7 @@ class SpecieCardDescription extends CardDescription {
     [SpecieCard.CitrilFinch]: CitrilFinch,
     [SpecieCard.GreenGrasshopper]: GreenGrasshopper,
     [SpecieCard.MountainHare]: MountainHare,
-    [SpecieCard.RedheadedMillipede]: RedheadedMillipede,
+    [SpecieCard.RedheadedMillipede]: RedHeadedMillipede,
     [SpecieCard.RosaliaLongicorn]: RosaliaLongicorn,
     [SpecieCard.WesternCapercaillie]: WesternCapercaillie,
     [SpecieCard.RedDeer]: RedDeer,
@@ -121,7 +121,7 @@ class SpecieCardDescription extends CardDescription {
     [SpecieCard.HazelDormouse]: HazelDormouse,
     [SpecieCard.MammothWasp]: MammothWasp,
     [SpecieCard.StagBeetle]: StagBeetle,
-    [SpecieCard.TwotailedPasha]: TwotailedPasha,
+    [SpecieCard.TwotailedPasha]: TwoTailedPasha,
     [SpecieCard.WildBoar]: WildBoar,
     [SpecieCard.BrownRat]: BrownRat,
     [SpecieCard.CommonLinnet]: CommonLinnet,
@@ -131,7 +131,7 @@ class SpecieCardDescription extends CardDescription {
     [SpecieCard.EuropeanRabbit]: EuropeanRabbit,
     [SpecieCard.MinotaurBeetle]: MinotaurBeetle,
     [SpecieCard.SpanishFestoon]: SpanishFestoon,
-    [SpecieCard.WesternHoneybee]: WesternHoneybee,
+    [SpecieCard.WesternHoneybee]: WesternHoneyBee,
     [SpecieCard.CanadaThistleGallFly]: CanadaThistleGallFly,
     [SpecieCard.CommonHouseMosquito]: CommonHouseMosquito,
     [SpecieCard.CommonBladderSnail]: CommonBladderSnail,
@@ -145,7 +145,7 @@ class SpecieCardDescription extends CardDescription {
     [SpecieCard.AlpineNewt]: AlpineNewt,
     [SpecieCard.LadybirdSpider]: LadybirdSpider,
     [SpecieCard.PyreneanDesman]: PyreneanDesman,
-    [SpecieCard.RedbilledChough]: RedbilledChough,
+    [SpecieCard.RedbilledChough]: RedBilledChough,
     [SpecieCard.ViviparousLizard]: ViviparousLizard,
     [SpecieCard.Wallcreeper]: Wallcreeper,
     [SpecieCard.EuropeanCrestedTit]: EuropeanCrestedTit,
@@ -153,7 +153,7 @@ class SpecieCardDescription extends CardDescription {
     [SpecieCard.EuropeanTreeFrog]: EuropeanTreeFrog,
     [SpecieCard.GreenWoodpecker]: GreenWoodpecker,
     [SpecieCard.MarbledNewt]: MarbledNewt,
-    [SpecieCard.RedwoodAnt]: RedwoodAnt,
+    [SpecieCard.RedwoodAnt]: RedWoodAnt,
     [SpecieCard.WesternGreenLizard]: WesternGreenLizard,
     [SpecieCard.CommonParsleyFrog]: CommonParsleyFrog,
     [SpecieCard.EuropeanBeeEater]: EuropeanBeeEater,
@@ -183,7 +183,7 @@ class SpecieCardDescription extends CardDescription {
     [SpecieCard.TawnyOwl]: TawnyOwl,
     [SpecieCard.GreenWhipSnake]: GreenWhipSnake,
     [SpecieCard.Merlin]: Merlin,
-    [SpecieCard.OccelatedLizard]: OccelatedLizard,
+    [SpecieCard.OcellatedLizard]: OcellatedLizard,
     [SpecieCard.RedFox]: RedFox,
     [SpecieCard.RedKite]: RedKite,
     [SpecieCard.WhiteStork]: WhiteStork,
