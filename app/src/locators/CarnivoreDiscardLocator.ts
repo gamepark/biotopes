@@ -9,7 +9,7 @@ class CarnivoreDiscardLocator extends DeckLocator<PlayerColor, MaterialType, Loc
   maxCount = 10
   getCoordinates(_location: Location<PlayerColor, LocationType>, context: MaterialContext<PlayerColor, MaterialType, LocationType>): Partial<Coordinates> {
     const landscapeSize = centralLandscapeLocator.getLandscapeSize(context.rules.game)
-    return { x: landscapeSize.width / 2 + 24, y: -12 }
+    return { x: landscapeSize.width / 2 + 8, y: 6 }
   }
 }
 
