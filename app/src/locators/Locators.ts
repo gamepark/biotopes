@@ -16,11 +16,15 @@ import { insectivoreDeckLocator } from './InsectivoreDeckLocator'
 import { carnivoreDiscardLocator } from './CarnivoreDiscardLocator'
 import { herbivoreDiscardLocator } from './HerbivoreDiscardLocator'
 import { insectivoreDiscardLocator } from './InsectivoreDiscardLocator'
+import { carnivoreRiverLocator } from './CarnivoreRiverLocator'
+import { herbivoreRiverLocator } from './HerbivoreRiverLocator'
+import { insectivoreRiverLocator } from './InsectivoreRiverLocator'
 
 export const Locators: Partial<Record<LocationType, Locator<PlayerColor, MaterialType, LocationType>>> = {
   [LocationType.AdvancedBiotopesSelectionSpot]: advancedBiotopesSelectionLocator,
   [LocationType.CarnivoreDeckSpot]: carnivoreDeckLocator,
   [LocationType.CarnivoreDiscardSpot]: carnivoreDiscardLocator,
+  [LocationType.CarnivoreRiverSpot]: carnivoreRiverLocator,
   [LocationType.CentralLandscapeSpot]: centralLandscapeLocator,
   [LocationType.CycleTokenSpotOnEnviromnentalConditionsBoard]: cycleTokenLocator,
   [LocationType.EcosystemBoardSpot]: ecosystemBoardLocator,
@@ -28,8 +32,10 @@ export const Locators: Partial<Record<LocationType, Locator<PlayerColor, Materia
   [LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard]: environmentalConditionsTokenLocator,
   [LocationType.HerbivoreDeckSpot]: herbivoreDeckLocator,
   [LocationType.HerbivoreDiscardSpot]: herbivoreDiscardLocator,
+  [LocationType.HerbivoreRiverSpot]: herbivoreRiverLocator,
   [LocationType.InsectivoreDeckSpot]: insectivoreDeckLocator,
   [LocationType.InsectivoreDiscardSpot]: insectivoreDiscardLocator,
+  [LocationType.InsectivoreRiverSpot]: insectivoreRiverLocator,
   [LocationType.PlayerBiotopesCardSpot]: playerBiotopeCardsLocator,
   [LocationType.PlayerInitiativeTokenSpot]: initiativeTokenLocator
 }
