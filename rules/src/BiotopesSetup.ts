@@ -142,5 +142,8 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
       }))
     )
     this.material(MaterialType.SpeciesCard).location(LocationType.CarnivoreDeckSpot).deck().shuffle()
+    this.material(MaterialType.SpeciesCard).location(LocationType.HerbivoreDeckSpot).deck().dealAtOnce({ type: LocationType.HerbivoreRiverSpot }, 3)
+    this.material(MaterialType.SpeciesCard).location(LocationType.InsectivoreDeckSpot).deck().dealAtOnce({ type: LocationType.InsectivoreRiverSpot }, 3)
+    this.material(MaterialType.SpeciesCard).location(LocationType.CarnivoreDeckSpot).deck().dealAtOnce({ type: LocationType.CarnivoreRiverSpot }, 3)
   }
 }
