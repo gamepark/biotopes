@@ -1,5 +1,5 @@
 import { CardDescription } from '@gamepark/react-game'
-import { SpecieCard, SpecieCardType } from '@gamepark/biotopes/material/SpecieCard'
+import { SpecieCard, SpecieCardId, SpecieCardType } from '@gamepark/biotopes/material/SpecieCard'
 import AlpineIbex from '../images/Cards/en/SpeciesCards/Mountain/Mountain-AlpineIbex.jpg'
 import Apollo from '../images/Cards/en/SpeciesCards/Mountain/Mountain-Apollo.jpg'
 import CitrilFinch from '../images/Cards/en/SpeciesCards/Mountain/Mountain-CitrilFinch.jpg'
@@ -100,8 +100,11 @@ import CarnivoreMountain from '../images/Cards/en/SpeciesCards/Mountain/Mountain
 import CarnivoreForest from '../images/Cards/en/SpeciesCards/Forest/Forest-Back-Carnivore.jpg'
 import CarnivoreMeadow from '../images/Cards/en/SpeciesCards/Meadow/Meadow-Back-Carnivore.jpg'
 import CarnivoreWetland from '../images/Cards/en/SpeciesCards/Wetland/Wetland-Back-Carnivore.jpg'
+import { LocationType } from '@gamepark/biotopes/material/LocationType'
+import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
+import { PlayerColor } from '@gamepark/biotopes/PlayerColor'
 
-class SpecieCardDescription extends CardDescription {
+class SpecieCardDescription extends CardDescription<PlayerColor, MaterialType, LocationType, SpecieCardId> {
   height = 4.4
   width = 6.7
   images = {
