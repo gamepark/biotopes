@@ -54,6 +54,7 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
 
   setupMaterial(_options: BiotopesOptions) {
     this.setupLandscape()
+    this.setupInitiativeToken()
   }
 
   start() {
@@ -67,6 +68,12 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
         id: id ?? 1,
         location: { type: LocationType.CentralLandscapeSpot, x: x, y: y, rotation: rotation ?? 0 }
       })
+    })
+  }
+
+  setupInitiativeToken() {
+    this.material(MaterialType.InitiativeToken).createItem({
+      location: { type: LocationType.PlayerInitiativeTokenSpot, player: this.players[0] }
     })
   }
 }
