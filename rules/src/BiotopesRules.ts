@@ -21,7 +21,10 @@ export class BiotopesRules
       [LocationType.AdvancedBiotopesSelectionSpot]: new FillGapStrategy(),
       [LocationType.HerbivoreDeckSpot]: new PositiveSequenceStrategy(),
       [LocationType.InsectivoreDeckSpot]: new PositiveSequenceStrategy(),
-      [LocationType.CarnivoreDeckSpot]: new PositiveSequenceStrategy()
+      [LocationType.CarnivoreDeckSpot]: new PositiveSequenceStrategy(),
+      [LocationType.HerbivoreDiscardSpot]: new PositiveSequenceStrategy(),
+      [LocationType.InsectivoreDiscardSpot]: new PositiveSequenceStrategy(),
+      [LocationType.CarnivoreDiscardSpot]: new PositiveSequenceStrategy()
     }
   }
 
