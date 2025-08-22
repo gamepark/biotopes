@@ -122,10 +122,7 @@ export type SpecieCardId = {
   back: SpecieCardType
 }
 
-export type KnownSpecieCardId = {
-  front: SpecieCard
-  back: SpecieCardType
-}
+export type KnownSpecieCardId = Required<SpecieCardId>
 
 export const specieCards = getEnumValues(SpecieCard)
 
