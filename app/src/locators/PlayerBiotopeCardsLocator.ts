@@ -4,6 +4,7 @@ import { Coordinates, Location } from '@gamepark/rules-api'
 
 class PlayerBiotopeCardsLocator extends ListLocator {
   gap = { y: 4.75 }
+  maxCount = 4
 
   getCoordinates(_location: Location, _context: MaterialContext): Partial<Coordinates> {
     const playerBoardCoordinates = _context.locators[LocationType.EcosystemBoardSpot]?.getCoordinates(
