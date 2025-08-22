@@ -23,5 +23,6 @@ export enum LocationType {
   CarnivoreRiverSpot,
   CentralLandscapeSpot,
   TerritoryTokenSpotOnCentralLandscape,
-  PlayerSpeciesCardHandSpot
+  PlayerSpeciesCardHandSpot,
+  AdvancedBiotopesSelectionSpot
 }

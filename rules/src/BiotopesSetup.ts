@@ -100,9 +100,9 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
     if (advancedBiotopes) {
       this.material(MaterialType.BiotopesCard).createItems(
         biotopeType.flatMap((biotope) =>
-          sampleSize(advancedCardsByBiotope[biotope], this.players.length).map((card, index) => ({
+          advancedCardsByBiotope[biotope].map((card) => ({
             id: card,
-            location: { type: LocationType.PlayerBiotopesCardSpot, player: this.players[index], y: biotope }
+            location: { type: LocationType.AdvancedBiotopesSelectionSpot, id: biotope }
           }))
         )
       )
