@@ -24,6 +24,7 @@ export class BiotopesRules
       [LocationType.HerbivoreDiscardSpot]: new PositiveSequenceStrategy(),
       [LocationType.InsectivoreDiscardSpot]: new PositiveSequenceStrategy(),
       [LocationType.CarnivoreDiscardSpot]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerSpeciesCardTableauSpot]: new PositiveSequenceStrategy(),
       // TODO : A new strategy will be needed when we will remove an item from the river
       [LocationType.HerbivoreRiverSpot]: new FillGapStrategy(),
       [LocationType.InsectivoreRiverSpot]: new FillGapStrategy(),
