@@ -1,4 +1,4 @@
-import { MaterialGame, MaterialMove, MaterialRules, PositiveSequenceStrategy, TimeLimit } from '@gamepark/rules-api'
+import { FillGapStrategy, MaterialGame, MaterialMove, MaterialRules, PositiveSequenceStrategy, TimeLimit } from '@gamepark/rules-api'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
@@ -16,6 +16,9 @@ export class BiotopesRules
   locationsStrategies = {
     [MaterialType.EnvironmentalConditionToken]: {
       [LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard]: new PositiveSequenceStrategy()
+    },
+    [MaterialType.BiotopesCard]: {
+      [LocationType.AdvancedBiotopesSelectionSpot]: new FillGapStrategy()
     }
   }
 

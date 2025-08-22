@@ -9,8 +9,10 @@ import { initiativeTokenLocator } from './InitiativeTokenLocator'
 import { cycleTokenLocator } from './CycleTokenLocator'
 import { environmentalConditionsTokenLocator } from './EnvironmentalConditionsTokenLocator'
 import { playerBiotopeCardsLocator } from './PlayerBiotopeCardsLocator'
+import { advancedBiotopesSelectionLocator } from './AdvancedBiotopesSelectionLocator'
 
 export const Locators: Partial<Record<LocationType, Locator<PlayerColor, MaterialType, LocationType>>> = {
+  [LocationType.AdvancedBiotopesSelectionSpot]: advancedBiotopesSelectionLocator,
   [LocationType.CentralLandscapeSpot]: centralLandscapeLocator,
   [LocationType.CycleTokenSpotOnEnviromnentalConditionsBoard]: cycleTokenLocator,
   [LocationType.EcosystemBoardSpot]: ecosystemBoardLocator,
