@@ -7,9 +7,9 @@ import { centralLandscapeLocator } from './CentralLandscapeLocator'
 
 class AdvancedBiotopesSelectionLocator extends ListLocator<PlayerColor, MaterialType, LocationType> {
   gap = { x: 5, z: -1 }
-  getCoordinates(_location: Location<PlayerColor, LocationType>, context: MaterialContext<PlayerColor, MaterialType, LocationType>): Partial<Coordinates> {
+  getCoordinates(location: Location<PlayerColor, LocationType>, context: MaterialContext<PlayerColor, MaterialType, LocationType>): Partial<Coordinates> {
     const landscapeSize = centralLandscapeLocator.getLandscapeSize(context.rules.game)
-    return { x: -(landscapeSize.width / 2 + 27), y: -5 + (_location.id ?? 1) * 5 }
+    return { x: -(landscapeSize.width / 2 + 27), y: -5 + (location.id ?? 1) * 5 }
   }
 }
 
