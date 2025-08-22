@@ -127,23 +127,17 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
         location: { type: LocationType.HerbivoreDeckSpot }
       }))
     )
-    this.material(MaterialType.SpeciesCard).location(LocationType.HerbivoreDeckSpot).deck().shuffle()
     this.material(MaterialType.SpeciesCard).createItemsAtOnce(
       insectivoreCard.map((card) => ({
         id: { front: card, back: getSpecieCardType(card) },
         location: { type: LocationType.InsectivoreDeckSpot }
       }))
     )
-    this.material(MaterialType.SpeciesCard).location(LocationType.InsectivoreDeckSpot).deck().shuffle()
     this.material(MaterialType.SpeciesCard).createItemsAtOnce(
       carnivoreCard.map((card) => ({
         id: { front: card, back: getSpecieCardType(card) },
         location: { type: LocationType.CarnivoreDeckSpot }
       }))
     )
-    this.material(MaterialType.SpeciesCard).location(LocationType.CarnivoreDeckSpot).deck().shuffle()
-    this.material(MaterialType.SpeciesCard).location(LocationType.HerbivoreDeckSpot).deck().dealAtOnce({ type: LocationType.HerbivoreRiverSpot }, 3)
-    this.material(MaterialType.SpeciesCard).location(LocationType.InsectivoreDeckSpot).deck().dealAtOnce({ type: LocationType.InsectivoreRiverSpot }, 3)
-    this.material(MaterialType.SpeciesCard).location(LocationType.CarnivoreDeckSpot).deck().dealAtOnce({ type: LocationType.CarnivoreRiverSpot }, 3)
   }
 }
