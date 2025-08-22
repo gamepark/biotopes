@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client'
 import { gameAnimations } from './animations/GameAnimations'
 import { App } from './App'
 import { Locators } from './locators/Locators'
-import { Material } from './material/Material'
+import { Material, materialI18n } from './material/Material'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -18,6 +18,7 @@ createRoot(document.getElementById('root')!).render(
       GameSetup={BiotopesSetup}
       material={Material}
       locators={Locators}
+      materialI18n={materialI18n}
       animations={gameAnimations}
     >
       <App />

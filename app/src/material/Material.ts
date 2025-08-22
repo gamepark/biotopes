@@ -17,3 +17,7 @@ export const Material: Partial<Record<MaterialType, MaterialDescription>> = {
   [MaterialType.InitiativeToken]: initiativeTokenDescription,
   [MaterialType.LandscapeTile]: landscapeTileDescription
 }
+
+export const materialI18n: Record<string, Partial<Record<MaterialType, MaterialDescription>>> = {
+  // Todo : Add french version when needed
+}
