@@ -8,7 +8,10 @@ import { centralLandscapeLocator } from './CentralLandscapeLocator'
 class EnvironmentalConditionsBoardLocator extends Locator<PlayerColor, MaterialType, LocationType> {
   getCoordinates(_location: Location<PlayerColor, LocationType>, context: MaterialContext<PlayerColor, MaterialType, LocationType>): Partial<Coordinates> {
     const landscapeSize = centralLandscapeLocator.getLandscapeSize(context.rules.game)
-    return { x: -(landscapeSize.width / 2 + 15), y: 5 }
+    const showAdvancedBiotopeLocator = context.rules.game.items[MaterialType.BiotopesCard]!.some(
+      (card) => card.location.type === LocationType.AdvancedBiotopesSelectionSpot
+    )
+    return { x: -(landscapeSize.width / 2 + 14), y: showAdvancedBiotopeLocator ? -10 : 0 }
   }
 }
 
