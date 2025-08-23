@@ -59,11 +59,11 @@ const landscapeSetupCoordinate: Record<number, (XYCoordinates & { rotation?: num
 export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, LocationType, BiotopesOptions> {
   Rules = BiotopesRules
 
-  setupMaterial(_options: Partial<BiotopesOptions>) {
-    this.memorize<EnvironmentalConditionsBoardSide>(Memory.AntSide, _options.antSide ?? EnvironmentalConditionsBoardSide.Butterfly)
+  setupMaterial(options: Partial<BiotopesOptions>) {
+    this.memorize<EnvironmentalConditionsBoardSide>(Memory.AntSide, options.antSide ?? EnvironmentalConditionsBoardSide.Butterfly)
     this.setupLandscape()
     this.setupTokens()
-    this.setupBiotopeCards(_options.advancedBiotopes ?? false)
+    this.setupBiotopeCards(options.advancedBiotopes ?? false)
     this.setupRiver()
   }
 
