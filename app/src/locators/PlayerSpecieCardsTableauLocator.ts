@@ -5,12 +5,12 @@ import { Coordinates, Location } from '@gamepark/rules-api'
 class PlayerSpecieCardsTableauLocator extends ListLocator {
   gap = { x: 7 }
 
-  getCoordinates(_location: Location, _context: MaterialContext): Partial<Coordinates> {
-    const playerBoardCoordinates = _context.locators[LocationType.EcosystemBoardSpot]?.getCoordinates(
-      { type: LocationType.EcosystemBoardSpot, player: _location.player },
-      _context
+  getCoordinates(location: Location, context: MaterialContext): Partial<Coordinates> {
+    const playerBoardCoordinates = context.locators[LocationType.EcosystemBoardSpot]?.getCoordinates(
+      { type: LocationType.EcosystemBoardSpot, player: location.player },
+      context
     )
-    return { x: (playerBoardCoordinates?.x ?? 0) + 17, y: (playerBoardCoordinates?.y ?? 0) - 11.86 + (_location.id ?? 1) * 4.75 }
+    return { x: (playerBoardCoordinates?.x ?? 0) + 17, y: (playerBoardCoordinates?.y ?? 0) - 11.86 + (location.id ?? 1) * 4.75 }
   }
 }
 
