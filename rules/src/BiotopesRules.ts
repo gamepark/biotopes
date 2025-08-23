@@ -17,8 +17,7 @@ export class BiotopesRules
     [MaterialType.EnvironmentalConditionToken]: {
       [LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard]: new PositiveSequenceStrategy()
     },
-    [MaterialType.BiotopesCard]: {
-      [LocationType.AdvancedBiotopesSelectionSpot]: new FillGapStrategy(),
+    [MaterialType.SpeciesCard]: {
       [LocationType.HerbivoreDeckSpot]: new PositiveSequenceStrategy(),
       [LocationType.InsectivoreDeckSpot]: new PositiveSequenceStrategy(),
       [LocationType.CarnivoreDeckSpot]: new PositiveSequenceStrategy(),
@@ -26,9 +25,12 @@ export class BiotopesRules
       [LocationType.InsectivoreDiscardSpot]: new PositiveSequenceStrategy(),
       [LocationType.CarnivoreDiscardSpot]: new PositiveSequenceStrategy(),
       // TODO : A new strategy will be needed when we will remove an item from the river
-      [LocationType.HerbivoreRiverSpot]: new PositiveSequenceStrategy(),
-      [LocationType.InsectivoreRiverSpot]: new PositiveSequenceStrategy(),
-      [LocationType.CarnivoreRiverSpot]: new PositiveSequenceStrategy()
+      [LocationType.HerbivoreRiverSpot]: new FillGapStrategy(),
+      [LocationType.InsectivoreRiverSpot]: new FillGapStrategy(),
+      [LocationType.CarnivoreRiverSpot]: new FillGapStrategy()
+    },
+    [MaterialType.BiotopesCard]: {
+      [LocationType.AdvancedBiotopesSelectionSpot]: new FillGapStrategy()
     }
   }
 
