@@ -1,5 +1,5 @@
-import { HexagonalGridLocator, HexOrientation } from '@gamepark/react-game'
-import { HexGridSystem, MaterialGame } from '@gamepark/rules-api'
+import { HexagonalGridLocator, HexOrientation, ItemContext } from '@gamepark/react-game'
+import { Coordinates, HexGridSystem, MaterialGame, MaterialItem } from '@gamepark/rules-api'
 import { landscapeTileDescription } from '../material/LandscapeTileDescription'
 import { LocationType } from '@gamepark/biotopes/material/LocationType'
 import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
@@ -15,6 +15,12 @@ class CentralLandscapeLocator extends HexagonalGridLocator {
     const landscape = new LandscapeHelper(game).landscape
     const { xMin, xMax, yMin, yMax } = this.getBoundaries(landscape)
     return { width: xMax - xMin, height: yMax - yMin }
+  }
+
+  getItemCoordinates(item: MaterialItem, context: ItemContext): Partial<Coordinates> {
+    const { x = 0, y = 0 } = super.getItemCoordinates(item, context)
+    const z = context.type === MaterialType.TerritoryToken ? 1 : 0
+    return { x, y, z }
   }
 
   // getCoordinates(location: Location, context: MaterialContext): Partial<Coordinates> {
