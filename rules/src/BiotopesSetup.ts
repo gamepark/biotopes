@@ -12,6 +12,7 @@ import { sampleSize } from 'lodash'
 import { biotopeEnvironmentalConditionTokens, speciesTypeEnvironmentalConditionTokens } from './material/EnvironmentalConditionToken'
 import { advancedCardsByBiotope, basicBiotopeCards } from './material/BiotopeCard'
 import { biotopeType } from './material/BiotopeType'
+import { carnivoreCard, getSpecieCardType, herbivoreCard, insectivoreCard } from './material/SpecieCard'
 
 const landscapeSetupCoordinate: Record<number, (XYCoordinates & { rotation?: number } & { id?: LandscapeTile })[]> = {
   2: [
@@ -63,6 +64,7 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
     this.setupLandscape()
     this.setupTokens()
     this.setupBiotopeCards(_options.advancedBiotopes ?? false)
+    this.setupRiver()
   }
 
   start() {
@@ -116,5 +118,26 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
         )
       )
     }
+  }
+
+  setupRiver() {
+    this.material(MaterialType.SpeciesCard).createItemsAtOnce(
+      herbivoreCard.map((card) => ({
+        id: { front: card, back: getSpecieCardType(card) },
+        location: { type: LocationType.HerbivoreDeckSpot }
+      }))
+    )
+    this.material(MaterialType.SpeciesCard).createItemsAtOnce(
+      insectivoreCard.map((card) => ({
+        id: { front: card, back: getSpecieCardType(card) },
+        location: { type: LocationType.InsectivoreDeckSpot }
+      }))
+    )
+    this.material(MaterialType.SpeciesCard).createItemsAtOnce(
+      carnivoreCard.map((card) => ({
+        id: { front: card, back: getSpecieCardType(card) },
+        location: { type: LocationType.CarnivoreDeckSpot }
+      }))
+    )
   }
 }
