@@ -10,6 +10,7 @@ class TerritoryTokenOnEcosystemBoardLocator extends FlexLocator {
   lineGap = { y: 1.8 }
   lineSize = 6
   maxLines = 2
+  maxCount = 12
 
   positionOnParent = { x: 10, y: 11 }
 
