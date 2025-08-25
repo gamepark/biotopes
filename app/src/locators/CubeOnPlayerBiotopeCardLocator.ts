@@ -4,7 +4,7 @@ import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
 import { PlayerColor } from '@gamepark/biotopes/PlayerColor'
 import { LocationType } from '@gamepark/biotopes/material/LocationType'
 
-class CubeOnBiotopeCardLocator extends PileLocator {
+class CubeOnPlayerBiotopeCardLocator extends PileLocator {
   parentItemType = MaterialType.BiotopesCard
   radius = { x: 1, y: 0.5 }
 
@@ -20,4 +20,4 @@ class CubeOnBiotopeCardLocator extends PileLocator {
   positionOnParent = { x: 25, y: 20 }
 }
 
-export const cubeOnBiotopeCardLocator = new CubeOnBiotopeCardLocator()
+export const cubeOnPlayerBiotopeCardLocator = new CubeOnPlayerBiotopeCardLocator()

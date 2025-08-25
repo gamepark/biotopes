@@ -25,7 +25,8 @@ import { territoryTokenOnEcosystemBoardLocator } from './TerritoryTokenOnEcosyst
 import { playerClothBagLocator } from './PlayerClothBagLocator'
 import { cubeStockpileLocator } from './CubeStockpileLocator'
 import { cubeOnEcosystemBoardLocator } from './CubeOnEcosystemBoardLocator'
-import { cubeOnBiotopeCardLocator } from './CubeOnBiotopeCardLocator'
+import { cubeOnPlayerBiotopeCardLocator } from './CubeOnPlayerBiotopeCardLocator'
+import { cubeOnPlayerSpecieCardLocator } from './CubeOnPlayerSpecieCardLocator'
 
 export const Locators: Partial<Record<LocationType, Locator<PlayerColor, MaterialType, LocationType>>> = {
   [LocationType.AdvancedBiotopesSelectionSpot]: advancedBiotopesSelectionLocator,
@@ -36,7 +37,8 @@ export const Locators: Partial<Record<LocationType, Locator<PlayerColor, Materia
   [LocationType.CycleTokenSpotOnEnviromnentalConditionsBoard]: cycleTokenLocator,
   [LocationType.CubeStockpileSpot]: cubeStockpileLocator,
   [LocationType.CubeSpotOnEcosystemBoard]: cubeOnEcosystemBoardLocator,
-  [LocationType.CubeSpotOnPlayerBiotopesCard]: cubeOnBiotopeCardLocator,
+  [LocationType.CubeSpotOnPlayerBiotopesCard]: cubeOnPlayerBiotopeCardLocator,
+  [LocationType.CubeSpotOnPlayerSpeciesCard]: cubeOnPlayerSpecieCardLocator,
   [LocationType.EcosystemBoardSpot]: ecosystemBoardLocator,
   [LocationType.EnvironmentalConditionsBoardSpot]: environmentalConditionsBoardLocator,
   [LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard]: environmentalConditionsTokenLocator,
