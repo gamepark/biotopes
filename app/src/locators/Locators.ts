@@ -23,6 +23,8 @@ import { playerSpecieCardsTableauLocator } from './PlayerSpecieCardsTableauLocat
 import { playerSpeciesCardHandLocator } from './PlayerSpeciesCardHandLocator'
 import { territoryTokenOnEcosystemBoardLocator } from './TerritoryTokenOnEcosystemBoardLocator'
 import { playerClothBagLocator } from './PlayerClothBagLocator'
+import { cubeStockpileLocator } from './CubeStockpileLocator'
+import { cubeOnEcosystemBoardLocator } from './CubeOnEcosystemBoardLocator'
 
 export const Locators: Partial<Record<LocationType, Locator<PlayerColor, MaterialType, LocationType>>> = {
   [LocationType.AdvancedBiotopesSelectionSpot]: advancedBiotopesSelectionLocator,
@@ -31,6 +33,8 @@ export const Locators: Partial<Record<LocationType, Locator<PlayerColor, Materia
   [LocationType.CarnivoreRiverSpot]: carnivoreRiverLocator,
   [LocationType.CentralLandscapeSpot]: centralLandscapeLocator,
   [LocationType.CycleTokenSpotOnEnviromnentalConditionsBoard]: cycleTokenLocator,
+  [LocationType.CubeStockpileSpot]: cubeStockpileLocator,
+  [LocationType.CubeSpotOnEcosystemBoard]: cubeOnEcosystemBoardLocator,
   [LocationType.EcosystemBoardSpot]: ecosystemBoardLocator,
   [LocationType.EnvironmentalConditionsBoardSpot]: environmentalConditionsBoardLocator,
   [LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard]: environmentalConditionsTokenLocator,
