@@ -63,6 +63,7 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
     this.memorize<EnvironmentalConditionsBoardSide>(Memory.AntSide, options.antSide ?? EnvironmentalConditionsBoardSide.Butterfly)
     this.setupLandscape()
     this.setupTokens()
+    this.setupCubes()
     this.setupBiotopeCards(options.advancedBiotopes ?? false)
     this.setupRiver()
   }
@@ -103,6 +104,16 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
         location: { type: LocationType.TerritoryTokenSpotOnEcosystemBoard, player: player }
       }))
     )
+  }
+
+  setupCubes() {
+    biotopeType.forEach((biotope) => {
+      this.material(MaterialType.Cube).createItem({
+        quantity: this.players.length * 8,
+        id: biotope,
+        location: { type: LocationType.CubeStockpileSpot, id: biotope }
+      })
+    })
   }
 
   setupBiotopeCards(advancedBiotopes: boolean) {
