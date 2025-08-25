@@ -9,10 +9,12 @@ import { initiativeTokenDescription } from './InitiativeTokenDescription'
 import { landscapeTileDescription } from './LandscapeTileDescription'
 import { specieCardDescription } from './SpecieCardDescription'
 import { territoryTokenDescription } from './TerritoryTokenDescription'
+import { clothBagDescription } from './ClothBagDescription'
 
 export const Material: Partial<Record<MaterialType, MaterialDescription>> = {
   [MaterialType.BiotopesCard]: biotopeCardDescription,
   [MaterialType.CycleToken]: cycleTokenDescription,
+  [MaterialType.ClothBag]: clothBagDescription,
   [MaterialType.EcosystemBoard]: ecosystemBoardDescription,
   [MaterialType.EnvironmentalConditionsBoard]: environmentalConditionsBoardDescription,
   [MaterialType.EnvironmentalConditionToken]: environmentalConditionTokenDescription,
