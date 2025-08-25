@@ -10,7 +10,7 @@ import { EnvironmentalConditionsBoardSide } from './EnvironmentalConditionsBoard
 import { Memory } from './Memory'
 import { sampleSize } from 'lodash'
 import { biotopeEnvironmentalConditionTokens, speciesTypeEnvironmentalConditionTokens } from './material/EnvironmentalConditionToken'
-import { advancedCardsByBiotope, basicBiotopeCards } from './material/BiotopeCard'
+import { advancedCardsByBiotope, basicBiotopeCards, getBiotopeCardTypes } from './material/BiotopeCard'
 import { biotopeType } from './material/BiotopeType'
 import { carnivoreCard, getSpecieCardType, herbivoreCard, insectivoreCard } from './material/SpecieCard'
 
@@ -129,9 +129,9 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
     } else {
       this.material(MaterialType.BiotopesCard).createItems(
         this.rules.players.flatMap((player) =>
-          basicBiotopeCards.map((card, index) => ({
+          basicBiotopeCards.map((card) => ({
             id: card,
-            location: { type: LocationType.PlayerBiotopesCardSpot, player: player, y: index + 1 }
+            location: { type: LocationType.PlayerBiotopesCardSpot, player: player, id: getBiotopeCardTypes(card) }
           }))
         )
       )

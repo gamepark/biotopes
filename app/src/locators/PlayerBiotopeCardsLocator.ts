@@ -11,7 +11,7 @@ class PlayerBiotopeCardsLocator extends ListLocator {
       { type: LocationType.EcosystemBoardSpot, player: location.player },
       context
     )
-    return { x: (playerBoardCoordinates?.x ?? 0) + 10, y: (playerBoardCoordinates?.y ?? 0) - 11.86 }
+    return { x: (playerBoardCoordinates?.x ?? 0) + 10, y: (playerBoardCoordinates?.y ?? 0) - 11.86 + (location.id ?? 1) * 4.75 }
   }
 }
 
