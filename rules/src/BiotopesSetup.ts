@@ -96,6 +96,13 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
           location: { type: LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard }
         }))
     )
+    this.material(MaterialType.TerritoryToken).createItems(
+      this.players.map((player) => ({
+        quantity: 12,
+        id: player,
+        location: { type: LocationType.TerritoryTokenSpotOnEcosystemBoard, player: player }
+      }))
+    )
   }
 
   setupBiotopeCards(advancedBiotopes: boolean) {

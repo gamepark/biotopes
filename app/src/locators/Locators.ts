@@ -21,6 +21,7 @@ import { herbivoreRiverLocator } from './HerbivoreRiverLocator'
 import { insectivoreRiverLocator } from './InsectivoreRiverLocator'
 import { playerSpecieCardsTableauLocator } from './PlayerSpecieCardsTableauLocator'
 import { playerSpeciesCardHandLocator } from './PlayerSpeciesCardHandLocator'
+import { territoryTokenOnEcosystemBoardLocator } from './TerritoryTokenOnEcosystemBoardLocator'
 
 export const Locators: Partial<Record<LocationType, Locator<PlayerColor, MaterialType, LocationType>>> = {
   [LocationType.AdvancedBiotopesSelectionSpot]: advancedBiotopesSelectionLocator,
@@ -41,5 +42,6 @@ export const Locators: Partial<Record<LocationType, Locator<PlayerColor, Materia
   [LocationType.PlayerBiotopesCardSpot]: playerBiotopeCardsLocator,
   [LocationType.PlayerInitiativeTokenSpot]: initiativeTokenLocator,
   [LocationType.PlayerSpeciesCardTableauSpot]: playerSpecieCardsTableauLocator,
-  [LocationType.PlayerSpeciesCardHandSpot]: playerSpeciesCardHandLocator
+  [LocationType.PlayerSpeciesCardHandSpot]: playerSpeciesCardHandLocator,
+  [LocationType.TerritoryTokenSpotOnEcosystemBoard]: territoryTokenOnEcosystemBoardLocator
 }
