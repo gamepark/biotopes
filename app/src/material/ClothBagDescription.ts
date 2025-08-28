@@ -6,8 +6,8 @@ import { MaterialItem } from '@gamepark/rules-api'
 import ClothBag from '../images/ClothBag.png'
 
 class ClothBagDescription extends FlatMaterialDescription<PlayerColor, MaterialType, LocationType> {
-  height = 7
-  width = 7
+  height = 14
+  width = 11
 
   image = ClothBag
 
