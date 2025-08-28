@@ -23,6 +23,9 @@ export class BiotopesRules
   implements TimeLimit<MaterialGame<PlayerColor, MaterialType, LocationType>, MaterialMove<PlayerColor, MaterialType, LocationType>, PlayerColor>
 {
   locationsStrategies = {
+    [MaterialType.BiotopesCard]: {
+      [LocationType.AdvancedBiotopesSelectionSpot]: new FillGapStrategy()
+    },
     [MaterialType.EnvironmentalConditionToken]: {
       [LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard]: new PositiveSequenceStrategy()
     },
@@ -40,8 +43,8 @@ export class BiotopesRules
       [LocationType.InsectivoreRiverSpot]: new FillGapStrategy(),
       [LocationType.CarnivoreRiverSpot]: new FillGapStrategy()
     },
-    [MaterialType.BiotopesCard]: {
-      [LocationType.AdvancedBiotopesSelectionSpot]: new FillGapStrategy()
+    [MaterialType.TerritoryToken]: {
+      [LocationType.EcosystemBoardSpot]: new PositiveSequenceStrategy()
     }
   }
 
