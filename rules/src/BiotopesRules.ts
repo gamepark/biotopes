@@ -2,6 +2,7 @@ import {
   FillGapStrategy,
   hideFront,
   hideFrontToOthers,
+  hideItemId,
   MaterialGame,
   MaterialMove,
   PositiveSequenceStrategy,
@@ -54,6 +55,9 @@ export class BiotopesRules
       [LocationType.InsectivoreDeckSpot]: hideFront,
       [LocationType.CarnivoreDeckSpot]: hideFront,
       [LocationType.PlayerSpeciesCardHandSpot]: hideFrontToOthers
+    },
+    [MaterialType.Cube]: {
+      [LocationType.PlayerClothBagSpot]: hideItemId
     }
   }
 

@@ -107,13 +107,14 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
   }
 
   setupCubes() {
-    biotopeType.forEach((biotope) => {
-      this.material(MaterialType.Cube).createItem({
-        quantity: this.players.length * 8,
-        id: biotope,
-        location: { type: LocationType.CubeStockpileSpot, id: biotope }
-      })
-    })
+    this.material(MaterialType.Cube).createItems(
+      biotopeType.flatMap((biotope) =>
+        Array.from({ length: this.players.length * 2 }, () => ({
+          id: biotope,
+          location: { type: LocationType.CubeStockpileSpot, id: biotope }
+        }))
+      )
+    )
   }
 
   setupBiotopeCards(advancedBiotopes: boolean) {
