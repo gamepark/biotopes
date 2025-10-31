@@ -10,7 +10,7 @@ import { EnvironmentalConditionsBoardSide } from './EnvironmentalConditionsBoard
 import { Memory } from './Memory'
 import { sampleSize } from 'lodash'
 import { biotopeEnvironmentalConditionTokens, speciesTypeEnvironmentalConditionTokens } from './material/EnvironmentalConditionToken'
-import { advancedCardsByBiotope, basicBiotopeCards } from './material/BiotopeCard'
+import { advancedCardsByBiotope, basicBiotopeCards, getBiotopeCardTypes } from './material/BiotopeCard'
 import { biotopeType } from './material/BiotopeType'
 import { carnivoreCard, getSpecieCardType, herbivoreCard, insectivoreCard } from './material/SpecieCard'
 
@@ -63,6 +63,7 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
     this.memorize<EnvironmentalConditionsBoardSide>(Memory.AntSide, options.antSide ?? EnvironmentalConditionsBoardSide.Butterfly)
     this.setupLandscape()
     this.setupTokens()
+    this.setupCubes()
     this.setupBiotopeCards(options.advancedBiotopes ?? false)
     this.setupRiver()
   }
@@ -105,6 +106,17 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
     )
   }
 
+  setupCubes() {
+    this.material(MaterialType.Cube).createItems(
+      biotopeType.flatMap((biotope) =>
+        Array.from({ length: this.players.length * 2 }, () => ({
+          id: biotope,
+          location: { type: LocationType.CubeStockpileSpot, id: biotope }
+        }))
+      )
+    )
+  }
+
   setupBiotopeCards(advancedBiotopes: boolean) {
     if (advancedBiotopes) {
       this.material(MaterialType.BiotopesCard).createItems(
@@ -118,9 +130,9 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
     } else {
       this.material(MaterialType.BiotopesCard).createItems(
         this.rules.players.flatMap((player) =>
-          basicBiotopeCards.map((card, index) => ({
+          basicBiotopeCards.map((card) => ({
             id: card,
-            location: { type: LocationType.PlayerBiotopesCardSpot, player: player, y: index + 1 }
+            location: { type: LocationType.PlayerBiotopesCardSpot, player: player, id: getBiotopeCardTypes(card) }
           }))
         )
       )
