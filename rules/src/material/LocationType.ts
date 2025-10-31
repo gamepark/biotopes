@@ -24,5 +24,6 @@ export enum LocationType {
   CentralLandscapeSpot,
   TerritoryTokenSpotOnCentralLandscape,
   PlayerSpeciesCardHandSpot,
-  AdvancedBiotopesSelectionSpot
+  AdvancedBiotopesSelectionSpot,
+  CubeStockpileSpot
 }

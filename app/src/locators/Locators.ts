@@ -22,6 +22,11 @@ import { insectivoreRiverLocator } from './InsectivoreRiverLocator'
 import { playerSpecieCardsTableauLocator } from './PlayerSpecieCardsTableauLocator'
 import { playerSpeciesCardHandLocator } from './PlayerSpeciesCardHandLocator'
 import { territoryTokenOnEcosystemBoardLocator } from './TerritoryTokenOnEcosystemBoardLocator'
+import { playerClothBagLocator } from './PlayerClothBagLocator'
+import { cubeStockpileLocator } from './CubeStockpileLocator'
+import { cubeOnEcosystemBoardLocator } from './CubeOnEcosystemBoardLocator'
+import { cubeOnPlayerBiotopeCardLocator } from './CubeOnPlayerBiotopeCardLocator'
+import { cubeOnPlayerSpecieCardLocator } from './CubeOnPlayerSpecieCardLocator'
 
 export const Locators: Partial<Record<LocationType, Locator<PlayerColor, MaterialType, LocationType>>> = {
   [LocationType.AdvancedBiotopesSelectionSpot]: advancedBiotopesSelectionLocator,
@@ -30,6 +35,10 @@ export const Locators: Partial<Record<LocationType, Locator<PlayerColor, Materia
   [LocationType.CarnivoreRiverSpot]: carnivoreRiverLocator,
   [LocationType.CentralLandscapeSpot]: centralLandscapeLocator,
   [LocationType.CycleTokenSpotOnEnviromnentalConditionsBoard]: cycleTokenLocator,
+  [LocationType.CubeStockpileSpot]: cubeStockpileLocator,
+  [LocationType.CubeSpotOnEcosystemBoard]: cubeOnEcosystemBoardLocator,
+  [LocationType.CubeSpotOnPlayerBiotopesCard]: cubeOnPlayerBiotopeCardLocator,
+  [LocationType.CubeSpotOnPlayerSpeciesCard]: cubeOnPlayerSpecieCardLocator,
   [LocationType.EcosystemBoardSpot]: ecosystemBoardLocator,
   [LocationType.EnvironmentalConditionsBoardSpot]: environmentalConditionsBoardLocator,
   [LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard]: environmentalConditionsTokenLocator,
@@ -40,6 +49,7 @@ export const Locators: Partial<Record<LocationType, Locator<PlayerColor, Materia
   [LocationType.InsectivoreDiscardSpot]: insectivoreDiscardLocator,
   [LocationType.InsectivoreRiverSpot]: insectivoreRiverLocator,
   [LocationType.PlayerBiotopesCardSpot]: playerBiotopeCardsLocator,
+  [LocationType.PlayerClothBagSpot]: playerClothBagLocator,
   [LocationType.PlayerInitiativeTokenSpot]: initiativeTokenLocator,
   [LocationType.PlayerSpeciesCardTableauSpot]: playerSpecieCardsTableauLocator,
   [LocationType.PlayerSpeciesCardHandSpot]: playerSpeciesCardHandLocator,
