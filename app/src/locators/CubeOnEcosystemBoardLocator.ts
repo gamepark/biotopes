@@ -14,7 +14,7 @@ class CubeOnEcosystemBoardLocator extends ListLocator {
     return ecosystemBoardDescription.getStaticItems(context).find((board) => board.location.player === location.player)
   }
 
-  getPositionOnParent(location: Location, _context: MaterialContext) {
+  getPositionOnParent(location: Location) {
     switch (location.id as EcosystemActionType) {
       case EcosystemActionType.Reproduction:
         return { x: 61.7, y: 40 }
