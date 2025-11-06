@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { RuleId } from '@gamepark/biotopes/rules/RuleId'
 import { ComponentType } from 'react'
 import { TheFirstStepHeader } from './TheFirstStepHeader'

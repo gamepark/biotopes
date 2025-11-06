@@ -1,10 +1,9 @@
-/** @jsxImportSource @emotion/react */
-import { BiotopesOptionsSpec } from '@gamepark/biotopes/BiotopesOptions'
-import { BiotopesRules } from '@gamepark/biotopes/BiotopesRules'
-import { BiotopesSetup } from '@gamepark/biotopes/BiotopesSetup'
+import { BiotopesOptionsSpec } from '@gamepark/biotopes/BiotopesOptions.ts'
+import { BiotopesRules } from '@gamepark/biotopes/BiotopesRules.ts'
+import { BiotopesSetup } from '@gamepark/biotopes/BiotopesSetup.ts'
 import { GameProvider, setupTranslation } from '@gamepark/react-game'
 import { StrictMode } from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { gameAnimations } from './animations/GameAnimations'
 import { App } from './App'
 import { Locators } from './locators/Locators'
@@ -13,7 +12,7 @@ import translations from './translations.json'
 
 setupTranslation(translations, { debug: false })
 
-ReactDOM.render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <GameProvider
       game="biotopes"
@@ -27,6 +26,5 @@ ReactDOM.render(
     >
       <App />
     </GameProvider>
-  </StrictMode>,
-  document.getElementById('root')
+  </StrictMode>
 )

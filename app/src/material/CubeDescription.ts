@@ -18,6 +18,8 @@ class CubeDescription extends FlatMaterialDescription<PlayerColor, MaterialType,
     [BiotopeType.Meadow]: MeadowCube,
     [BiotopeType.Wetland]: WetlandCube
   }
+
+  transparency = true
 }
 
 export const cubeDescription = new CubeDescription()

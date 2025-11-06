@@ -10,6 +10,7 @@ class ClothBagDescription extends FlatMaterialDescription<PlayerColor, MaterialT
   width = 11
 
   image = ClothBag
+  transparency = true
 
   getStaticItems(_context: MaterialContext<PlayerColor, MaterialType, LocationType>): MaterialItem<number, LocationType>[] {
     return _context.rules.players.map((player) => ({
