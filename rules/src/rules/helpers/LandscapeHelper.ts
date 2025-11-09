@@ -1,7 +1,7 @@
 import { HexGridSystem, MaterialGame, MaterialRulesPart, Polyhex } from '@gamepark/rules-api'
-import { MaterialType } from '../../material/MaterialType'
 import { getLandscape, LandscapeTile } from '../../material/LandscapeTile'
 import { LocationType } from '../../material/LocationType'
+import { MaterialType } from '../../material/MaterialType'
 import { PlayerColor } from '../../PlayerColor'
 
 export class LandscapeHelper extends MaterialRulesPart {
@@ -13,6 +13,6 @@ export class LandscapeHelper extends MaterialRulesPart {
     this.landscape = new Polyhex([], { system: HexGridSystem.Axial })
     this.material(MaterialType.LandscapeTile)
       .getItems<LandscapeTile>()
-      .forEach((item) => this.landscape.merge(getLandscape(item.id), item.location))
+      .forEach((item) => this.landscape.merge(new Polyhex(getLandscape(item.id), { system: HexGridSystem.Axial, xMin: -1, yMin: -1 }), item.location))
   }
 }
