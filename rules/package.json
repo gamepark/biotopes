@@ -22,7 +22,7 @@
     "lint": "eslint"
   },
   "peerDependencies": {
-    "@gamepark/rules-api": ">=7",
+    "@gamepark/rules-api": ">=7.2",
     "es-toolkit": "^1.45.1"
   },
   "devDependencies": {
