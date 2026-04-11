@@ -1,7 +1,7 @@
 import { TFunction } from 'i18next'
 import { getEnumValues, OptionsSpec } from '@gamepark/rules-api'
 import { PlayerColor } from './PlayerColor'
-import { environmentalConditionsBoardSide, EnvironmentalConditionsBoardSide } from './EnvironmentalConditionsBoardSide'
+import { EnvironmentalConditionsBoardSide } from './EnvironmentalConditionsBoardSide'
 
 /**
  * This is the options for each player in the game.
@@ -14,9 +14,9 @@ type PlayerOptions = { id: PlayerColor }
  */
 export type BiotopesOptions = {
   players: PlayerOptions[]
-  antSide: EnvironmentalConditionsBoardSide
+  //antSide: EnvironmentalConditionsBoardSide
   advancedBiotopes: boolean
-  customCentralLandscape: boolean
+  //customCentralLandscape: boolean
 }
 
 /**
@@ -31,25 +31,25 @@ export const BiotopesOptionsSpec: OptionsSpec<BiotopesOptions> = {
       valueSpec: (id) => ({ label: (t) => t(`player.${id}`) })
     }
   },
-  antSide: {
-    label: (t: TFunction) => t('option.environmentalConditions.antSide'),
-    help: (t: TFunction) => t('option.environmentalConditions.antSide.help'),
-    values: environmentalConditionsBoardSide,
-    valueSpec: (side) => ({
-      label: (t) => getEnvironmentalConditionsBoardSide(side, t),
-      warn: (t) => (side === EnvironmentalConditionsBoardSide.Butterfly ? t('option.environmentalConditions.butterflySide.beginnerSuggestion') : '')
-    })
-  },
+  // antSide: {
+  //   label: (t: TFunction) => t('option.environmentalConditions.antSide'),
+  //   help: (t: TFunction) => t('option.environmentalConditions.antSide.help'),
+  //   values: environmentalConditionsBoardSide,
+  //   valueSpec: (side) => ({
+  //     label: (t) => getEnvironmentalConditionsBoardSide(side, t),
+  //     warn: (t) => (side === EnvironmentalConditionsBoardSide.Butterfly ? t('option.environmentalConditions.butterflySide.beginnerSuggestion') : '')
+  //   })
+  // },
   advancedBiotopes: {
     label: (t: TFunction) => t('option.advancedBioptopes'),
     help: (t: TFunction) => t('option.advancedBioptopes.help'),
     warn: (t: TFunction) => t('option.advancedBioptopes.advancedSuggestion')
   },
-  customCentralLandscape: {
-    label: (t: TFunction) => t('option.customCentralLandscape'),
-    help: (t: TFunction) => t('option.customCentralLandscape.help'),
-    warn: (t: TFunction) => t('option.customCentralLandscape.advancedSuggestion')
-  }
+  // customCentralLandscape: {
+  //   label: (t: TFunction) => t('option.customCentralLandscape'),
+  //   help: (t: TFunction) => t('option.customCentralLandscape.help'),
+  //   warn: (t: TFunction) => t('option.customCentralLandscape.advancedSuggestion')
+  // }
 }
 
 export function getEnvironmentalConditionsBoardSide(side: EnvironmentalConditionsBoardSide, t: TFunction) {

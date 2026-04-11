@@ -22,10 +22,6 @@ import B7 from '../images/Hexes/Hexes-B7.png'
 import B8 from '../images/Hexes/Hexes-B8.png'
 import B9 from '../images/Hexes/Hexes-B9.png'
 import B10 from '../images/Hexes/Hexes-B10.png'
-import C1 from '../images/Hexes/Hexes-C1.png'
-import C2 from '../images/Hexes/Hexes-C2.png'
-import D1 from '../images/Hexes/Hexes-D1.png'
-import D2 from '../images/Hexes/Hexes-D2.png'
 import { PolyhexDescription } from '@gamepark/react-game'
 import { HexGridSystem, Polyhex } from '@gamepark/rules-api'
 
@@ -62,11 +58,7 @@ class LandscapeTileDescription extends PolyhexDescription<PlayerColor, MaterialT
     [LandscapeTile.B7]: B7,
     [LandscapeTile.B8]: B8,
     [LandscapeTile.B9]: B9,
-    [LandscapeTile.B10]: B10,
-    [LandscapeTile.C1]: C1,
-    [LandscapeTile.C2]: C2,
-    [LandscapeTile.D1]: D1,
-    [LandscapeTile.D2]: D2
+    [LandscapeTile.B10]: B10
   }
 }
 

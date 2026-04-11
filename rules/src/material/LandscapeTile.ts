@@ -21,11 +21,7 @@ export enum LandscapeTile {
   B7,
   B8,
   B9,
-  B10,
-  C1 = 21,
-  C2,
-  D1 = 31,
-  D2
+  B10
 }
 
 export const landscapeTiles = getEnumValues(LandscapeTile)
@@ -45,11 +41,119 @@ export function getLandscape(tile: LandscapeTile) {
         [Fo, Me, Me],
         [Fo, Me]
       ]
-    default:
+    case LandscapeTile.A2:
       return [
-        [_, 1, 1],
-        [1, 1, 1],
-        [1, 1]
+        [_, Me, Mo],
+        [Me, Fo, Fo],
+        [Me, Fo]
+      ]
+    case LandscapeTile.A3:
+      return [
+        [_, Fo, Mo],
+        [Mo, Me, Mo],
+        [We, Me]
+      ]
+    case LandscapeTile.A4:
+      return [
+        [_, Me, We],
+        [We, Fo, We],
+        [Mo, Fo]
+      ]
+    case LandscapeTile.A5:
+      return [
+        [_, Fo, Fo],
+        [We, Mo, Mo],
+        [We, We]
+      ]
+    case LandscapeTile.A6:
+      return [
+        [_, Me, Me],
+        [Mo, We, We],
+        [Mo, Mo]
+      ]
+    case LandscapeTile.A7:
+      return [
+        [_, Mo, Mo],
+        [Fo, We, We],
+        [Me, Me]
+      ]
+    case LandscapeTile.A8:
+      return [
+        [_, We, We],
+        [Me, Mo, Mo],
+        [Fo, Fo]
+      ]
+    case LandscapeTile.A9:
+      return [
+        [_, Me, Mo],
+        [Mo, Mo, Fo],
+        [We, Fo]
+      ]
+    case LandscapeTile.A10:
+      return [
+        [_, Fo, We],
+        [We, We, Me],
+        [Mo, Me]
+      ]
+    case LandscapeTile.B1:
+      return [
+        [_, Mo, Fo],
+        [Mo, Fo, Fo],
+        [Mo, Me]
+      ]
+    case LandscapeTile.B2:
+      return [
+        [_, We, Mo],
+        [Mo, We, Fo],
+        [Me, We]
+      ]
+    case LandscapeTile.B3:
+      return [
+        [_, Me, Me],
+        [Me, Me, Mo],
+        [Fo, Fo]
+      ]
+    case LandscapeTile.B4:
+      return [
+        [_, Fo, We],
+        [We, We, Me],
+        [Mo, We]
+      ]
+    case LandscapeTile.B5:
+      return [
+        [_, Mo, Mo],
+        [Mo, Fo, We],
+        [Fo, We]
+      ]
+    case LandscapeTile.B6:
+      return [
+        [_, Fo, Mo],
+        [Me, Me, Mo],
+        [Me, Me]
+      ]
+    case LandscapeTile.B7:
+      return [
+        [_, Mo, Me],
+        [Fo, Me, Fo],
+        [Fo, Fo]
+      ]
+    case LandscapeTile.B8:
+      return [
+        [_, Me, Me],
+        [We, Me, Mo],
+        [We, Mo]
+      ]
+    case LandscapeTile.B9:
+      return [
+        [_, We, Mo],
+        [Mo, We, Mo],
+        [We, Fo]
+      ]
+    case LandscapeTile.B10:
+      return [
+        [_, We, Mo],
+        [Fo, We, We],
+        [Me, Me]
       ]
   }
 }

@@ -13,15 +13,21 @@ import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
 import { RuleId } from './rules/RuleId'
-import { TheFirstStepRule } from './rules/TheFirstStepRule'
+import { GameSetupPlaceTerritoryTokenRule } from './rules/GameSetupPlaceTerritoryTokenRule'
+import { GameSetupHandMulliganRule } from './rules/GameSetupHandMulliganRule'
 
 /**
  * This class implements the rules of the board game.
  * It must follow Game Park "Rules" API so that the Game Park server can enforce the rules.
  */
 export class BiotopesRules
-  extends SecretMaterialRules<PlayerColor, MaterialType, LocationType>
-  implements TimeLimit<MaterialGame<PlayerColor, MaterialType, LocationType>, MaterialMove<PlayerColor, MaterialType, LocationType>, PlayerColor>
+  extends SecretMaterialRules<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
+  implements
+    TimeLimit<
+      MaterialGame<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>,
+      MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>,
+      PlayerColor
+    >
 {
   locationsStrategies = {
     [MaterialType.BiotopesCard]: {
@@ -45,7 +51,7 @@ export class BiotopesRules
       [LocationType.CarnivoreRiverSpot]: new FillGapStrategy()
     },
     [MaterialType.TerritoryToken]: {
-      [LocationType.EcosystemBoardSpot]: new PositiveSequenceStrategy()
+      [LocationType.TerritoryTokenSpotOnEcosystemBoard]: new PositiveSequenceStrategy()
     }
   }
 
@@ -62,12 +68,18 @@ export class BiotopesRules
   }
 
   rules = {
-    [RuleId.TheFirstStep]: TheFirstStepRule
+    [RuleId.GameSetupHandMulligan]: GameSetupHandMulliganRule,
+    [RuleId.GameSetupPlaceTerritoryTokens]: GameSetupPlaceTerritoryTokenRule
   }
-
-  locationsStrategies = {}
 
   giveTime(): number {
     return 60
+  }
+
+  public itemsCanMerge(type: MaterialType): boolean {
+    if (type === MaterialType.TerritoryToken) {
+      return false
+    }
+    return super.itemsCanMerge(type)
   }
 }

@@ -1,1 +1,4 @@
-{}
+{
+  "header.gameSetup.handMulligan.you": "You can <discard>discard your hand</discard> or <pass>keep it</pass>",
+  "header.gameSetup.handMulligan.player": "{player} can discard their hand or keep it"
+}
