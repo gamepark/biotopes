@@ -1,17 +1,21 @@
-import { MaterialContext, PileLocator } from '@gamepark/react-game'
+import { PileLocator } from '@gamepark/react-game'
 import { Coordinates, Location } from '@gamepark/rules-api'
-import { LocationType } from '@gamepark/biotopes/material/LocationType'
+import { BiotopeType } from '@gamepark/biotopes/material/BiotopeType.ts'
+
+const baseCoordinates = {
+  [BiotopeType.Mountain]: { x: -52.5, y: -10 },
+  [BiotopeType.Forest]: { x: -47.5, y: -10 },
+  [BiotopeType.Meadow]: { x: -42.5, y: -10 },
+  [BiotopeType.Wetland]: { x: -37.5, y: -10 }
+}
 
 class CubeStockpileLocator extends PileLocator {
   radius = 1
   maxAngle = 20
-  limit = 10
-  getCoordinates(location: Location, context: MaterialContext): Partial<Coordinates> {
-    const environmentalConditionsBoardCoordinates = context.locators[LocationType.EnvironmentalConditionsBoardSpot]?.getCoordinates(
-      { type: LocationType.EnvironmentalConditionsBoardSpot, player: location.player },
-      context
-    )
-    return { x: (environmentalConditionsBoardCoordinates?.x ?? 0) - 10 + (location.id ?? 1) * 4, y: (environmentalConditionsBoardCoordinates?.y ?? 0) - 8 }
+  limit = 64
+
+  public getCoordinates(location: Location): Partial<Coordinates> {
+    return baseCoordinates[location.id as BiotopeType]
   }
 }
 
