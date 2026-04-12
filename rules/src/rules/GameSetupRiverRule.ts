@@ -6,7 +6,6 @@ import { RuleId } from './RuleId'
 import { BiotopesMove } from '../BiotopeTypes'
 
 export class GameSetupRiverRule extends SimultaneousRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-
   public getActivePlayerLegalMoves(): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
     return []
   }
@@ -20,20 +19,24 @@ export class GameSetupRiverRule extends SimultaneousRule<PlayerColor, MaterialTy
     _previousRule?: RuleStep,
     _context?: PlayMoveContext
   ): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
-    return [LocationType.HerbivoreDeckSpot, LocationType.InsectivoreDeckSpot, LocationType.CarnivoreDeckSpot].map((type) =>
-      this.material(MaterialType.SpeciesCard)
-        .location(type)
-        .deck()
-        .dealAtOnce({
-          type:
-            type === LocationType.HerbivoreDeckSpot
-              ? LocationType.HerbivoreRiverSpot
-              : type === LocationType.InsectivoreDeckSpot
-                ? LocationType.InsectivoreRiverSpot
-                : LocationType.CarnivoreRiverSpot
-        }, 3) as BiotopesMove
-    ).concat(this.startPlayerTurn(RuleId.PrimaryProduction, this.game.players[0]))
-
-
+    return [LocationType.HerbivoreDeckSpot, LocationType.InsectivoreDeckSpot, LocationType.CarnivoreDeckSpot]
+      .map(
+        (type) =>
+          this.material(MaterialType.SpeciesCard)
+            .location(type)
+            .deck()
+            .dealAtOnce(
+              {
+                type:
+                  type === LocationType.HerbivoreDeckSpot
+                    ? LocationType.HerbivoreRiverSpot
+                    : type === LocationType.InsectivoreDeckSpot
+                      ? LocationType.InsectivoreRiverSpot
+                      : LocationType.CarnivoreRiverSpot
+              },
+              3
+            ) as BiotopesMove
+      )
+      .concat(this.startPlayerTurn(RuleId.PrimaryProduction, this.game.players[0]))
   }
 }

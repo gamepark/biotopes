@@ -5,7 +5,7 @@ import { LocationType } from '../material/LocationType'
 import { RuleId } from './RuleId'
 import { MaterialMove, PlayMoveContext } from '@gamepark/rules-api'
 import { BiotopesItemMove, isBiotopesMoveItemTypeAtOnce } from '../BiotopeTypes'
-import { SpecieCardId, SpecieCardType } from '../material/SpecieCard'
+import { SpeciesCardId, SpeciesCardType } from '../material/SpeciesCard'
 
 export class GameSetupHandMulliganRule extends BiotopesPlayerTurnRule {
   public getPlayerMoves(): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
@@ -20,10 +20,22 @@ export class GameSetupHandMulliganRule extends BiotopesPlayerTurnRule {
   public afterItemMove(move: BiotopesItemMove, _context?: PlayMoveContext): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
     if (isBiotopesMoveItemTypeAtOnce(MaterialType.SpeciesCard)(move) && move.location.type === LocationType.HerbivoreDiscardSpot) {
       const herbivoresDeck = this.material(MaterialType.SpeciesCard).location(LocationType.HerbivoreDeckSpot).deck()
-      const mountainHerbivoreIndex = herbivoresDeck.id<SpecieCardId>((id) => id.back === SpecieCardType.HerbivoreMountain).limit(1).getIndex()
-      const forestHerbivoreIndex = herbivoresDeck.id<SpecieCardId>((id) => id.back === SpecieCardType.HerbivoreForest).limit(1).getIndex()
-      const meadowHerbivoreIndex = herbivoresDeck.id<SpecieCardId>((id) => id.back === SpecieCardType.HerbivoreMeadow).limit(1).getIndex()
-      const wetlandHerbivoreIndex = herbivoresDeck.id<SpecieCardId>((id) => id.back === SpecieCardType.HerbivoreWetland).limit(1).getIndex()
+      const mountainHerbivoreIndex = herbivoresDeck
+        .id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreMountain)
+        .limit(1)
+        .getIndex()
+      const forestHerbivoreIndex = herbivoresDeck
+        .id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreForest)
+        .limit(1)
+        .getIndex()
+      const meadowHerbivoreIndex = herbivoresDeck
+        .id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreMeadow)
+        .limit(1)
+        .getIndex()
+      const wetlandHerbivoreIndex = herbivoresDeck
+        .id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreWetland)
+        .limit(1)
+        .getIndex()
       const cardsToDealIndexes = [mountainHerbivoreIndex, forestHerbivoreIndex, meadowHerbivoreIndex, wetlandHerbivoreIndex]
       const nextRule = this.isLastPlayer() ? RuleId.GameSetupPlaceTerritoryTokens : RuleId.GameSetupHandMulligan
       return [
@@ -40,6 +52,6 @@ export class GameSetupHandMulliganRule extends BiotopesPlayerTurnRule {
     if (isBiotopesMoveItemTypeAtOnce(MaterialType.SpeciesCard)(move) && move.location.type === LocationType.PlayerSpeciesCardHandSpot) {
       return move.reveal === undefined ? [] : [this.material(MaterialType.SpeciesCard).location(LocationType.HerbivoreDeckSpot).shuffle()]
     }
-      return super.afterItemMove(move, _context)
+    return super.afterItemMove(move, _context)
   }
 }

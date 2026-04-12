@@ -22,7 +22,9 @@ export class LandscapeHelper extends MaterialRulesPart<PlayerColor, MaterialType
 
   public get gridWithCoordinates() {
     return this.landscape.grid.flatMap((yLine, yIndex) =>
-      yLine.map((biotope, xIndex) => ({ biotope: biotope, x: xIndex + this.landscape.xMin, y: yIndex + this.landscape.yMin })).filter((hexTypeWithCoordinates) =>hexTypeWithCoordinates.biotope !== undefined)
+      yLine
+        .map((biotope, xIndex) => ({ biotope: biotope, x: xIndex + this.landscape.xMin, y: yIndex + this.landscape.yMin }))
+        .filter((hexTypeWithCoordinates) => hexTypeWithCoordinates.biotope !== undefined)
     )
   }
 

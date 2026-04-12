@@ -1,12 +1,12 @@
 import { getEnumValues } from '@gamepark/rules-api'
 
-export enum SpecieDietType {
+export enum SpeciesDietType {
   Herbivore = 1,
   Insectivore,
   Carnivore
 }
 
-export enum SpecieCard {
+export enum SpeciesCard {
   // Herbivore
   AlpineIbex = 110,
   Apollo,
@@ -102,7 +102,7 @@ export enum SpecieCard {
   ViperineWaterSnake
 }
 
-export enum SpecieCardType {
+export enum SpeciesCardType {
   HerbivoreMountain = 11,
   HerbivoreForest,
   HerbivoreMeadow,
@@ -117,17 +117,17 @@ export enum SpecieCardType {
   CarnivoreWetland
 }
 
-export type SpecieCardId = {
-  front?: SpecieCard
-  back: SpecieCardType
+export type SpeciesCardId = {
+  front?: SpeciesCard
+  back: SpeciesCardType
 }
 
-export type KnownSpecieCardId = Required<SpecieCardId>
+export type KnownSpeciesCardId = Required<SpeciesCardId>
 
-export const specieCards = getEnumValues(SpecieCard)
+export const speciesCards = getEnumValues(SpeciesCard)
 
-export const herbivoreCard = specieCards.slice(0, 36)
-export const insectivoreCard = specieCards.slice(36, 64)
-export const carnivoreCard = specieCards.slice(64, 90)
+export const herbivoreCard = speciesCards.slice(0, 36)
+export const insectivoreCard = speciesCards.slice(36, 64)
+export const carnivoreCard = speciesCards.slice(64, 90)
 
-export const getSpecieCardType = (cardId: SpecieCard): SpecieCardType => Math.floor(cardId / 10)
+export const getSpeciesCardType = (cardId: SpeciesCard): SpeciesCardType => Math.floor(cardId / 10)

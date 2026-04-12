@@ -17,19 +17,11 @@ import { GameSetupHandMulliganRule } from './rules/GameSetupHandMulliganRule'
 import { GameSetupRiverRule } from './rules/GameSetupRiverRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
 import { PrimaryProductionRule } from './rules/PrimaryProductionRule'
-import {
-  ExpansionActionPlaceTerritoryTokenOnMountainRule
-} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnMountainRule'
+import { ExpansionActionPlaceTerritoryTokenOnMountainRule } from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnMountainRule'
 import { ExpansionActionChooseCubeRule } from './rules/actions/expansion/ExpansionActionChooseCubeRule'
-import {
-  ExpansionActionPlaceTerritoryTokenOnForestRule
-} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnForestRule'
-import {
-  ExpansionActionPlaceTerritoryTokenOnMeadowRule
-} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnMeadowRule'
-import {
-  ExpansionActionPlaceTerritoryTokenOnWetlandRule
-} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnWetlandRule'
+import { ExpansionActionPlaceTerritoryTokenOnForestRule } from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnForestRule'
+import { ExpansionActionPlaceTerritoryTokenOnMeadowRule } from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnMeadowRule'
+import { ExpansionActionPlaceTerritoryTokenOnWetlandRule } from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnWetlandRule'
 
 /**
  * This class implements the rules of the board game.
