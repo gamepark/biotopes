@@ -1,7 +1,9 @@
 import { RuleId } from '@gamepark/biotopes/rules/RuleId'
 import { ComponentType } from 'react'
-import { TheFirstStepHeader } from './TheFirstStepHeader'
+import { GameSetupPlaceTerritoryTokenHeader } from './GameSetupPlaceTerritoryTokenHeader.tsx'
+import { GameSetupHandMulliganHeader } from './GameSetupHandMulliganHeader.tsx'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
-  [RuleId.TheFirstStep]: TheFirstStepHeader
+  [RuleId.GameSetupHandMulligan]: GameSetupHandMulliganHeader,
+  [RuleId.GameSetupPlaceTerritoryTokens]: GameSetupPlaceTerritoryTokenHeader
 }

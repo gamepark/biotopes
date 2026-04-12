@@ -1,23 +1,15 @@
 import { css } from '@emotion/react'
-import { GameTable, GameTableNavigation } from '@gamepark/react-game'
+import { DevToolsHub, GameTable, GameTableNavigation } from '@gamepark/react-game'
 import { PlayerPanels } from './panels/PlayerPanels'
-import { MaterialGame } from '@gamepark/rules-api'
-import { centralLandscapeLocator } from './locators/CentralLandscapeLocator'
-import { ecosystemBoardDescription } from './material/EcosystemBoardDescription'
 
-const playerHandHeight = 11
-
-export function GameDisplay({ game }: { game: MaterialGame }) {
-  const margin = { top: 7, left: 0, right: 30, bottom: 0 }
-  const landscapeSize = centralLandscapeLocator.getLandscapeSize(game)
-  const verticalSpaceForPlayers = (ecosystemBoardDescription.height + 5) * 2 + playerHandHeight
-  const yMax = (landscapeSize.height + verticalSpaceForPlayers) / 2
-  const yMin = -yMax
+export function GameDisplay() {
+  const margin = { top: 7, left: 0, right: 0, bottom: 0 }
   return (
     <>
-      <GameTable xMin={-50} xMax={70} yMin={yMin} yMax={yMax} margin={margin} css={process.env.NODE_ENV === 'development' && tableBorder}>
+      <GameTable xMin={-55} xMax={55} yMin={-25} yMax={25} margin={margin} css={process.env.NODE_ENV === 'development' && tableBorder}>
         <GameTableNavigation />
         <PlayerPanels />
+        <DevToolsHub />
       </GameTable>
     </>
   )

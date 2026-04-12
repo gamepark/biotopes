@@ -1,30 +1,18 @@
 import { LocationType } from '@gamepark/biotopes/material/LocationType'
 import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
 import { PlayerColor } from '@gamepark/biotopes/PlayerColor'
-import { HandLocator, MaterialContext } from '@gamepark/react-game'
-import { Location, Coordinates } from '@gamepark/rules-api'
+import { HandLocator, ItemContext } from '@gamepark/react-game'
+import { MaterialItem } from '@gamepark/rules-api'
 
 export class PlayerSpeciesCardHandLocator extends HandLocator<PlayerColor, MaterialType, LocationType> {
-  radius = 150
-  maxAngle = 15
-  gapMaxAngle = 1
+  radius = 300
+  maxAngle = 5
+  gapMaxAngle = 2
   clockwise = true
+  coordinates = { x: -35, y: -2.5}
 
-  getBaseAngle(location: Location<number, LocationType, number, number>, context: MaterialContext<number, MaterialType, LocationType>): number {
-    const playerBoardCoordinates = context.locators[LocationType.EcosystemBoardSpot]?.getCoordinates(
-      { type: LocationType.EcosystemBoardSpot, player: location.player },
-      context
-    )
-    return (playerBoardCoordinates?.y ?? 0) > 0 ? 0 : 180
-  }
-
-  getCoordinates(location: Location, context: MaterialContext): Partial<Coordinates> {
-    const playerBoardCoordinates = context.locators[LocationType.EcosystemBoardSpot]?.getCoordinates(
-      { type: LocationType.EcosystemBoardSpot, player: location.player },
-      context
-    )
-    const BoardY = playerBoardCoordinates?.y ?? 0
-    return { x: (playerBoardCoordinates?.x ?? 0) + 10, y: BoardY + (BoardY > 0 ? 1 : -1) * 13 }
+  public hide(item: MaterialItem<PlayerColor, LocationType>, context: ItemContext<PlayerColor, MaterialType, LocationType, number, number>): boolean {
+    return item.location.player !== (context.rules.game.view ?? context.player ?? context.rules.players[0])
   }
 }
 

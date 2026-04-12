@@ -1,1 +1,6 @@
-{}
+{
+  "header.gameSetup.handMulligan.you": "You can <discard>discard your hand</discard> or <pass>keep it</pass>",
+  "header.gameSetup.handMulligan.player": "{player} can discard their hand or keep it",
+  "header.gameSetup.territoryToken.you": "You must place a territory token on the border of the central landscape",
+  "header.gameSetup.territoryToken.player": "{player} must place a territory token on the border of the central landscape"
+}
