@@ -3,5 +3,10 @@ export enum RuleId {
   GameSetupPlaceTerritoryTokens,
   GameSetupRiver,
   PrimaryProduction,
-  ChooseAction
+  ChooseAction,
+  ExpansionChooseCube,
+  ExpansionPlaceTokenOnMountain,
+  ExpansionPlaceTokenOnForest,
+  ExpansionPlaceTokenOnMeadow,
+  ExpansionPlaceTokenOnWetland
 }

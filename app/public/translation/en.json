@@ -2,5 +2,15 @@
   "header.gameSetup.handMulligan.you": "You can <discard>discard your hand</discard> or <pass>keep it</pass>",
   "header.gameSetup.handMulligan.player": "{player} can discard their hand or keep it",
   "header.gameSetup.territoryToken.you": "You must place a territory token on the border of the central landscape",
-  "header.gameSetup.territoryToken.player": "{player} must place a territory token on the border of the central landscape"
+  "header.gameSetup.territoryToken.player": "{player} must place a territory token on the border of the central landscape",
+  "header.chooseAction.you": "You can <expansion>expand</expansion> or <pass>pass</pass>",
+  "header.chooseAction.player": "{player} can choose which action to perform or pass",
+  "header.expansionAction.chooseCube.you": "You must place a cube on the expansion slot of your board",
+  "header.expansionAction.chooseCube.player": "{player} must place a cube on the expansion slot of their board",
+  "header.expansionAction.placeToken.you": "You must place a territory token on a <biotope/> hex on the Central Landscape",
+  "header.expansionAction.placeToken.player": "{player} must place a territory token on a <biotope/> hex on the Central Landscape",
+  "biotope.mountain": "mountain",
+  "biotope.forest": "forest",
+  "biotope.meadow": "meadow",
+  "biotope.wetland": "wetland"
 }
