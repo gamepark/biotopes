@@ -16,6 +16,7 @@ import { RuleId } from './rules/RuleId'
 import { GameSetupPlaceTerritoryTokenRule } from './rules/GameSetupPlaceTerritoryTokenRule'
 import { GameSetupHandMulliganRule } from './rules/GameSetupHandMulliganRule'
 import { GameSetupRiverRule } from './rules/GameSetupRiverRule'
+import { ChooseActionRule } from './rules/ChooseActionRule'
 import { PrimaryProductionRule } from './rules/PrimaryProductionRule'
 
 /**
@@ -71,10 +72,10 @@ export class BiotopesRules
 
   rules = {
     [RuleId.GameSetupHandMulligan]: GameSetupHandMulliganRule,
-    [RuleId.GameSetupPlaceTerritoryTokens]: GameSetupPlaceTerritoryTokenRule
     [RuleId.GameSetupPlaceTerritoryTokens]: GameSetupPlaceTerritoryTokenRule,
     [RuleId.GameSetupRiver]: GameSetupRiverRule,
-    [RuleId.PrimaryProduction]: PrimaryProductionRule
+    [RuleId.PrimaryProduction]: PrimaryProductionRule,
+    [RuleId.ChooseAction]: ChooseActionRule
   }
 
   giveTime(): number {
