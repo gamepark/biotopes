@@ -18,14 +18,6 @@ class CubeOnEcosystemBoardLocator extends ListLocator<PlayerColor, MaterialType,
     return ecosystemBoardDescription.getStaticItems(context).find((board) => board.location.player === location.player)
   }
 
-  protected getAreaCoordinates(
-    location: Location<PlayerColor, LocationType>,
-    context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
-  ): Partial<Coordinates> {
-    const baseCoords = super.getAreaCoordinates(location, context)
-    return baseCoords
-  }
-
   getMaxCount(
     location: Location<PlayerColor, LocationType, EcosystemActionType>,
     _context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
@@ -67,25 +59,6 @@ class CubeOnEcosystemBoardLocator extends ListLocator<PlayerColor, MaterialType,
         return { x: 0, y: 0 }
     }
   }
-
-  // getPositionOnParent(location: Location<PlayerColor, LocationType, EcosystemActionType>) {
-  //   switch (location.id) {
-  //     case EcosystemActionType.Reproduction:
-  //       return { x: 61.7, y: 40 }
-  //     case EcosystemActionType.Transfert:
-  //       return { x: 18.3, y: 51 }
-  //     case EcosystemActionType.Evolution:
-  //       return { x: 18.7, y: 66.75 }
-  //     case EcosystemActionType.Expansion:
-  //       return { x: 20, y: 81.5 }
-  //     case EcosystemActionType.Competition:
-  //       return { x: 20, y: 92.5 }
-  //     case EcosystemActionType.Migration:
-  //       return { x: 61, y: 92.5 }
-  //     default:
-  //       return { x: 0, y: 0 }
-  //   }
-  // }
 
   public hide(item: MaterialItem<PlayerColor, LocationType>, context: ItemContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>): boolean {
     return item.location.player !== (context.rules.game.view ?? context.player ?? context.rules.players[0])
