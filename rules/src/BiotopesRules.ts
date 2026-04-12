@@ -15,6 +15,8 @@ import { PlayerColor } from './PlayerColor'
 import { RuleId } from './rules/RuleId'
 import { GameSetupPlaceTerritoryTokenRule } from './rules/GameSetupPlaceTerritoryTokenRule'
 import { GameSetupHandMulliganRule } from './rules/GameSetupHandMulliganRule'
+import { GameSetupRiverRule } from './rules/GameSetupRiverRule'
+import { PrimaryProductionRule } from './rules/PrimaryProductionRule'
 
 /**
  * This class implements the rules of the board game.
@@ -51,7 +53,7 @@ export class BiotopesRules
       [LocationType.CarnivoreRiverSpot]: new FillGapStrategy()
     },
     [MaterialType.TerritoryToken]: {
-      [LocationType.TerritoryTokenSpotOnEcosystemBoard]: new PositiveSequenceStrategy()
+      [LocationType.TerritoryTokenSpotOnEcosystemBoard]: new FillGapStrategy()
     }
   }
 
@@ -70,6 +72,9 @@ export class BiotopesRules
   rules = {
     [RuleId.GameSetupHandMulligan]: GameSetupHandMulliganRule,
     [RuleId.GameSetupPlaceTerritoryTokens]: GameSetupPlaceTerritoryTokenRule
+    [RuleId.GameSetupPlaceTerritoryTokens]: GameSetupPlaceTerritoryTokenRule,
+    [RuleId.GameSetupRiver]: GameSetupRiverRule,
+    [RuleId.PrimaryProduction]: PrimaryProductionRule
   }
 
   giveTime(): number {

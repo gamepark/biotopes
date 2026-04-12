@@ -784,7 +784,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@gamepark/biotopes@workspace:rules"
   dependencies:
-    "@gamepark/rules-api": "npm:~7.6.1"
+    "@gamepark/rules-api": "npm:~7.6.2"
     es-toolkit: "npm:^1.45.1"
     vitest: "npm:^4.1.2"
   peerDependencies:
@@ -860,7 +860,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gamepark/rules-api@npm:~7.6.1":
+"@gamepark/rules-api@npm:~7.6.1, @gamepark/rules-api@npm:~7.6.2":
   version: 7.6.2
   resolution: "@gamepark/rules-api@npm:7.6.2"
   peerDependencies:

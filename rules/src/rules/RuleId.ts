@@ -1,4 +1,6 @@
 export enum RuleId {
   GameSetupHandMulligan = 1,
-  GameSetupPlaceTerritoryTokens
+  GameSetupPlaceTerritoryTokens,
+  GameSetupRiver,
+  PrimaryProduction
 }

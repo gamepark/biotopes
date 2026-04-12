@@ -42,6 +42,9 @@ export class GameSetupHandMulliganRule extends BiotopesPlayerTurnRule {
         this.startPlayerTurn(nextRule, this.nextPlayer)
       ]
     }
-    return super.afterItemMove(move, _context)
+    if (isBiotopesMoveItemTypeAtOnce(MaterialType.SpeciesCard)(move) && move.location.type === LocationType.PlayerSpeciesCardHandSpot) {
+      return [this.material(MaterialType.SpeciesCard).location(LocationType.HerbivoreDeckSpot).shuffle()]
+    }
+      return super.afterItemMove(move, _context)
   }
 }
