@@ -2,7 +2,6 @@ import {
   FillGapStrategy,
   hideFront,
   hideFrontToOthers,
-  hideItemId,
   MaterialGame,
   MaterialMove,
   PositiveSequenceStrategy,
@@ -18,6 +17,19 @@ import { GameSetupHandMulliganRule } from './rules/GameSetupHandMulliganRule'
 import { GameSetupRiverRule } from './rules/GameSetupRiverRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
 import { PrimaryProductionRule } from './rules/PrimaryProductionRule'
+import {
+  ExpansionActionPlaceTerritoryTokenOnMountainRule
+} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnMountainRule'
+import { ExpansionActionChooseCubeRule } from './rules/actions/expansion/ExpansionActionChooseCubeRule'
+import {
+  ExpansionActionPlaceTerritoryTokenOnForestRule
+} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnForestRule'
+import {
+  ExpansionActionPlaceTerritoryTokenOnMeadowRule
+} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnMeadowRule'
+import {
+  ExpansionActionPlaceTerritoryTokenOnWetlandRule
+} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnWetlandRule'
 
 /**
  * This class implements the rules of the board game.
@@ -55,6 +67,9 @@ export class BiotopesRules
     },
     [MaterialType.TerritoryToken]: {
       [LocationType.TerritoryTokenSpotOnEcosystemBoard]: new FillGapStrategy()
+    },
+    [MaterialType.Cube]: {
+      [LocationType.CubeSpotOnEcosystemBoard]: new PositiveSequenceStrategy()
     }
   }
 
@@ -64,9 +79,6 @@ export class BiotopesRules
       [LocationType.InsectivoreDeckSpot]: hideFront,
       [LocationType.CarnivoreDeckSpot]: hideFront,
       [LocationType.PlayerSpeciesCardHandSpot]: hideFrontToOthers
-    },
-    [MaterialType.Cube]: {
-      [LocationType.PlayerClothBagSpot]: hideItemId
     }
   }
 
@@ -75,7 +87,12 @@ export class BiotopesRules
     [RuleId.GameSetupPlaceTerritoryTokens]: GameSetupPlaceTerritoryTokenRule,
     [RuleId.GameSetupRiver]: GameSetupRiverRule,
     [RuleId.PrimaryProduction]: PrimaryProductionRule,
-    [RuleId.ChooseAction]: ChooseActionRule
+    [RuleId.ChooseAction]: ChooseActionRule,
+    [RuleId.ExpansionChooseCube]: ExpansionActionChooseCubeRule,
+    [RuleId.ExpansionPlaceTokenOnMountain]: ExpansionActionPlaceTerritoryTokenOnMountainRule,
+    [RuleId.ExpansionPlaceTokenOnForest]: ExpansionActionPlaceTerritoryTokenOnForestRule,
+    [RuleId.ExpansionPlaceTokenOnMeadow]: ExpansionActionPlaceTerritoryTokenOnMeadowRule,
+    [RuleId.ExpansionPlaceTokenOnWetland]: ExpansionActionPlaceTerritoryTokenOnWetlandRule
   }
 
   giveTime(): number {

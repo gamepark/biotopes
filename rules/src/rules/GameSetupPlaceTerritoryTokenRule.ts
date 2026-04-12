@@ -28,7 +28,7 @@ export class GameSetupPlaceTerritoryTokenRule extends BiotopesPlayerTurnRule {
     _context?: PlayMoveContext
   ): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
     if (isBiotopesMoveItemType(MaterialType.TerritoryToken)(_move) && _move.location.type === LocationType.CentralLandscapeSpot) {
-      const nextRule = this.areAllTokenPlaced() ? RuleId.PrimaryProduction : RuleId.GameSetupPlaceTerritoryTokens
+      const nextRule = this.areAllTokenPlaced() ? RuleId.GameSetupRiver : RuleId.GameSetupPlaceTerritoryTokens
       return [this.startPlayerTurn(nextRule, this.nextPlayer)]
     }
     return super.afterItemMove(_move, _context)

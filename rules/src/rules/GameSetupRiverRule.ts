@@ -32,7 +32,7 @@ export class GameSetupRiverRule extends SimultaneousRule<PlayerColor, MaterialTy
                 ? LocationType.InsectivoreRiverSpot
                 : LocationType.CarnivoreRiverSpot
         }, 3) as BiotopesMove
-    ).concat(this.startPlayerTurn(RuleId.ChooseAction, this.game.players[0]))
+    ).concat(this.startPlayerTurn(RuleId.PrimaryProduction, this.game.players[0]))
 
 
   }
