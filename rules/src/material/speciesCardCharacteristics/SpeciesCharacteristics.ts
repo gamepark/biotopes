@@ -84,3 +84,21 @@ export abstract class WetlandInsectivoreCharacteristics extends InsectivoreChara
     return BiotopeType.Wetland
   }
 }
+
+abstract class CarnivoreSpeciesCharacteristics extends SpeciesCharacteristics {
+  get dietType(): SpeciesDietType {
+    return SpeciesDietType.Carnivore
+  }
+}
+
+export abstract class MountainCarnivoreCharacteristics extends CarnivoreSpeciesCharacteristics {
+  get biotope(): BiotopeType {
+    return BiotopeType.Mountain
+  }
+}
+
+export abstract class ForestCarnivoreCharacteristics extends CarnivoreSpeciesCharacteristics {
+  get biotope(): BiotopeType {
+    return BiotopeType.Forest
+  }
+}

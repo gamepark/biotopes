@@ -1,4 +1,16 @@
 import { SpeciesCard } from './SpeciesCard'
+import { CommonGenetCharacteristics } from './speciesCardCharacteristics/Carnivores/Forest/CommonGenetCharacteristics'
+import { EurasianBadgerCharacteristics } from './speciesCardCharacteristics/Carnivores/Forest/EurasianBadgerCharacteristics'
+import { EurasianHobbyCharacteristics } from './speciesCardCharacteristics/Carnivores/Forest/EurasianHobbyCharacteristics'
+import { EuropeanPineMartenCharacteristics } from './speciesCardCharacteristics/Carnivores/Forest/EuropeanPineMartenCharacteristics'
+import { EuropeanRollerCharacteristics } from './speciesCardCharacteristics/Carnivores/Forest/EuropeanRollerCharacteristics'
+import { TawnyOwlCharacteristics } from './speciesCardCharacteristics/Carnivores/Forest/TawnyOwlCharacteristics'
+import { AspicViperCharacteristics } from './speciesCardCharacteristics/Carnivores/Mountain/AspicViperCharacteristics'
+import { BeardedVultureCharacteristics } from './speciesCardCharacteristics/Carnivores/Mountain/BeardedVultureCharacteristics'
+import { EurasianLynxCharacteristics } from './speciesCardCharacteristics/Carnivores/Mountain/EurasianLynxCharacteristics'
+import { EuropeanPolecatCharacteristics } from './speciesCardCharacteristics/Carnivores/Mountain/EuropeanPolecatCharacteristics'
+import { FireSalamanderCharacteristics } from './speciesCardCharacteristics/Carnivores/Mountain/FireSalamanderCharacteristics'
+import { PeregrineFalconCharacteristics } from './speciesCardCharacteristics/Carnivores/Mountain/PeregrineFalconCharacteristics'
 import { EurasianBullfinchCharacteristics } from './speciesCardCharacteristics/Herbivores/Forest/EurasianBullfinchCharacteristics'
 import { EuropeanHareCharacteristics } from './speciesCardCharacteristics/Herbivores/Forest/EuropeanHareCharacteristics'
 import { EuropeanRoseChaferCharacteristics } from './speciesCardCharacteristics/Herbivores/Forest/EuropeanRoseChaferCharacteristics'
@@ -141,9 +153,19 @@ export const speciesCardCharacteristics: Partial<Record<SpeciesCard, SpeciesChar
   [SpeciesCard.YellowBelliedToad]: new YellowBelliedToadCharacteristics(),
   // Carnivores
   // Mountain
-
+  [SpeciesCard.AspicViper]: new AspicViperCharacteristics(),
+  [SpeciesCard.BeardedVulture]: new BeardedVultureCharacteristics(),
+  [SpeciesCard.EurasianLynx]: new EurasianLynxCharacteristics(),
+  [SpeciesCard.EuropeanPolecat]: new EuropeanPolecatCharacteristics(),
+  [SpeciesCard.FireSalamander]: new FireSalamanderCharacteristics(),
+  [SpeciesCard.PeregrineFalcon]: new PeregrineFalconCharacteristics(),
   // Forest
-
+  [SpeciesCard.CommonGenet]: new CommonGenetCharacteristics(),
+  [SpeciesCard.EurasianBadger]: new EurasianBadgerCharacteristics(),
+  [SpeciesCard.EurasianHobby]: new EurasianHobbyCharacteristics(),
+  [SpeciesCard.EuropeanPineMarten]: new EuropeanPineMartenCharacteristics(),
+  [SpeciesCard.EuropeanRoller]: new EuropeanRollerCharacteristics(),
+  [SpeciesCard.TawnyOwl]: new TawnyOwlCharacteristics()
   // Meadow
 
   // Wetland
