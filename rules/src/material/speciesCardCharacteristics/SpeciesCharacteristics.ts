@@ -102,3 +102,15 @@ export abstract class ForestCarnivoreCharacteristics extends CarnivoreSpeciesCha
     return BiotopeType.Forest
   }
 }
+
+export abstract class MeadowCarnivoreCharacteristics extends CarnivoreSpeciesCharacteristics {
+  get biotope(): BiotopeType {
+    return BiotopeType.Meadow
+  }
+}
+
+export abstract class WetlandCarnivoreCharacteristics extends CarnivoreSpeciesCharacteristics {
+  get biotope():  BiotopeType {
+    return BiotopeType.Wetland
+  }
+}

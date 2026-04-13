@@ -5,12 +5,24 @@ import { EurasianHobbyCharacteristics } from './speciesCardCharacteristics/Carni
 import { EuropeanPineMartenCharacteristics } from './speciesCardCharacteristics/Carnivores/Forest/EuropeanPineMartenCharacteristics'
 import { EuropeanRollerCharacteristics } from './speciesCardCharacteristics/Carnivores/Forest/EuropeanRollerCharacteristics'
 import { TawnyOwlCharacteristics } from './speciesCardCharacteristics/Carnivores/Forest/TawnyOwlCharacteristics'
+import { GreenWhipSnakeCharacteristics } from './speciesCardCharacteristics/Carnivores/Meadow/GreenWhipSnakeCharacteristics'
+import { MerlinCharacteristics } from './speciesCardCharacteristics/Carnivores/Meadow/MerlinCharacteristics'
+import { OcellatedLizardCharacteristics } from './speciesCardCharacteristics/Carnivores/Meadow/OcellatedLizardCharacteristics'
+import { RedFoxCharacteristics } from './speciesCardCharacteristics/Carnivores/Meadow/RedFoxCharacteristics'
+import { RedKiteCharacteristics } from './speciesCardCharacteristics/Carnivores/Meadow/RedKiteCharacteristics'
+import { WhiteStorkCharacteristics } from './speciesCardCharacteristics/Carnivores/Meadow/WhiteStorkCharacteristics'
 import { AspicViperCharacteristics } from './speciesCardCharacteristics/Carnivores/Mountain/AspicViperCharacteristics'
 import { BeardedVultureCharacteristics } from './speciesCardCharacteristics/Carnivores/Mountain/BeardedVultureCharacteristics'
 import { EurasianLynxCharacteristics } from './speciesCardCharacteristics/Carnivores/Mountain/EurasianLynxCharacteristics'
 import { EuropeanPolecatCharacteristics } from './speciesCardCharacteristics/Carnivores/Mountain/EuropeanPolecatCharacteristics'
 import { FireSalamanderCharacteristics } from './speciesCardCharacteristics/Carnivores/Mountain/FireSalamanderCharacteristics'
 import { PeregrineFalconCharacteristics } from './speciesCardCharacteristics/Carnivores/Mountain/PeregrineFalconCharacteristics'
+import { BarredGrassSnakeCharacteristics } from './speciesCardCharacteristics/Carnivores/Wetland/BarredGrassSnakeCharacteristics'
+import { EuropeanOtterCharacteristics } from './speciesCardCharacteristics/Carnivores/Wetland/EuropeanOtterCharacteristics'
+import { EuropeanPondTerrapinCharacteristics } from './speciesCardCharacteristics/Carnivores/Wetland/EuropeanPondTerrapinCharacteristics'
+import { GreatDivingBeetleCharacteristics } from './speciesCardCharacteristics/Carnivores/Wetland/GreatDivingBeetleCharacteristics'
+import { SquaccoHeronCharacteristics } from './speciesCardCharacteristics/Carnivores/Wetland/SquaccoHeronCharacteristics'
+import { ViperineWaterSnakeCharacteristics } from './speciesCardCharacteristics/Carnivores/Wetland/ViperineWaterSnakeCharacteristics'
 import { EurasianBullfinchCharacteristics } from './speciesCardCharacteristics/Herbivores/Forest/EurasianBullfinchCharacteristics'
 import { EuropeanHareCharacteristics } from './speciesCardCharacteristics/Herbivores/Forest/EuropeanHareCharacteristics'
 import { EuropeanRoseChaferCharacteristics } from './speciesCardCharacteristics/Herbivores/Forest/EuropeanRoseChaferCharacteristics'
@@ -76,7 +88,7 @@ import { GreatCrestedNewtCharacteristics } from './speciesCardCharacteristics/In
 import { YellowBelliedToadCharacteristics } from './speciesCardCharacteristics/Insectivores/Wetland/YellowBelliedToadCharacteristics'
 import { SpeciesCharacteristics } from './speciesCardCharacteristics/SpeciesCharacteristics'
 
-export const speciesCardCharacteristics: Partial<Record<SpeciesCard, SpeciesCharacteristics>> = {
+export const speciesCardCharacteristics: Record<SpeciesCard, SpeciesCharacteristics> = {
   // Herbivores
   // Mountain
   [SpeciesCard.AlpineIbex]: new AlpineIbexCharacteristics(),
@@ -165,8 +177,19 @@ export const speciesCardCharacteristics: Partial<Record<SpeciesCard, SpeciesChar
   [SpeciesCard.EurasianHobby]: new EurasianHobbyCharacteristics(),
   [SpeciesCard.EuropeanPineMarten]: new EuropeanPineMartenCharacteristics(),
   [SpeciesCard.EuropeanRoller]: new EuropeanRollerCharacteristics(),
-  [SpeciesCard.TawnyOwl]: new TawnyOwlCharacteristics()
+  [SpeciesCard.TawnyOwl]: new TawnyOwlCharacteristics(),
   // Meadow
-
+  [SpeciesCard.GreenWhipSnake]: new GreenWhipSnakeCharacteristics(),
+  [SpeciesCard.Merlin]: new MerlinCharacteristics(),
+  [SpeciesCard.OcellatedLizard]: new OcellatedLizardCharacteristics(),
+  [SpeciesCard.RedFox]: new RedFoxCharacteristics(),
+  [SpeciesCard.RedKite]: new RedKiteCharacteristics(),
+  [SpeciesCard.WhiteStork]: new WhiteStorkCharacteristics(),
   // Wetland
+  [SpeciesCard.BarredGrassSnake]: new BarredGrassSnakeCharacteristics(),
+  [SpeciesCard.EuropeanOtter]: new EuropeanOtterCharacteristics(),
+  [SpeciesCard.EuropeanPondTerrapin]: new EuropeanPondTerrapinCharacteristics(),
+  [SpeciesCard.GreatDivingBeetle]: new GreatDivingBeetleCharacteristics(),
+  [SpeciesCard.SquaccoHeron]: new SquaccoHeronCharacteristics(),
+  [SpeciesCard.ViperineWaterSnake]: new ViperineWaterSnakeCharacteristics()
 }
