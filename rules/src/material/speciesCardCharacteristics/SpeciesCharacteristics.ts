@@ -37,19 +37,19 @@ export abstract class MountainHerbivoreCharacteristics extends HerbivoreCharacte
   }
 }
 
-export class ForestHerbivoreCharacteristics extends HerbivoreCharacteristics {
+export abstract class ForestHerbivoreCharacteristics extends HerbivoreCharacteristics {
   get biotope(): BiotopeType {
     return BiotopeType.Forest
   }
 }
 
-export class MeadowHerbivoreCharacteristics extends HerbivoreCharacteristics {
+export abstract class MeadowHerbivoreCharacteristics extends HerbivoreCharacteristics {
   get biotope(): BiotopeType {
     return BiotopeType.Meadow
   }
 }
 
-export class WetlandHerbivoreCharacteristics extends HerbivoreCharacteristics {
+export abstract class WetlandHerbivoreCharacteristics extends HerbivoreCharacteristics {
   get biotope(): BiotopeType {
     return BiotopeType.Wetland
   }
