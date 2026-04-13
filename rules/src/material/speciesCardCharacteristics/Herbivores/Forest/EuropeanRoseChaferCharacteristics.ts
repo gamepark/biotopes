@@ -1,7 +1,7 @@
-import { ForestHerbivoreCharacteristics } from '../../../SpeciesCardCharacteristics'
 import { CubeType } from '../../../CubeType'
+import { ForestHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
 
-export class StagBeetleCharacteristics extends ForestHerbivoreCharacteristics {
+export class EuropeanRoseChaferCharacteristics extends ForestHerbivoreCharacteristics {
   get cubeType(): CubeType {
     return CubeType.Insect
   }

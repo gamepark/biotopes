@@ -2,17 +2,17 @@ import { MaterialDeck, MaterialGameSetup, MaterialItem, XYCoordinates } from '@g
 import { randomInt, sample, sampleSize } from 'es-toolkit'
 import { BiotopesOptions } from './BiotopesOptions'
 import { BiotopesRules } from './BiotopesRules'
-import { LocationType } from './material/LocationType'
-import { MaterialType } from './material/MaterialType'
-import { PlayerColor } from './PlayerColor'
-import { RuleId } from './rules/RuleId'
-import { LandscapeTile, landscapeTiles } from './material/LandscapeTile'
 import { EnvironmentalConditionsBoardSide } from './EnvironmentalConditionsBoardSide'
-import { Memory } from './Memory'
-import { biotopeEnvironmentalConditionTokens, speciesTypeEnvironmentalConditionTokens } from './material/EnvironmentalConditionToken'
 import { advancedCardsByBiotope, basicBiotopeCards, getBiotopeCardTypes } from './material/BiotopeCard'
 import { BiotopeType, biotopeType } from './material/BiotopeType'
+import { biotopeEnvironmentalConditionTokens, speciesTypeEnvironmentalConditionTokens } from './material/EnvironmentalConditionToken'
+import { LandscapeTile, landscapeTiles } from './material/LandscapeTile'
+import { LocationType } from './material/LocationType'
+import { MaterialType } from './material/MaterialType'
 import { carnivoreCard, getSpeciesCardType, herbivoreCard, insectivoreCard, SpeciesCardId, SpeciesCardType } from './material/SpeciesCard'
+import { Memory } from './Memory'
+import { PlayerColor } from './PlayerColor'
+import { RuleId } from './rules/RuleId'
 
 const landscapeSetupCoordinate: Record<number, (XYCoordinates & { rotation?: number } & { id?: LandscapeTile })[]> = {
   2: [
@@ -95,14 +95,14 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
       location: { type: LocationType.PlayerInitiativeTokenSpot, player: this.players[0] }
     })
     this.material(MaterialType.CycleToken).createItem({
-      location: { type: LocationType.CycleTokenSpotOnEnviromnentalConditionsBoard, x: 1 }
+      location: { type: LocationType.CycleTokenSpotOnEnvironmentalConditionsBoard, x: 1 }
     })
     this.material(MaterialType.EnvironmentalConditionToken).createItemsAtOnce(
       sampleSize(biotopeEnvironmentalConditionTokens, 2)
         .concat(sampleSize(speciesTypeEnvironmentalConditionTokens, 2))
         .map((id) => ({
           id: id,
-          location: { type: LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard }
+          location: { type: LocationType.EnvironmentalConditionTokenSpotOnEnvironmentalConditionsBoard }
         }))
     )
     this.material(MaterialType.TerritoryToken).createItemsAtOnce(

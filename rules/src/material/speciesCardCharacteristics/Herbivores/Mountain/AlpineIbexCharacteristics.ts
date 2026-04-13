@@ -1,9 +1,9 @@
-import { ForestHerbivoreCharacteristics } from '../../../SpeciesCardCharacteristics'
 import { CubeType } from '../../../CubeType'
+import { MountainHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
 
-export class HawfinchCharacteristics extends ForestHerbivoreCharacteristics {
+export class AlpineIbexCharacteristics extends MountainHerbivoreCharacteristics {
   get cubeType(): CubeType {
-    return CubeType.Bird
+    return CubeType.Mammal
   }
 
   get effect(): unknown {

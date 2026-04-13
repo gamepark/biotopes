@@ -1,5 +1,5 @@
-import { ForestHerbivoreCharacteristics } from '../../../SpeciesCardCharacteristics'
 import { CubeType } from '../../../CubeType'
+import { ForestHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
 
 export class WildBoarCharacteristics extends ForestHerbivoreCharacteristics {
   get cubeType(): CubeType {
