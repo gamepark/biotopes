@@ -21,7 +21,7 @@ export abstract class SpeciesCharacteristics {
   }
 }
 
-export abstract class HerbivoreCharacteristics extends SpeciesCharacteristics {
+abstract class HerbivoreCharacteristics extends SpeciesCharacteristics {
   public get dietType(): SpeciesDietType {
     return SpeciesDietType.Herbivore
   }
@@ -52,5 +52,23 @@ export abstract class MeadowHerbivoreCharacteristics extends HerbivoreCharacteri
 export abstract class WetlandHerbivoreCharacteristics extends HerbivoreCharacteristics {
   get biotope(): BiotopeType {
     return BiotopeType.Wetland
+  }
+}
+
+abstract class InsectivoreCharacteristics extends SpeciesCharacteristics {
+  get dietType(): SpeciesDietType {
+    return SpeciesDietType.Insectivore
+  }
+}
+
+export abstract class MountainInsectivoreCharacteristics extends InsectivoreCharacteristics {
+  get biotope(): BiotopeType {
+    return BiotopeType.Mountain
+  }
+}
+
+export abstract class ForestInsectivoreCharacteristics extends InsectivoreCharacteristics {
+  get biotope(): BiotopeType {
+    return BiotopeType.Forest
   }
 }

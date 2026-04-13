@@ -34,6 +34,20 @@ import { LargeCopperCharacteristics } from './speciesCardCharacteristics/Herbivo
 import { MuteSwanCharacteristics } from './speciesCardCharacteristics/Herbivores/Wetland/MuteSwanCharacteristics'
 import { NorthernPintailCharacteristics } from './speciesCardCharacteristics/Herbivores/Wetland/NorthernPintailCharacteristics'
 import { SouthwesternWaterVoleCharacteristics } from './speciesCardCharacteristics/Herbivores/Wetland/SouthwesternWaterVoleCharacteristics'
+import { EuropeanCrestedTitCharacteristics } from './speciesCardCharacteristics/Insectivores/Forest/EuropeanCrestedTitCharacteristics'
+import { EuropeanHornetCharacteristics } from './speciesCardCharacteristics/Insectivores/Forest/EuropeanHornetCharacteristics'
+import { EuropeanTreeFrogCharacteristics } from './speciesCardCharacteristics/Insectivores/Forest/EuropeanTreeFrogCharacteristics'
+import { GreenWoodpeckerCharacteristics } from './speciesCardCharacteristics/Insectivores/Forest/GreenWoodpeckerCharacteristics'
+import { MarbledNewtCharacteristics } from './speciesCardCharacteristics/Insectivores/Forest/MarbledNewtCharacteristics'
+import { RedWoodAntCharacteristics } from './speciesCardCharacteristics/Insectivores/Forest/RedWoodAntCharacteristics'
+import { WesternGreenLizardCharacteristics } from './speciesCardCharacteristics/Insectivores/Forest/WesternGreenLizardCharacteristics'
+import { AlpineMarmotCharacteristics } from './speciesCardCharacteristics/Insectivores/Mountain/AlpineMarmotCharacteristics'
+import { AlpineNewtCharacteristics } from './speciesCardCharacteristics/Insectivores/Mountain/AlpineNewtCharacteristics'
+import { LadybirdSpiderCharacteristics } from './speciesCardCharacteristics/Insectivores/Mountain/LadybirdSpiderCharacteristics'
+import { PyreneanDesmanCharacteristics } from './speciesCardCharacteristics/Insectivores/Mountain/PyreneanDesmanCharacteristics'
+import { RedBilledChoughCharacteristics } from './speciesCardCharacteristics/Insectivores/Mountain/RedBilledChoughCharacteristics'
+import { ViviparousLizardCharacteristics } from './speciesCardCharacteristics/Insectivores/Mountain/ViviparousLizardCharacteristics'
+import { WallcreeperCharacteristics } from './speciesCardCharacteristics/Insectivores/Mountain/WallcreeperCharacteristics'
 import { SpeciesCharacteristics } from './speciesCardCharacteristics/SpeciesCharacteristics'
 
 export const speciesCardCharacteristics: Partial<Record<SpeciesCard, SpeciesCharacteristics>> = {
@@ -77,5 +91,23 @@ export const speciesCardCharacteristics: Partial<Record<SpeciesCard, SpeciesChar
   [SpeciesCard.LargeCopper]: new LargeCopperCharacteristics(),
   [SpeciesCard.MuteSwan]: new MuteSwanCharacteristics(),
   [SpeciesCard.NorthernPintail]: new NorthernPintailCharacteristics(),
-  [SpeciesCard.SouthwesternWaterVole]: new SouthwesternWaterVoleCharacteristics()
+  [SpeciesCard.SouthwesternWaterVole]: new SouthwesternWaterVoleCharacteristics(),
+  // Insectivores
+  // Mountains
+  [SpeciesCard.AlpineMarmot]: new AlpineMarmotCharacteristics(),
+  [SpeciesCard.AlpineNewt]: new AlpineNewtCharacteristics(),
+  [SpeciesCard.LadybirdSpider]: new LadybirdSpiderCharacteristics(),
+  [SpeciesCard.PyreneanDesman]: new PyreneanDesmanCharacteristics(),
+  [SpeciesCard.RedbilledChough]: new RedBilledChoughCharacteristics(),
+  [SpeciesCard.ViviparousLizard]: new ViviparousLizardCharacteristics(),
+  [SpeciesCard.Wallcreeper]: new WallcreeperCharacteristics(),
+  // Forest
+  [SpeciesCard.EuropeanCrestedTit]: new EuropeanCrestedTitCharacteristics(),
+  [SpeciesCard.EuropeanHornet]: new EuropeanHornetCharacteristics(),
+  [SpeciesCard.EuropeanTreeFrog]: new EuropeanTreeFrogCharacteristics(),
+  [SpeciesCard.GreenWoodpecker]: new GreenWoodpeckerCharacteristics(),
+  [SpeciesCard.MarbledNewt]: new MarbledNewtCharacteristics(),
+  [SpeciesCard.RedwoodAnt]: new RedWoodAntCharacteristics(),
+  [SpeciesCard.WesternGreenLizard]:  new WesternGreenLizardCharacteristics(),
+  // Meadow
 }
