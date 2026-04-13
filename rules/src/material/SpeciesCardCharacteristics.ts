@@ -41,6 +41,13 @@ import { GreenWoodpeckerCharacteristics } from './speciesCardCharacteristics/Ins
 import { MarbledNewtCharacteristics } from './speciesCardCharacteristics/Insectivores/Forest/MarbledNewtCharacteristics'
 import { RedWoodAntCharacteristics } from './speciesCardCharacteristics/Insectivores/Forest/RedWoodAntCharacteristics'
 import { WesternGreenLizardCharacteristics } from './speciesCardCharacteristics/Insectivores/Forest/WesternGreenLizardCharacteristics'
+import { CommonParsleyFrogCharacteristics } from './speciesCardCharacteristics/Insectivores/Meadow/CommonParsleyFrogCharacteristics'
+import { EuropeanBeeEaterCharacteristics } from './speciesCardCharacteristics/Insectivores/Meadow/EuropeanBeeEaterCharacteristics'
+import { EuropeanHedgehogCharacteristics } from './speciesCardCharacteristics/Insectivores/Meadow/EuropeanHedgehogCharacteristics'
+import { GreaterHorseshoeBatCharacteristics } from './speciesCardCharacteristics/Insectivores/Meadow/GreaterHorseshoeBatCharacteristics'
+import { NatterjackToadCharacteristics } from './speciesCardCharacteristics/Insectivores/Meadow/NatterjackToadCharacteristics'
+import { SpanishPsammodromusCharacteristics } from './speciesCardCharacteristics/Insectivores/Meadow/SpanishPsammodromusCharacteristics'
+import { SpikedMagicianCharacteristics } from './speciesCardCharacteristics/Insectivores/Meadow/SpikedMagicianCharacteristics'
 import { AlpineMarmotCharacteristics } from './speciesCardCharacteristics/Insectivores/Mountain/AlpineMarmotCharacteristics'
 import { AlpineNewtCharacteristics } from './speciesCardCharacteristics/Insectivores/Mountain/AlpineNewtCharacteristics'
 import { LadybirdSpiderCharacteristics } from './speciesCardCharacteristics/Insectivores/Mountain/LadybirdSpiderCharacteristics'
@@ -48,6 +55,13 @@ import { PyreneanDesmanCharacteristics } from './speciesCardCharacteristics/Inse
 import { RedBilledChoughCharacteristics } from './speciesCardCharacteristics/Insectivores/Mountain/RedBilledChoughCharacteristics'
 import { ViviparousLizardCharacteristics } from './speciesCardCharacteristics/Insectivores/Mountain/ViviparousLizardCharacteristics'
 import { WallcreeperCharacteristics } from './speciesCardCharacteristics/Insectivores/Mountain/WallcreeperCharacteristics'
+import { BeardedReedlingCharacteristics } from './speciesCardCharacteristics/Insectivores/Wetland/BeardedReedlingCharacteristics'
+import { CommonWaterFrogCharacteristics } from './speciesCardCharacteristics/Insectivores/Wetland/CommonWaterFrogCharacteristics'
+import { DaubentonsBatCharacteristics } from './speciesCardCharacteristics/Insectivores/Wetland/DaubentonsBatCharacteristics'
+import { EmperorDragonflyCharacteristics } from './speciesCardCharacteristics/Insectivores/Wetland/EmperorDragonflyCharacteristics'
+import { GrassFrogCharacteristics } from './speciesCardCharacteristics/Insectivores/Wetland/GrassFrogCharacteristics'
+import { GreatCrestedNewtCharacteristics } from './speciesCardCharacteristics/Insectivores/Wetland/GreatCrestedNewtCharacteristics'
+import { YellowBelliedToadCharacteristics } from './speciesCardCharacteristics/Insectivores/Wetland/YellowBelliedToadCharacteristics'
 import { SpeciesCharacteristics } from './speciesCardCharacteristics/SpeciesCharacteristics'
 
 export const speciesCardCharacteristics: Partial<Record<SpeciesCard, SpeciesCharacteristics>> = {
@@ -110,4 +124,27 @@ export const speciesCardCharacteristics: Partial<Record<SpeciesCard, SpeciesChar
   [SpeciesCard.RedwoodAnt]: new RedWoodAntCharacteristics(),
   [SpeciesCard.WesternGreenLizard]:  new WesternGreenLizardCharacteristics(),
   // Meadow
+  [SpeciesCard.CommonParsleyFrog]: new CommonParsleyFrogCharacteristics(),
+  [SpeciesCard.EuropeanBeeEater]: new EuropeanBeeEaterCharacteristics(),
+  [SpeciesCard.EuropeanHedgehog]: new EuropeanHedgehogCharacteristics(),
+  [SpeciesCard.GreaterHorseshoeBat]: new GreaterHorseshoeBatCharacteristics(),
+  [SpeciesCard.NatterjackToad]: new NatterjackToadCharacteristics(),
+  [SpeciesCard.SpanishPsammodromus]: new SpanishPsammodromusCharacteristics(),
+  [SpeciesCard.SpikedMagician]: new SpikedMagicianCharacteristics(),
+  // Wetland
+  [SpeciesCard.BeardedReedling]: new BeardedReedlingCharacteristics(),
+  [SpeciesCard.CommonWaterFrog]: new CommonWaterFrogCharacteristics(),
+  [SpeciesCard.DaubentonsBat]: new DaubentonsBatCharacteristics(),
+  [SpeciesCard.EmperorDragonfly]: new EmperorDragonflyCharacteristics(),
+  [SpeciesCard.GrassFrog]: new GrassFrogCharacteristics(),
+  [SpeciesCard.GreatCrestedNewt]: new GreatCrestedNewtCharacteristics(),
+  [SpeciesCard.YellowBelliedToad]: new YellowBelliedToadCharacteristics(),
+  // Carnivores
+  // Mountain
+
+  // Forest
+
+  // Meadow
+
+  // Wetland
 }

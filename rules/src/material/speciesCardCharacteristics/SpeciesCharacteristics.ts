@@ -72,3 +72,15 @@ export abstract class ForestInsectivoreCharacteristics extends InsectivoreCharac
     return BiotopeType.Forest
   }
 }
+
+export abstract class MeadowInsectivoreCharacteristics extends InsectivoreCharacteristics {
+  get biotope(): BiotopeType {
+    return BiotopeType.Meadow
+  }
+}
+
+export abstract class WetlandInsectivoreCharacteristics extends InsectivoreCharacteristics {
+  get biotope(): BiotopeType {
+    return BiotopeType.Wetland
+  }
+}
