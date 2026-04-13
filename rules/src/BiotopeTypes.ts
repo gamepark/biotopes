@@ -1,6 +1,4 @@
-import { MaterialGame, MaterialMove, isMoveItemType, isMoveItemTypeAtOnce, ItemMove, isMoveItemsAtOnce,
-  isStartPlayerTurn
-} from '@gamepark/rules-api'
+import { MaterialGame, MaterialMove, isMoveItemType, isMoveItemTypeAtOnce, ItemMove, isMoveItemsAtOnce, isStartPlayerTurn } from '@gamepark/rules-api'
 import { PlayerColor } from './PlayerColor'
 import { MaterialType } from './material/MaterialType'
 import { LocationType } from './material/LocationType'

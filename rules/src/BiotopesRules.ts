@@ -11,15 +11,7 @@ import {
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
-import { RuleId } from './rules/RuleId'
-import { GameSetupPlaceTerritoryTokenRule } from './rules/GameSetupPlaceTerritoryTokenRule'
-import { GameSetupHandMulliganRule } from './rules/GameSetupHandMulliganRule'
-import { GameSetupRiverRule } from './rules/GameSetupRiverRule'
-import { ChooseActionRule } from './rules/ChooseActionRule'
-import { PrimaryProductionRule } from './rules/PrimaryProductionRule'
-import {
-  ExpansionActionPlaceTerritoryTokenOnMountainRule
-} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnMountainRule'
+import { AdaptationActionRule } from './rules/actions/adaptation/AdaptationActionRule'
 import { ExpansionActionChooseCubeRule } from './rules/actions/expansion/ExpansionActionChooseCubeRule'
 import {
   ExpansionActionPlaceTerritoryTokenOnForestRule
@@ -28,8 +20,17 @@ import {
   ExpansionActionPlaceTerritoryTokenOnMeadowRule
 } from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnMeadowRule'
 import {
+  ExpansionActionPlaceTerritoryTokenOnMountainRule
+} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnMountainRule'
+import {
   ExpansionActionPlaceTerritoryTokenOnWetlandRule
 } from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnWetlandRule'
+import { ChooseActionRule } from './rules/ChooseActionRule'
+import { GameSetupHandMulliganRule } from './rules/GameSetupHandMulliganRule'
+import { GameSetupPlaceTerritoryTokenRule } from './rules/GameSetupPlaceTerritoryTokenRule'
+import { GameSetupRiverRule } from './rules/GameSetupRiverRule'
+import { PrimaryProductionRule } from './rules/PrimaryProductionRule'
+import { RuleId } from './rules/RuleId'
 
 /**
  * This class implements the rules of the board game.
@@ -49,7 +50,7 @@ export class BiotopesRules
       [LocationType.AdvancedBiotopesSelectionSpot]: new FillGapStrategy()
     },
     [MaterialType.EnvironmentalConditionToken]: {
-      [LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard]: new PositiveSequenceStrategy()
+      [LocationType.EnvironmentalConditionTokenSpotOnEnvironmentalConditionsBoard]: new PositiveSequenceStrategy()
     },
     [MaterialType.SpeciesCard]: {
       [LocationType.HerbivoreDeckSpot]: new PositiveSequenceStrategy(),
@@ -92,7 +93,8 @@ export class BiotopesRules
     [RuleId.ExpansionPlaceTokenOnMountain]: ExpansionActionPlaceTerritoryTokenOnMountainRule,
     [RuleId.ExpansionPlaceTokenOnForest]: ExpansionActionPlaceTerritoryTokenOnForestRule,
     [RuleId.ExpansionPlaceTokenOnMeadow]: ExpansionActionPlaceTerritoryTokenOnMeadowRule,
-    [RuleId.ExpansionPlaceTokenOnWetland]: ExpansionActionPlaceTerritoryTokenOnWetlandRule
+    [RuleId.ExpansionPlaceTokenOnWetland]: ExpansionActionPlaceTerritoryTokenOnWetlandRule,
+    [RuleId.AdaptationAction]: AdaptationActionRule
   }
 
   giveTime(): number {

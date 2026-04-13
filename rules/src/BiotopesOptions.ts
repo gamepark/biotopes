@@ -44,7 +44,7 @@ export const BiotopesOptionsSpec: OptionsSpec<BiotopesOptions> = {
     label: (t: TFunction) => t('option.advancedBioptopes'),
     help: (t: TFunction) => t('option.advancedBioptopes.help'),
     warn: (t: TFunction) => t('option.advancedBioptopes.advancedSuggestion')
-  },
+  }
   // customCentralLandscape: {
   //   label: (t: TFunction) => t('option.customCentralLandscape'),
   //   help: (t: TFunction) => t('option.customCentralLandscape.help'),

@@ -8,10 +8,8 @@ export enum LocationType {
   CubeSpotOnPlayerBiotopesCard,
   CubeSpotOnPlayerSpeciesCard,
   EnvironmentalConditionsBoardSpot,
-  EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard,
-  CycleTokenSpotOnEnviromnentalConditionsBoard,
-  PlayerClothBagSpot,
-  CubeSpotUnderPlayerClothBag,
+  EnvironmentalConditionTokenSpotOnEnvironmentalConditionsBoard,
+  CycleTokenSpotOnEnvironmentalConditionsBoard,
   HerbivoreDeckSpot,
   HerbivoreDiscardSpot,
   HerbivoreRiverSpot,
@@ -22,8 +20,8 @@ export enum LocationType {
   CarnivoreDiscardSpot,
   CarnivoreRiverSpot,
   CentralLandscapeSpot,
-  TerritoryTokenSpotOnCentralLandscape,
   PlayerSpeciesCardHandSpot,
   AdvancedBiotopesSelectionSpot,
-  CubeStockpileSpot
+  CubeStockpileSpot,
+  RecycledCubesSpot
 }

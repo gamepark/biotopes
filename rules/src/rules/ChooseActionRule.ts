@@ -1,20 +1,32 @@
-import { BiotopesPlayerTurnRule } from './BiotopesPlayerTurnRule'
 import { CustomMove, PlayMoveContext } from '@gamepark/rules-api'
-import { RuleId } from './RuleId'
-import { EcosystemActionType, ecosystemActionType } from '../material/EcosystemActionType'
-import { ChooseActionCustomMoveData, CustomMoveType, isChooseActionCustomMove, isPassCycleCustomMove } from '../material/CustomMoveType'
 import { BiotopesMove } from '../BiotopeTypes'
+import {
+  ChooseActionCustomMoveData,
+  CustomMoveType,
+  isAdaptationChooseActionCustomMove,
+  isExpansionChooseActionCustomMove,
+  isPassCycleCustomMove
+} from '../material/CustomMoveType'
+import { EcosystemActionType, ecosystemActionType } from '../material/EcosystemActionType'
+import { BiotopesPlayerTurnRule } from './BiotopesPlayerTurnRule'
+import { RuleId } from './RuleId'
 
 export class ChooseActionRule extends BiotopesPlayerTurnRule {
   public getPlayerMoves(): BiotopesMove[] {
     return ecosystemActionType
-      .map((type) => this.customMove<CustomMoveType, ChooseActionCustomMoveData>(CustomMoveType.ChooseAction, { action: type }) as BiotopesMove)
+      .map(
+        (type) =>
+          this.customMove<CustomMoveType, ChooseActionCustomMoveData<EcosystemActionType>>(CustomMoveType.ChooseAction, { action: type }) as BiotopesMove
+      )
       .concat(this.customMove<CustomMoveType, undefined>(CustomMoveType.PassCycle))
   }
 
   public onCustomMove(move: CustomMove, context?: PlayMoveContext): BiotopesMove[] {
-    if (isChooseActionCustomMove(move) && move.data?.action === EcosystemActionType.Expansion) {
+    if (isExpansionChooseActionCustomMove(move)) {
       return [this.startRule(RuleId.ExpansionChooseCube)]
+    }
+    if (isAdaptationChooseActionCustomMove(move)) {
+      return [this.startRule(RuleId.AdaptationAction)]
     }
     if (isPassCycleCustomMove(move)) {
       // TODO memorize player has passed

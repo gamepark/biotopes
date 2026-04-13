@@ -2,17 +2,17 @@ import { MaterialDeck, MaterialGameSetup, MaterialItem, XYCoordinates } from '@g
 import { randomInt, sample, sampleSize } from 'es-toolkit'
 import { BiotopesOptions } from './BiotopesOptions'
 import { BiotopesRules } from './BiotopesRules'
-import { LocationType } from './material/LocationType'
-import { MaterialType } from './material/MaterialType'
-import { PlayerColor } from './PlayerColor'
-import { RuleId } from './rules/RuleId'
-import { LandscapeTile, landscapeTiles } from './material/LandscapeTile'
 import { EnvironmentalConditionsBoardSide } from './EnvironmentalConditionsBoardSide'
-import { Memory } from './Memory'
-import { biotopeEnvironmentalConditionTokens, speciesTypeEnvironmentalConditionTokens } from './material/EnvironmentalConditionToken'
 import { advancedCardsByBiotope, basicBiotopeCards, getBiotopeCardTypes } from './material/BiotopeCard'
 import { BiotopeType, biotopeType } from './material/BiotopeType'
-import { carnivoreCard, getSpecieCardType, herbivoreCard, insectivoreCard, SpecieCardId, SpecieCardType } from './material/SpecieCard'
+import { biotopeEnvironmentalConditionTokens, speciesTypeEnvironmentalConditionTokens } from './material/EnvironmentalConditionToken'
+import { LandscapeTile, landscapeTiles } from './material/LandscapeTile'
+import { LocationType } from './material/LocationType'
+import { MaterialType } from './material/MaterialType'
+import { carnivoreCard, getSpeciesCardType, herbivoreCard, insectivoreCard, SpeciesCardId, SpeciesCardType } from './material/SpeciesCard'
+import { Memory } from './Memory'
+import { PlayerColor } from './PlayerColor'
+import { RuleId } from './rules/RuleId'
 
 const landscapeSetupCoordinate: Record<number, (XYCoordinates & { rotation?: number } & { id?: LandscapeTile })[]> = {
   2: [
@@ -95,14 +95,14 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
       location: { type: LocationType.PlayerInitiativeTokenSpot, player: this.players[0] }
     })
     this.material(MaterialType.CycleToken).createItem({
-      location: { type: LocationType.CycleTokenSpotOnEnviromnentalConditionsBoard, x: 1 }
+      location: { type: LocationType.CycleTokenSpotOnEnvironmentalConditionsBoard, x: 1 }
     })
     this.material(MaterialType.EnvironmentalConditionToken).createItemsAtOnce(
       sampleSize(biotopeEnvironmentalConditionTokens, 2)
         .concat(sampleSize(speciesTypeEnvironmentalConditionTokens, 2))
         .map((id) => ({
           id: id,
-          location: { type: LocationType.EnvironmentalConditionTokenSpotOnEnviromnentalConditionsBoard }
+          location: { type: LocationType.EnvironmentalConditionTokenSpotOnEnvironmentalConditionsBoard }
         }))
     )
     this.material(MaterialType.TerritoryToken).createItemsAtOnce(
@@ -152,21 +152,21 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
   setupDecks() {
     this.material(MaterialType.SpeciesCard).createItemsAtOnce(
       herbivoreCard.map((card) => ({
-        id: { front: card, back: getSpecieCardType(card) },
+        id: { front: card, back: getSpeciesCardType(card) },
         location: { type: LocationType.HerbivoreDeckSpot }
       }))
     )
     this.material(MaterialType.SpeciesCard).location(LocationType.HerbivoreDeckSpot).shuffle()
     this.material(MaterialType.SpeciesCard).createItemsAtOnce(
       insectivoreCard.map((card) => ({
-        id: { front: card, back: getSpecieCardType(card) },
+        id: { front: card, back: getSpeciesCardType(card) },
         location: { type: LocationType.InsectivoreDeckSpot }
       }))
     )
     this.material(MaterialType.SpeciesCard).location(LocationType.InsectivoreDeckSpot).shuffle()
     this.material(MaterialType.SpeciesCard).createItemsAtOnce(
       carnivoreCard.map((card) => ({
-        id: { front: card, back: getSpecieCardType(card) },
+        id: { front: card, back: getSpeciesCardType(card) },
         location: { type: LocationType.CarnivoreDeckSpot }
       }))
     )
@@ -175,10 +175,10 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
 
   private setupHands() {
     const herbivoresDeckMaterial = this.material(MaterialType.SpeciesCard).location(LocationType.HerbivoreDeckSpot).deck()
-    const mountainHerbivores = herbivoresDeckMaterial.id<SpecieCardId>((id) => id.back === SpecieCardType.HerbivoreMountain)
-    const forestHerbivores = herbivoresDeckMaterial.id<SpecieCardId>((id) => id.back === SpecieCardType.HerbivoreForest)
-    const meadowHerbivores = herbivoresDeckMaterial.id<SpecieCardId>((id) => id.back === SpecieCardType.HerbivoreMeadow)
-    const wetlandsHerbivores = herbivoresDeckMaterial.id<SpecieCardId>((id) => id.back === SpecieCardType.HerbivoreWetland)
+    const mountainHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreMountain)
+    const forestHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreForest)
+    const meadowHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreMeadow)
+    const wetlandsHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreWetland)
     this.players.forEach((player, index) => {
       const cardsToDeal = new MaterialDeck(MaterialType.SpeciesCard, undefined, (move) => this.playMove(move), [
         mountainHerbivores.entries[index],
