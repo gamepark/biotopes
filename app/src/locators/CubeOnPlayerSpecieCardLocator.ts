@@ -2,7 +2,7 @@ import { PileLocator } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
 
 class CubeOnPlayerSpecieCardLocator extends PileLocator {
-  parentItemType = MaterialType.BiotopesCard
+  parentItemType = MaterialType.SpeciesCard
   radius = { x: 1, y: 0.5 }
   maxCount = 4
 
