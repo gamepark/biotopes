@@ -130,4 +130,4 @@ export const herbivoreCard = speciesCards.slice(0, 36)
 export const insectivoreCard = speciesCards.slice(36, 64)
 export const carnivoreCard = speciesCards.slice(64, 90)
 
-export const getSpeciesCardType = (cardId: SpeciesCard): SpeciesCardType => Math.floor(cardId / 10)
+export const speciesDietTypes = getEnumValues(SpeciesDietType)

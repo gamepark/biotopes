@@ -31,6 +31,8 @@ import { GameSetupPlaceTerritoryTokenRule } from './rules/GameSetupPlaceTerritor
 import { GameSetupRiverRule } from './rules/GameSetupRiverRule'
 import { PrimaryProductionRule } from './rules/PrimaryProductionRule'
 import { RuleId } from './rules/RuleId'
+import { SpeciesRiverStrategy } from './strategies/location/SpeciesRiverStrategy'
+import { SpeciesStrategy } from './strategies/location/SpeciesStrategy'
 
 /**
  * This class implements the rules of the board game.
@@ -53,18 +55,12 @@ export class BiotopesRules
       [LocationType.EnvironmentalConditionTokenSpotOnEnvironmentalConditionsBoard]: new PositiveSequenceStrategy()
     },
     [MaterialType.SpeciesCard]: {
-      [LocationType.HerbivoreDeckSpot]: new PositiveSequenceStrategy(),
-      [LocationType.InsectivoreDeckSpot]: new PositiveSequenceStrategy(),
-      [LocationType.CarnivoreDeckSpot]: new PositiveSequenceStrategy(),
-      [LocationType.HerbivoreDiscardSpot]: new PositiveSequenceStrategy(),
-      [LocationType.InsectivoreDiscardSpot]: new PositiveSequenceStrategy(),
-      [LocationType.CarnivoreDiscardSpot]: new PositiveSequenceStrategy(),
       [LocationType.PlayerSpeciesCardTableauSpot]: new PositiveSequenceStrategy(),
       [LocationType.PlayerSpeciesCardHandSpot]: new PositiveSequenceStrategy(),
       // TODO : A new strategy will be needed when we will remove an item from the river
-      [LocationType.HerbivoreRiverSpot]: new FillGapStrategy(),
-      [LocationType.InsectivoreRiverSpot]: new FillGapStrategy(),
-      [LocationType.CarnivoreRiverSpot]: new FillGapStrategy()
+      [LocationType.SpeciesDecksSpot]: new SpeciesStrategy(PositiveSequenceStrategy),
+      [LocationType.SpeciesRiversGrid]: new SpeciesStrategy(SpeciesRiverStrategy),
+      [LocationType.SpeciesDiscardsSpot]: new SpeciesStrategy(PositiveSequenceStrategy)
     },
     [MaterialType.TerritoryToken]: {
       [LocationType.TerritoryTokenSpotOnEcosystemBoard]: new FillGapStrategy()
@@ -77,9 +73,7 @@ export class BiotopesRules
 
   hidingStrategies = {
     [MaterialType.SpeciesCard]: {
-      [LocationType.HerbivoreDeckSpot]: hideFront,
-      [LocationType.InsectivoreDeckSpot]: hideFront,
-      [LocationType.CarnivoreDeckSpot]: hideFront,
+      [LocationType.SpeciesDecksSpot]: hideFront,
       [LocationType.PlayerSpeciesCardHandSpot]: hideFrontToOthers
     }
   }

@@ -5,7 +5,7 @@ import { BiotopeType } from '../BiotopeType'
 import { CubeType } from '../CubeType'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
-import { SpeciesDietType } from '../SpeciesCard'
+import { SpeciesCardType, SpeciesDietType } from '../SpeciesCard'
 
 export abstract class SpeciesCharacteristics {
   public abstract get biotope(): BiotopeType
@@ -18,6 +18,10 @@ export abstract class SpeciesCharacteristics {
   public recycledCubesMatchDiet(recycledCubes: Material<PlayerColor, MaterialType, LocationType>): boolean {
     const cubesByTypeCount = countBy(recycledCubes.getItems(), (cube) => cube.location.id as CubeType)
     return isEqual(cubesByTypeCount, this.diet)
+  }
+
+  public get speciesType(): SpeciesCardType {
+    return (this.dietType * 10 + this.biotope) as SpeciesCardType
   }
 }
 
