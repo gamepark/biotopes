@@ -70,7 +70,8 @@ export class BiotopesRules
       [LocationType.TerritoryTokenSpotOnEcosystemBoard]: new FillGapStrategy()
     },
     [MaterialType.Cube]: {
-      [LocationType.CubeSpotOnEcosystemBoard]: new PositiveSequenceStrategy()
+      [LocationType.CubeSpotOnEcosystemBoard]: new PositiveSequenceStrategy(),
+      [LocationType.RecycledCubesSpot]: new PositiveSequenceStrategy(),
     }
   }
 

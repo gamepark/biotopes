@@ -8,6 +8,9 @@ import {
   isPassCycleCustomMove
 } from '../material/CustomMoveType'
 import { EcosystemActionType, ecosystemActionType } from '../material/EcosystemActionType'
+import { Memory } from '../Memory'
+import { PlayerColor } from '../PlayerColor'
+import { ExpansionActionChooseCubeRule } from './actions/colonization/expansion/ExpansionActionChooseCubeRule'
 import { BiotopesPlayerTurnRule } from './BiotopesPlayerTurnRule'
 import { RuleId } from './RuleId'
 
@@ -29,7 +32,7 @@ export class ChooseActionRule extends BiotopesPlayerTurnRule {
       return [this.startRule(RuleId.AdaptationAction)]
     }
     if (isPassCycleCustomMove(move)) {
-      // TODO memorize player has passed
+      this.memorize<PlayerColor[] | undefined>(Memory.PassedPlayers, (oldValue) => oldValue?.concat(this.player) ?? [this.player])
       return [this.startPlayerTurn(RuleId.ChooseAction, this.nextPlayer)]
     }
     return super.onCustomMove(move, context)

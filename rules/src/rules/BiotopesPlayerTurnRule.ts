@@ -1,4 +1,5 @@
 import { PlayerTurnRule } from '@gamepark/rules-api'
+import { Memory } from '../Memory'
 import { PlayerColor } from '../PlayerColor'
 import { MaterialType } from '../material/MaterialType'
 import { LocationType } from '../material/LocationType'
@@ -18,5 +19,12 @@ export abstract class BiotopesPlayerTurnRule extends PlayerTurnRule<PlayerColor,
 
   protected isLastPlayer() {
     return this.nextPlayer === this.game.players[0]
+  }
+
+  get nextPlayer(): PlayerColor {
+    const currentPlayerIndex = this.game.players.indexOf(this.player)
+    const passedPlayers = this.remind<PlayerColor[]>(Memory.PassedPlayers) ?? []
+    const players = this.game.players.slice(currentPlayerIndex + 1).concat(this.game.players.slice(0, currentPlayerIndex + 1))
+    return players.find((p) => !passedPlayers.includes(p)) ?? this.player
   }
 }
