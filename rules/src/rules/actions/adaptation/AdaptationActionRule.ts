@@ -1,4 +1,5 @@
-import { MaterialMove } from '@gamepark/rules-api'
+import { ItemMove, MaterialMove, PlayMoveContext } from '@gamepark/rules-api'
+import { BiotopesMove, isBiotopesMoveItemType } from '../../../BiotopeTypes'
 import { BiotopeType } from '../../../material/BiotopeType'
 import { CubeType } from '../../../material/CubeType'
 import { LocationType } from '../../../material/LocationType'
@@ -13,7 +14,7 @@ export class AdaptationActionRule extends BiotopesPlayerTurnRule {
   public getPlayerMoves(): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
     const cubeMaterial = this.material(MaterialType.Cube)
     const playerCubeMaterial = cubeMaterial.player(this.player)
-    const playerSpeciesCard = this.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardTableauSpot).player(this.player)
+    const playerSpeciesCard = this.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardHandSpot).player(this.player)
     const cubesOnBiotopeCardMoves = playerCubeMaterial.location(LocationType.CubeSpotOnPlayerBiotopesCard).moveItems({
       type: LocationType.RecycledCubesSpot,
       id: CubeType.Plant
@@ -23,17 +24,35 @@ export class AdaptationActionRule extends BiotopesPlayerTurnRule {
       const parentCardCharacteristics = speciesCardCharacteristics[parentCard?.id.front]
       return {
         type: LocationType.RecycledCubesSpot,
-        id: parentCardCharacteristics?.cubeType
+        id: parentCardCharacteristics.cubeType
       }
     })
-    const cardMoves = playerCubeMaterial
+    const cardMoves = playerSpeciesCard
       .id<KnownSpeciesCardId>(
-        (id) => speciesCardCharacteristics[id.front]?.recycledCubesMatchDiet(cubeMaterial.location(LocationType.RecycledCubesSpot)) ?? false
+        (id) => speciesCardCharacteristics[id.front].recycledCubesMatchDiet(cubeMaterial.location(LocationType.RecycledCubesSpot))
       )
       .moveItems<KnownSpeciesCardId, BiotopeType>((card) => ({
         type: LocationType.PlayerSpeciesCardTableauSpot,
-        id: speciesCardCharacteristics[card.id.front]?.biotope
+        id: speciesCardCharacteristics[card.id.front].biotope,
+        player: this.player
       }))
     return cubesOnBiotopeCardMoves.concat(cubesOnSpeciesCardMoves).concat(cardMoves)
+  }
+
+  public afterItemMove(move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
+    if (isBiotopesMoveItemType(MaterialType.SpeciesCard)(move) && move.location.type === LocationType.PlayerSpeciesCardTableauSpot) {
+      const card = this.material(MaterialType.SpeciesCard).index(move.itemIndex).getItem<KnownSpeciesCardId>()!
+      const characteristics = speciesCardCharacteristics[card.id.front]
+      const cubeMaterial = this.material(MaterialType.Cube)
+      return (cubeMaterial.location(LocationType.RecycledCubesSpot).moveItems((item) => ({
+        type: LocationType.CubeStockpileSpot,
+        id: item.id
+      })) as BiotopesMove[]).concat(cubeMaterial.location(LocationType.CubeStockpileSpot).id(characteristics.biotope).moveItem({
+        type: LocationType.CubeSpotOnPlayerSpeciesCard,
+        player: move.location.player,
+        parent: move.itemIndex
+      })).concat(this.startPlayerTurn(RuleId.ChooseAction, this.nextPlayer))
+    }
+    return super.afterItemMove(move, _context)
   }
 }
