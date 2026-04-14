@@ -1,3 +1,4 @@
 export enum Memory {
-  AntSide = 1
+  AntSide = 1,
+  PassedPlayers
 }
