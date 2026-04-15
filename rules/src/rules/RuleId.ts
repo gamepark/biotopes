@@ -9,5 +9,6 @@ export enum RuleId {
   ExpansionPlaceTokenOnForest,
   ExpansionPlaceTokenOnMeadow,
   ExpansionPlaceTokenOnWetland,
-  AdaptationAction
+  AdaptationAction,
+  EndOfCycle
 }

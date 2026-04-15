@@ -6,7 +6,6 @@ import { MaterialType } from '../material/MaterialType'
 import { LocationType } from '../material/LocationType'
 import { countBy } from 'es-toolkit'
 import { BiotopeType } from '../material/BiotopeType'
-import { BiotopeCard, getBiotopeCardTypes } from '../material/BiotopeCard'
 import { BiotopesMove } from '../BiotopeTypes'
 
 export class PrimaryProductionRule extends BiotopesPlayerTurnRule {
@@ -15,12 +14,9 @@ export class PrimaryProductionRule extends BiotopesPlayerTurnRule {
     _previousRule?: RuleStep,
     _context?: PlayMoveContext
   ): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
-    const tokenMaterial = this.material(MaterialType.TerritoryToken).location(LocationType.CentralLandscapeSpot)
-    const biotopeCards = this.material(MaterialType.BiotopesCard)
-    const reserveCubes = this.material(MaterialType.Cube).location(LocationType.CubeStockpileSpot)
+    const tokenMaterial = this.territoryTokenMaterial.location(LocationType.CentralLandscapeSpot)
     return this.game.players
       .flatMap((player) => {
-        const playerBiotopeCards = biotopeCards.player(player)
         const playerTokenCoordinates = tokenMaterial
           .id(player)
           .getItems()!
@@ -30,7 +26,7 @@ export class PrimaryProductionRule extends BiotopesPlayerTurnRule {
           (type) => type
         )
         return Object.entries(cubeCountByType).flatMap(([biotopeType, cubeCount]) =>
-          this.createCubeMoves(biotopeType, playerBiotopeCards, reserveCubes, player, cubeCount)
+          this.createCubeMoves(biotopeType, this.reserveCubeMaterial, player, cubeCount)
         )
       })
       .concat(this.startPlayerTurn(RuleId.ChooseAction, this.player))
@@ -38,18 +34,15 @@ export class PrimaryProductionRule extends BiotopesPlayerTurnRule {
 
   private createCubeMoves(
     biotopeType: string,
-    playerBiotopeCards: Material<PlayerColor, MaterialType, LocationType>,
     reserveCubes: Material<PlayerColor, MaterialType, LocationType>,
     player: PlayerColor,
     cubeCount: number
   ) {
     const type = parseInt(biotopeType) as BiotopeType
-    const biotopeCardIndex = playerBiotopeCards.id<BiotopeCard>((id) => getBiotopeCardTypes(id) === type).getIndex()
     return reserveCubes.id(type).moveItems(
       {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
-        player: player,
-        parent: biotopeCardIndex
+        player: player
       },
       cubeCount
     ) as BiotopesMove[]

@@ -3,7 +3,7 @@ import { randomInt, sample, sampleSize } from 'es-toolkit'
 import { BiotopesOptions } from './BiotopesOptions'
 import { BiotopesRules } from './BiotopesRules'
 import { EnvironmentalConditionsBoardSide } from './EnvironmentalConditionsBoardSide'
-import { advancedCardsByBiotope, basicBiotopeCards, getBiotopeCardTypes } from './material/BiotopeCard'
+import { advancedCardsByBiotope, basicBiotopeCards, getBiotopeCardType } from './material/BiotopeCard'
 import { BiotopeType, biotopeType } from './material/BiotopeType'
 import { biotopeEnvironmentalConditionTokens, speciesTypeEnvironmentalConditionTokens } from './material/EnvironmentalConditionToken'
 import { LandscapeTile, landscapeTiles } from './material/LandscapeTile'
@@ -143,7 +143,7 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
         this.rules.players.flatMap((player) =>
           basicBiotopeCards.map((card) => ({
             id: card,
-            location: { type: LocationType.PlayerBiotopesCardSpot, player: player, id: getBiotopeCardTypes(card) }
+            location: { type: LocationType.PlayerBiotopesCardSpot, player: player, id: getBiotopeCardType(card) }
           }))
         )
       )
