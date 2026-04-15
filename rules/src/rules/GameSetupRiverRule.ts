@@ -1,42 +1,20 @@
-import { MaterialMove, PlayMoveContext, RuleMove, RuleStep, SimultaneousRule } from '@gamepark/rules-api'
-import { PlayerColor } from '../PlayerColor'
-import { MaterialType } from '../material/MaterialType'
+import { MaterialMove, PlayMoveContext, RuleMove, RuleStep } from '@gamepark/rules-api'
 import { LocationType } from '../material/LocationType'
+import { MaterialType } from '../material/MaterialType'
+import { PlayerColor } from '../PlayerColor'
+import { BiotopesPlayerTurnRule } from './BiotopesPlayerTurnRule'
 import { RuleId } from './RuleId'
-import { BiotopesMove } from '../BiotopeTypes'
 
-export class GameSetupRiverRule extends SimultaneousRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-  public getActivePlayerLegalMoves(): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
-    return []
-  }
-
-  public getMovesAfterPlayersDone(): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
-    return []
-  }
-
+export class GameSetupRiverRule extends BiotopesPlayerTurnRule {
   public onRuleStart(
     _move: RuleMove<PlayerColor, RuleId>,
     _previousRule?: RuleStep,
     _context?: PlayMoveContext
   ): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
-    return [LocationType.HerbivoreDeckSpot, LocationType.InsectivoreDeckSpot, LocationType.CarnivoreDeckSpot]
-      .map(
-        (type) =>
-          this.material(MaterialType.SpeciesCard)
-            .location(type)
-            .deck()
-            .dealAtOnce(
-              {
-                type:
-                  type === LocationType.HerbivoreDeckSpot
-                    ? LocationType.HerbivoreRiverSpot
-                    : type === LocationType.InsectivoreDeckSpot
-                      ? LocationType.InsectivoreRiverSpot
-                      : LocationType.CarnivoreRiverSpot
-              },
-              3
-            ) as BiotopesMove
-      )
-      .concat(this.startPlayerTurn(RuleId.PrimaryProduction, this.game.players[0]))
+    const indexes = [this.herbivoresDeckMaterial, this.insectivoresDeckMaterial, this.carnivoreDeckMaterial].flatMap((deck) => deck.limit(3).getIndexes())
+    return [
+      this.speciesCardMaterial.index(indexes).moveItemsAtOnce({ type: LocationType.SpeciesRiversGrid }),
+      this.startPlayerTurn(RuleId.PrimaryProduction, this.game.players[0])
+    ]
   }
 }

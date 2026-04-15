@@ -12,14 +12,13 @@ import { RuleId } from '../../RuleId'
 
 export class AdaptationActionRule extends BiotopesPlayerTurnRule {
   public getPlayerMoves(): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
-    const cubeMaterial = this.material(MaterialType.Cube)
-    const playerCubeMaterial = cubeMaterial.player(this.player)
-    const playerSpeciesCard = this.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardHandSpot).player(this.player)
-    const cubesOnBiotopeCardMoves = playerCubeMaterial.location(LocationType.CubeSpotOnPlayerBiotopesCard).moveItems({
+    const cubeMaterial = this.cubeMaterial
+    const playerSpeciesCard = this.playerSpeciesCardHand
+    const cubesOnBiotopeCardMoves = this.playerCubesOnBiotopeCards.location(LocationType.CubeSpotOnPlayerBiotopesCard).moveItems({
       type: LocationType.RecycledCubesSpot,
       id: CubeType.Plant
     })
-    const cubesOnSpeciesCardMoves = playerCubeMaterial.location(LocationType.CubeSpotOnPlayerSpeciesCard).moveItems((cube) => {
+    const cubesOnSpeciesCardMoves = this.playerCubesOnSpeciesCards.moveItems((cube) => {
       const parentCard = playerSpeciesCard.index(cube.location.parent).getItem<KnownSpeciesCardId>()!
       const parentCardCharacteristics = speciesCardCharacteristics[parentCard?.id.front]
       return {
@@ -47,7 +46,7 @@ export class AdaptationActionRule extends BiotopesPlayerTurnRule {
       return (cubeMaterial.location(LocationType.RecycledCubesSpot).moveItems((item) => ({
         type: LocationType.CubeStockpileSpot,
         id: item.id
-      })) as BiotopesMove[]).concat(cubeMaterial.location(LocationType.CubeStockpileSpot).id(characteristics.biotope).moveItem({
+      })) as BiotopesMove[]).concat(this.reserveCubeMaterial.id(characteristics.biotope).moveItem({
         type: LocationType.CubeSpotOnPlayerSpeciesCard,
         player: move.location.player,
         parent: move.itemIndex

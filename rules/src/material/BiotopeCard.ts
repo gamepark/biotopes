@@ -39,7 +39,7 @@ export enum BiotopeCard {
 
 export const biotopeCards = getEnumValues(BiotopeCard)
 
-export const getBiotopeCardTypes = (cardId: BiotopeCard): BiotopeType => Math.floor(cardId / 10)
+export const getBiotopeCardType = (cardId: BiotopeCard): BiotopeType => Math.floor(cardId / 10)
 
 export const getBiotopeCardEffect = (cardId: BiotopeCard): BiotopeEffect => cardId % 10
 

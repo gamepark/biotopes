@@ -822,8 +822,8 @@ __metadata:
   linkType: hard
 
 "@gamepark/react-game@npm:~7.7.9":
-  version: 7.7.9
-  resolution: "@gamepark/react-game@npm:7.7.9"
+  version: 7.7.13
+  resolution: "@gamepark/react-game@npm:7.7.13"
   dependencies:
     "@datadog/browser-logs": "npm:^6.28.1"
     "@dnd-kit/modifiers": "npm:^9.0.0"
@@ -857,7 +857,7 @@ __metadata:
     react-dom: 19.x
     react-i18next: 16.x
     react-redux: 9.x
-  checksum: 10c0/f333bb7174a64620b23d9d3acf4c0338ca7b04ccaf7364d57c248103f716574a6ecb62f6de45ee500b77ceeb78754ea6e4c9505fb831d446a3d5d020bbd0a922
+  checksum: 10c0/dc90ab912ed7d3e9256087ea9db52ad96a0d971f5d31cd4871e34ba31874a8694906f6be22192073e1a7ab9c455ea6e5f80c40f50e5ff6d9db9eed351081f8d8
   languageName: node
   linkType: hard
 

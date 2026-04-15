@@ -12,25 +12,29 @@ import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
 import { AdaptationActionRule } from './rules/actions/adaptation/AdaptationActionRule'
-import { ExpansionActionChooseCubeRule } from './rules/actions/expansion/ExpansionActionChooseCubeRule'
+import { ExpansionActionChooseCubeRule } from './rules/actions/colonization/expansion/ExpansionActionChooseCubeRule'
 import {
   ExpansionActionPlaceTerritoryTokenOnForestRule
-} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnForestRule'
+} from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnForestRule'
 import {
   ExpansionActionPlaceTerritoryTokenOnMeadowRule
-} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnMeadowRule'
+} from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnMeadowRule'
 import {
   ExpansionActionPlaceTerritoryTokenOnMountainRule
-} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnMountainRule'
+} from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnMountainRule'
 import {
   ExpansionActionPlaceTerritoryTokenOnWetlandRule
-} from './rules/actions/expansion/ExpansionActionPlaceTerritoryTokenOnWetlandRule'
+} from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnWetlandRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
+import { EndOfCycleRule } from './rules/EndOfCycleRule'
 import { GameSetupHandMulliganRule } from './rules/GameSetupHandMulliganRule'
 import { GameSetupPlaceTerritoryTokenRule } from './rules/GameSetupPlaceTerritoryTokenRule'
 import { GameSetupRiverRule } from './rules/GameSetupRiverRule'
 import { PrimaryProductionRule } from './rules/PrimaryProductionRule'
 import { RuleId } from './rules/RuleId'
+import { BiotopeCubeStrategy } from './strategies/location/BiotopeCubeStrategy'
+import { SpeciesRiverStrategy } from './strategies/location/SpeciesRiverStrategy'
+import { SpeciesStrategy } from './strategies/location/SpeciesStrategy'
 
 /**
  * This class implements the rules of the board game.
@@ -53,18 +57,12 @@ export class BiotopesRules
       [LocationType.EnvironmentalConditionTokenSpotOnEnvironmentalConditionsBoard]: new PositiveSequenceStrategy()
     },
     [MaterialType.SpeciesCard]: {
-      [LocationType.HerbivoreDeckSpot]: new PositiveSequenceStrategy(),
-      [LocationType.InsectivoreDeckSpot]: new PositiveSequenceStrategy(),
-      [LocationType.CarnivoreDeckSpot]: new PositiveSequenceStrategy(),
-      [LocationType.HerbivoreDiscardSpot]: new PositiveSequenceStrategy(),
-      [LocationType.InsectivoreDiscardSpot]: new PositiveSequenceStrategy(),
-      [LocationType.CarnivoreDiscardSpot]: new PositiveSequenceStrategy(),
       [LocationType.PlayerSpeciesCardTableauSpot]: new PositiveSequenceStrategy(),
       [LocationType.PlayerSpeciesCardHandSpot]: new PositiveSequenceStrategy(),
       // TODO : A new strategy will be needed when we will remove an item from the river
-      [LocationType.HerbivoreRiverSpot]: new FillGapStrategy(),
-      [LocationType.InsectivoreRiverSpot]: new FillGapStrategy(),
-      [LocationType.CarnivoreRiverSpot]: new FillGapStrategy()
+      [LocationType.SpeciesDecksSpot]: new SpeciesStrategy(PositiveSequenceStrategy),
+      [LocationType.SpeciesRiversGrid]: new SpeciesStrategy(SpeciesRiverStrategy),
+      [LocationType.SpeciesDiscardsSpot]: new SpeciesStrategy(PositiveSequenceStrategy)
     },
     [MaterialType.TerritoryToken]: {
       [LocationType.TerritoryTokenSpotOnEcosystemBoard]: new FillGapStrategy()
@@ -72,14 +70,14 @@ export class BiotopesRules
     [MaterialType.Cube]: {
       [LocationType.CubeSpotOnEcosystemBoard]: new PositiveSequenceStrategy(),
       [LocationType.RecycledCubesSpot]: new PositiveSequenceStrategy(),
+      [LocationType.CubeSpotOnPlayerBiotopesCard]: new BiotopeCubeStrategy(),
+      [LocationType.CubeStockpileSpot]: new BiotopeCubeStrategy(true)
     }
   }
 
   hidingStrategies = {
     [MaterialType.SpeciesCard]: {
-      [LocationType.HerbivoreDeckSpot]: hideFront,
-      [LocationType.InsectivoreDeckSpot]: hideFront,
-      [LocationType.CarnivoreDeckSpot]: hideFront,
+      [LocationType.SpeciesDecksSpot]: hideFront,
       [LocationType.PlayerSpeciesCardHandSpot]: hideFrontToOthers
     }
   }
@@ -95,7 +93,8 @@ export class BiotopesRules
     [RuleId.ExpansionPlaceTokenOnForest]: ExpansionActionPlaceTerritoryTokenOnForestRule,
     [RuleId.ExpansionPlaceTokenOnMeadow]: ExpansionActionPlaceTerritoryTokenOnMeadowRule,
     [RuleId.ExpansionPlaceTokenOnWetland]: ExpansionActionPlaceTerritoryTokenOnWetlandRule,
-    [RuleId.AdaptationAction]: AdaptationActionRule
+    [RuleId.AdaptationAction]: AdaptationActionRule,
+    [RuleId.EndOfCycle]: EndOfCycleRule
   }
 
   giveTime(): number {
