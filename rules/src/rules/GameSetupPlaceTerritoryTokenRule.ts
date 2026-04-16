@@ -1,20 +1,25 @@
-import { getAdjacentHexagons, ItemMove, Material, MaterialMove, PlayMoveContext } from '@gamepark/rules-api'
+import { getAdjacentHexagons, ItemMove, Material, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
 import { PlayerColor } from '../PlayerColor'
 import { MaterialType } from '../material/MaterialType'
 import { LocationType } from '../material/LocationType'
+import { LandscapeHelper } from './helpers/LandscapeHelper'
+import { MaterialHelper } from './helpers/MaterialHelper'
 import { RuleId } from './RuleId'
-import { BiotopesPlayerTurnRule } from './BiotopesPlayerTurnRule'
-import { isBiotopesMoveItemType } from '../BiotopeTypes'
+import { BiotopesMove, isBiotopesMoveItemType } from '../BiotopeTypes'
 
-export class GameSetupPlaceTerritoryTokenRule extends BiotopesPlayerTurnRule {
-  public getPlayerMoves(): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
-    const playerTerritoryTokens = this.material(MaterialType.TerritoryToken).id(this.player)
+export class GameSetupPlaceTerritoryTokenRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
+
+  private readonly landscapeHelper = new LandscapeHelper(this.game)
+  private readonly materialHelper = new MaterialHelper(this.game)
+
+  public getPlayerMoves(): BiotopesMove[] {
+    const playerTerritoryTokens = this.materialHelper.playerTerritoryToken
     const alreadyTakenCoords = this.computeAlreadyTakenCoordinates(playerTerritoryTokens)
     const validDestinations = this.landscapeHelper.gridWithCoordinates
       .filter(({ x, y }) => this.landscapeHelper.getAdjacentValues({ x, y }).length < 6)
       .filter(({ x, y }) => !alreadyTakenCoords.some((coords) => coords.x === x && coords.y === y))
     const availablePlayerTerritoryTokens = playerTerritoryTokens.location(LocationType.TerritoryTokenSpotOnEcosystemBoard)
-    return validDestinations.map(({ x, y }) =>
+    return validDestinations.map<BiotopesMove>(({ x, y }) =>
       availablePlayerTerritoryTokens.moveItem({
         type: LocationType.CentralLandscapeSpot,
         x: x,
@@ -24,18 +29,18 @@ export class GameSetupPlaceTerritoryTokenRule extends BiotopesPlayerTurnRule {
   }
 
   public afterItemMove(
-    _move: ItemMove<PlayerColor, MaterialType, LocationType>,
+    move: ItemMove<PlayerColor, MaterialType, LocationType>,
     _context?: PlayMoveContext
-  ): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
-    if (isBiotopesMoveItemType(MaterialType.TerritoryToken)(_move) && _move.location.type === LocationType.CentralLandscapeSpot) {
+  ): BiotopesMove[] {
+    if (isBiotopesMoveItemType(MaterialType.TerritoryToken)(move) && move.location.type === LocationType.CentralLandscapeSpot) {
       const nextRule = this.areAllTokenPlaced() ? RuleId.GameSetupRiver : RuleId.GameSetupPlaceTerritoryTokens
       return [this.startPlayerTurn(nextRule, this.nextPlayer)]
     }
-    return super.afterItemMove(_move, _context)
+    return super.afterItemMove(move, _context)
   }
 
   private areAllTokenPlaced() {
-    return this.material(MaterialType.TerritoryToken).location(LocationType.CentralLandscapeSpot).length === 4 * this.game.players.length
+    return this.materialHelper.centralLandscapeTerritoryTokenMaterial.length === 4 * this.game.players.length
   }
 
   private computeAlreadyTakenCoordinates(playerTerritoryTokens: Material<PlayerColor, MaterialType, LocationType>) {
@@ -46,8 +51,7 @@ export class GameSetupPlaceTerritoryTokenRule extends BiotopesPlayerTurnRule {
         ?.map((item) => ({ x: item.location.x!, y: item.location.y! }))
         .flatMap((coords) => getAdjacentHexagons(coords).concat(coords)) ?? []
     const otherPlayersTerritoryTokenCoords =
-      this.material(MaterialType.TerritoryToken)
-        .id((id) => id !== this.player)
+      this.materialHelper.otherPlayersTerritoryTokensOnCentralLandscape
         .getItems()
         ?.map((token) => ({ x: token.location.x!, y: token.location.y! })) ?? []
     return playerAlreadyPlacedTokenCoords.concat(otherPlayersTerritoryTokenCoords)

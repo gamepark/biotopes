@@ -10,5 +10,8 @@ export enum RuleId {
   ExpansionPlaceTokenOnMeadow,
   ExpansionPlaceTokenOnWetland,
   AdaptationAction,
-  EndOfCycle
+  EndOfCycle,
+  EvolutionActionPlaceCubesAndDiscardCards,
+  EvolutionActionPickCards,
+  EvolutionActionDiscardCardsFromHand
 }

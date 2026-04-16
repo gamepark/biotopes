@@ -1,4 +1,4 @@
-import { ItemMove, PlayMoveContext } from '@gamepark/rules-api'
+import { ItemMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
 import { BiotopesMove, isBiotopesMoveItemType } from '../../../../BiotopeTypes'
 import { BiotopeType } from '../../../../material/BiotopeType'
 import { CubeType } from '../../../../material/CubeType'
@@ -8,27 +8,27 @@ import { MaterialType } from '../../../../material/MaterialType'
 import { KnownSpeciesCardId } from '../../../../material/SpeciesCard'
 import { speciesCardCharacteristics } from '../../../../material/SpeciesCardCharacteristics'
 import { PlayerColor } from '../../../../PlayerColor'
+import { ColonizationHelper } from '../../../helpers/ColonizationHelper'
+import { MaterialHelper } from '../../../helpers/MaterialHelper'
 import { RuleId } from '../../../RuleId'
-import { ColonizationActionRule } from '../ColonizationActionRule'
 
-export class ExpansionActionChooseCubeRule extends ColonizationActionRule {
-  protected readonly playerTerritoryTokenOnCentralLandscape = this.territoryTokenMaterial.location(LocationType.CentralLandscapeSpot).id(this.player)
-  protected readonly otherPlayerTerritoryTokenOnCentralLandscape = this.territoryTokenMaterial.location(LocationType.CentralLandscapeSpot).id((p) => p !== this.player)
+export class ExpansionActionChooseCubeRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
+
+  private readonly colonizationHelper = new ColonizationHelper(this.game)
+  private readonly materialHelper = new MaterialHelper(this.game)
 
   public getPlayerMoves(): BiotopesMove[] {
-    const reachableBiotopeTypes = this.computeReachableBiotopeTypes()
-    const playerSpeciesCard = this.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardTableauSpot).player(this.player)
+    const reachableBiotopeTypes = this.colonizationHelper.computeReachableBiotopeTypes()
+    const playerSpeciesCard = this.materialHelper.playerSpeciesCardTableau
     const destination = {
       type: LocationType.CubeSpotOnEcosystemBoard,
       player: this.player,
       id: EcosystemActionType.Expansion
     }
-    const biotopeCubeMoves: BiotopesMove[] = this.material(MaterialType.Cube)
-      .location(LocationType.CubeSpotOnPlayerBiotopesCard)
-      .player(this.player)
+    const biotopeCubeMoves: BiotopesMove[] = this.materialHelper.playerCubesOnBiotopeCards
       .id<BiotopeType>((id) => reachableBiotopeTypes.includes(id))
       .moveItems(destination)
-    const insectCubeMoves: BiotopesMove[] = this.material(MaterialType.Cube).location(LocationType.CubeSpotOnPlayerSpeciesCard).player(this.player)
+    const insectCubeMoves: BiotopesMove[] = this.materialHelper.playerCubesOnSpeciesCards
       .id<BiotopeType>((id) => reachableBiotopeTypes.includes(id))
       .parent((cardIndex) => {
         const card = playerSpeciesCard.index(cardIndex).getItem<KnownSpeciesCardId>()!
@@ -41,7 +41,7 @@ export class ExpansionActionChooseCubeRule extends ColonizationActionRule {
 
   public afterItemMove(_move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): BiotopesMove[] {
     if (isBiotopesMoveItemType(MaterialType.Cube)(_move)) {
-      const biotopeToExpandTo = this.material(MaterialType.Cube).index(_move.itemIndex).getItem<BiotopeType>()!.id
+      const biotopeToExpandTo = this.materialHelper.cubeMaterial.index(_move.itemIndex).getItem<BiotopeType>()!.id
       const nextRule = this.getRuleFromBiotope(biotopeToExpandTo)
       return [this.startRule(nextRule)]
     }

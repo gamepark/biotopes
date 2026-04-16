@@ -25,6 +25,9 @@ import {
 import {
   ExpansionActionPlaceTerritoryTokenOnWetlandRule
 } from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnWetlandRule'
+import { EvolutionActionDiscardCardsFromHandRule } from './rules/actions/evolution/EvolutionActionDiscardCardsFromHandRule'
+import { EvolutionActionPickCardsRule } from './rules/actions/evolution/EvolutionActionPickCardsRule'
+import { EvolutionActionPlaceCubesAndDiscardCardsRule } from './rules/actions/evolution/EvolutionActionPlaceCubesAndDiscardCardsRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
 import { EndOfCycleRule } from './rules/EndOfCycleRule'
 import { GameSetupHandMulliganRule } from './rules/GameSetupHandMulliganRule'
@@ -94,7 +97,10 @@ export class BiotopesRules
     [RuleId.ExpansionPlaceTokenOnMeadow]: ExpansionActionPlaceTerritoryTokenOnMeadowRule,
     [RuleId.ExpansionPlaceTokenOnWetland]: ExpansionActionPlaceTerritoryTokenOnWetlandRule,
     [RuleId.AdaptationAction]: AdaptationActionRule,
-    [RuleId.EndOfCycle]: EndOfCycleRule
+    [RuleId.EndOfCycle]: EndOfCycleRule,
+    [RuleId.EvolutionActionPlaceCubesAndDiscardCards]: EvolutionActionPlaceCubesAndDiscardCardsRule,
+    [RuleId.EvolutionActionPickCards]: EvolutionActionPickCardsRule,
+    [RuleId.EvolutionActionDiscardCardsFromHand]: EvolutionActionDiscardCardsFromHandRule
   }
 
   giveTime(): number {

@@ -7,7 +7,8 @@ import { MaterialType } from './MaterialType'
 
 export enum CustomMoveType {
   ChooseAction = 1,
-  PassCycle
+  PassCycle,
+  EndEvolutionAction
 }
 
 export type ChooseActionCustomMoveData<T extends EcosystemActionType> = {
@@ -17,6 +18,8 @@ export type ChooseActionCustomMoveData<T extends EcosystemActionType> = {
 export type ChooseActionCustomMove<T extends EcosystemActionType> = CustomMove<typeof CustomMoveType.ChooseAction, ChooseActionCustomMoveData<T>>
 
 export type PassCycleCustomMove = CustomMove<typeof CustomMoveType.PassCycle, undefined>
+
+export type EndEvolutionActionCustomMove = CustomMove<typeof CustomMoveType.EndEvolutionAction, undefined>
 
 export const isChooseActionCustomMove: <T extends EcosystemActionType>(move: BiotopesMove) => move is ChooseActionCustomMove<T> = <
   T extends EcosystemActionType
@@ -35,6 +38,19 @@ export const isAdaptationChooseActionCustomMove: (move: BiotopesMove) => move is
   move
 ): move is ChooseActionCustomMove<typeof EcosystemActionType.Adaptation> =>
   isChooseActionCustomMove(move) && move.data?.action === EcosystemActionType.Adaptation
+
+export const isEvolutionChooseActionCustomMove: (move: BiotopesMove) => move is ChooseActionCustomMove<typeof EcosystemActionType.Evolution> = (
+  move
+): move is ChooseActionCustomMove<typeof EcosystemActionType.Evolution> =>
+  isChooseActionCustomMove(move) && move.data?.action === EcosystemActionType.Evolution
+
+export const isEndOfEvolutionActionCustomMove: (move: BiotopesMove) => move is EndEvolutionActionCustomMove = isCustomMoveType<
+  typeof CustomMoveType.EndEvolutionAction,
+  undefined,
+  PlayerColor,
+  MaterialType,
+  LocationType
+>(CustomMoveType.EndEvolutionAction)
 
 export const isPassCycleCustomMove: (move: BiotopesMove) => move is PassCycleCustomMove = isCustomMoveType<
   typeof CustomMoveType.PassCycle,
