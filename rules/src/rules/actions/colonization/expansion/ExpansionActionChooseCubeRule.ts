@@ -8,7 +8,7 @@ import { MaterialType } from '../../../../material/MaterialType'
 import { KnownSpeciesCardId } from '../../../../material/SpeciesCard'
 import { speciesCardCharacteristics } from '../../../../material/SpeciesCardCharacteristics'
 import { PlayerColor } from '../../../../PlayerColor'
-import { ColonizationHelper } from '../../../helpers/ColonizationHelper'
+import { ColonizationHelper } from '../helpers/ColonizationHelper'
 import { MaterialHelper } from '../../../helpers/MaterialHelper'
 import { RuleId } from '../../../RuleId'
 

@@ -13,5 +13,10 @@ export enum RuleId {
   EndOfCycle,
   EvolutionActionPlaceCubesAndDiscardCards,
   EvolutionActionPickCards,
-  EvolutionActionDiscardCardsFromHand
+  EvolutionActionDiscardCardsFromHand,
+  MigrationActionChooseCube,
+  MigrationActionMoveTerritoryTokenOnMountain,
+  MigrationActionMoveTerritoryTokenOnForest,
+  MigrationActionMoveTerritoryTokenOnMeadow,
+  MigrationActionMoveTerritoryTokenOnWetland,
 }

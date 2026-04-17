@@ -2,14 +2,15 @@ import { css } from '@emotion/react'
 import {
   isAdaptationChooseActionCustomMove,
   isEvolutionChooseActionCustomMove,
-  isExpansionChooseActionCustomMove,
+  isExpansionChooseActionCustomMove, isMigrationChooseActionCustomMove,
   isPassCycleCustomMove
 } from '@gamepark/biotopes/material/CustomMoveType.ts'
 import { HeaderText, Picture } from '@gamepark/react-game'
 import { FC } from 'react'
-import AdaptationSymbol from '../images/Symbols/Adaptation.svg?inline'
-import ExpansionSymbol from '../images/Symbols/Expansion.svg?inline'
-import EvolutionSymbol from '../images/Symbols/Evolution.svg?inline'
+import adaptationSymbol from '../images/Symbols/Adaptation.svg?inline'
+import expansionSymbol from '../images/Symbols/Expansion.svg?inline'
+import evolutionSymbol from '../images/Symbols/Evolution.svg?inline'
+import migrationSymbol from '../images/Symbols/Migration.svg?inline'
 
 export const ChooseActionHeader: FC = () => {
   return (
@@ -19,12 +20,14 @@ export const ChooseActionHeader: FC = () => {
         adaptation: isAdaptationChooseActionCustomMove,
         evolution: isEvolutionChooseActionCustomMove,
         expansion: isExpansionChooseActionCustomMove,
+        migration: isMigrationChooseActionCustomMove,
         pass: isPassCycleCustomMove
       }}
       components={{
-        adaptationSymbol: <Picture src={AdaptationSymbol} css={symbolCss} />,
-        evolutionSymbol: <Picture src={EvolutionSymbol} css={symbolCss} />,
-        expansionSymbol: <Picture src={ExpansionSymbol} css={symbolCss} />
+        adaptationSymbol: <Picture src={adaptationSymbol} css={symbolCss} />,
+        evolutionSymbol: <Picture src={evolutionSymbol} css={symbolCss} />,
+        expansionSymbol: <Picture src={expansionSymbol} css={symbolCss} />,
+        migrationSymbol: <Picture src={migrationSymbol} css={symbolCss} />
       }}
     />
   )

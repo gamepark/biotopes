@@ -3,7 +3,7 @@ import { BiotopesMove } from '../../../../BiotopeTypes'
 import { LocationType } from '../../../../material/LocationType'
 import { MaterialType } from '../../../../material/MaterialType'
 import { PlayerColor } from '../../../../PlayerColor'
-import { ColonizationHelper } from '../../../helpers/ColonizationHelper'
+import { ColonizationHelper } from '../helpers/ColonizationHelper'
 import { RuleId } from '../../../RuleId'
 import { BiotopeType } from '../../../../material/BiotopeType'
 
