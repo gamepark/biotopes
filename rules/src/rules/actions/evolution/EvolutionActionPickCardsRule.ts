@@ -39,11 +39,10 @@ export class EvolutionActionPickCardsRule extends PlayerTurnRule<PlayerColor, Ma
         ]
         if (riverMaterial.length < 9) {
           const riverCounts = countBy(riverMaterial.getItems<KnownSpeciesCardId>(), (card) => card.location.y as SpeciesDietType)
-          const riverMove: BiotopesMove = riverMaterial.sort((card) => card.location.y ?? 0, (card) => -(card.location.x ?? 0)).moveItemsAtOnce({ x: 2 })
           const indexesToDraw: number[] = this.materialHelper.herbivoresDeckMaterial.limit(3 - (riverCounts[SpeciesDietType.Herbivore] ?? 0)).getIndexes()
             .concat(this.materialHelper.insectivoresDeckMaterial.limit(3 - (riverCounts[SpeciesDietType.Insectivore] ?? 0)).getIndexes())
             .concat(this.materialHelper.carnivoreDeckMaterial.limit(3 - (riverCounts[SpeciesDietType.Carnivore] ?? 0)).getIndexes())
-          return [riverMove, this.materialHelper.speciesCardMaterial.index(indexesToDraw).moveItemsAtOnce({ type: LocationType.SpeciesRiversGrid }) as BiotopesMove]
+          return [this.materialHelper.speciesCardMaterial.index(indexesToDraw).deck().dealAtOnce({ type: LocationType.SpeciesRiversGrid }, indexesToDraw.length) as BiotopesMove]
             .concat(consequences)
         }
         return consequences
