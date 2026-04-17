@@ -63,6 +63,13 @@ class CubeOnEcosystemBoardLocator extends ListLocator<PlayerColor, MaterialType,
   public hide(item: MaterialItem<PlayerColor, LocationType>, context: ItemContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>): boolean {
     return item.location.player !== (context.rules.game.view ?? context.player ?? context.rules.players[0])
   }
+
+  public getLocationIndex(location: Location<PlayerColor, LocationType>, _context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>): number | undefined {
+    if (location.id === EcosystemActionType.Evolution) {
+      return (location.x ?? 1) - 1
+    }
+    return super.getLocationIndex(location, _context)
+  }
 }
 
 class CubeOnEcosystemBoardDropAreaDescription extends DropAreaDescription<PlayerColor, MaterialType, LocationType, BiotopeType, RuleId, PlayerColor> {

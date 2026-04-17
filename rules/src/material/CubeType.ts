@@ -1,11 +1,11 @@
 import { getEnumValues } from '@gamepark/rules-api'
 
 export enum CubeType {
-  AmphibianReptile = 5,
-  Bird,
+  Plant = 1,
   Insect,
   Mammal,
-  Plant
+  Bird,
+  AmphibianReptile
 }
 
 export const cubeType = getEnumValues(CubeType)

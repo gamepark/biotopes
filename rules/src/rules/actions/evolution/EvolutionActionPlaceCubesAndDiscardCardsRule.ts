@@ -20,12 +20,13 @@ export class EvolutionActionPlaceCubesAndDiscardCardsRule extends PlayerTurnRule
   public getPlayerMoves(): BiotopesMove[] {
     const freeCubeTypes = xor(
       cubeType,
-      this.material(MaterialType.Cube)
+      this.materialHelper.cubeMaterial
         .location(LocationType.CubeSpotOnEcosystemBoard)
         .locationId(EcosystemActionType.Evolution)
+        .player(this.player)
         .getItems()
         .map((cube) => cube.location.x! as CubeType))
-    return freeCubeTypes.flatMap<BiotopesMove>((cubeType) => {
+    const moves = freeCubeTypes.flatMap<BiotopesMove>((cubeType) => {
       if (cubeType === CubeType.Plant) {
         return this.materialHelper.playerCubesOnBiotopeCards.moveItems({
           type: LocationType.CubeSpotOnEcosystemBoard,
@@ -43,8 +44,13 @@ export class EvolutionActionPlaceCubesAndDiscardCardsRule extends PlayerTurnRule
         }))
       }
     })
-      .concat(this.materialHelper.playerSpeciesCardHand.moveItems<KnownSpeciesCardId>({ type: LocationType.SpeciesDiscardsSpot }))
-      .concat(this.customMove(CustomMoveType.EndEvolutionAction))
+      .concat(this.materialHelper.playerSpeciesCardHand.moveItems<KnownSpeciesCardId>((card) => ({
+        type: LocationType.SpeciesDiscardsSpot,
+        y: speciesCardCharacteristics[card.id.front].dietType
+      })))
+    return this.materialHelper.cubeMaterial.location(LocationType.CubeSpotOnEcosystemBoard).locationId(EcosystemActionType.Evolution).player(this.player).exists
+      ? moves.concat(this.customMove(CustomMoveType.EndEvolutionAction))
+      : moves
   }
 
   public afterItemMove(move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): BiotopesMove[] {
@@ -56,7 +62,7 @@ export class EvolutionActionPlaceCubesAndDiscardCardsRule extends PlayerTurnRule
 
   public onCustomMove(move: CustomMove, _context?: PlayMoveContext): BiotopesMove[] {
     if (isEndOfEvolutionActionCustomMove(move)) {
-      this.memorize(Memory.NumberOfCardsToPickForEvolution, this.remind<number>(Memory.NumberOfDiscardedCardForEvolution) + this.materialHelper.cubeMaterial.location(LocationType.CubeSpotOnEcosystemBoard).locationId(EcosystemActionType.Evolution).length)
+      this.memorize(Memory.NumberOfCardsToPickForEvolution, (this.remind<number | undefined>(Memory.NumberOfDiscardedCardForEvolution) ?? 0) + this.materialHelper.cubeMaterial.location(LocationType.CubeSpotOnEcosystemBoard).locationId(EcosystemActionType.Evolution).player(this.player).length)
       this.forget(Memory.NumberOfDiscardedCardForEvolution)
       return [this.startRule(RuleId.EvolutionActionPickCards)]
     }

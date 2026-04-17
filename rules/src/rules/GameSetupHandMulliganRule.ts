@@ -2,7 +2,7 @@ import { PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
 import { BiotopesItemMove, BiotopesMove, isBiotopesMoveItemTypeAtOnce } from '../BiotopeTypes'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
-import { SpeciesCardId, SpeciesCardType } from '../material/SpeciesCard'
+import { SpeciesCardId, SpeciesCardType, SpeciesDietType } from '../material/SpeciesCard'
 import { PlayerColor } from '../PlayerColor'
 import { MaterialHelper } from './helpers/MaterialHelper'
 import { PlayerHelper } from './helpers/PlayerHelper'
@@ -17,7 +17,8 @@ export class GameSetupHandMulliganRule extends PlayerTurnRule<PlayerColor, Mater
     const nextRule = this.playerHelper.isLastPlayer ? RuleId.GameSetupPlaceTerritoryTokens : RuleId.GameSetupHandMulligan
     return [
       this.materialHelper.playerSpeciesCardHand.moveItemsAtOnce({
-        type: LocationType.SpeciesDiscardsSpot
+        type: LocationType.SpeciesDiscardsSpot,
+        y: SpeciesDietType.Herbivore
       }),
       this.startPlayerTurn(nextRule, this.nextPlayer)
     ]

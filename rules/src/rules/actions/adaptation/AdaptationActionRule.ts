@@ -1,5 +1,5 @@
 import { ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
-import { BiotopesMove, isBiotopesMoveItemType } from '../../../BiotopeTypes'
+import { isBiotopesMoveItemType } from '../../../BiotopeTypes'
 import { BiotopeType } from '../../../material/BiotopeType'
 import { CubeType } from '../../../material/CubeType'
 import { LocationType } from '../../../material/LocationType'
@@ -8,11 +8,13 @@ import { KnownSpeciesCardId } from '../../../material/SpeciesCard'
 import { speciesCardCharacteristics } from '../../../material/SpeciesCardCharacteristics'
 import { PlayerColor } from '../../../PlayerColor'
 import { MaterialHelper } from '../../helpers/MaterialHelper'
+import { PlayerHelper } from '../../helpers/PlayerHelper'
 import { RuleId } from '../../RuleId'
 
 export class AdaptationActionRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
 
   private readonly materialHelper = new MaterialHelper(this.game)
+  private readonly playerHelper = new PlayerHelper(this.game)
 
   public getPlayerMoves(): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
     const cubeMaterial = this.materialHelper.cubeMaterial
@@ -22,7 +24,7 @@ export class AdaptationActionRule extends PlayerTurnRule<PlayerColor, MaterialTy
       id: CubeType.Plant
     })
     const cubesOnSpeciesCardMoves = this.materialHelper.playerCubesOnSpeciesCards.moveItems((cube) => {
-      const parentCard = playerSpeciesCard.index(cube.location.parent).getItem<KnownSpeciesCardId>()!
+      const parentCard = this.materialHelper.playerSpeciesCardTableau.index(cube.location.parent).getItem<KnownSpeciesCardId>()!
       const parentCardCharacteristics = speciesCardCharacteristics[parentCard?.id.front]
       return {
         type: LocationType.RecycledCubesSpot,
@@ -45,15 +47,19 @@ export class AdaptationActionRule extends PlayerTurnRule<PlayerColor, MaterialTy
     if (isBiotopesMoveItemType(MaterialType.SpeciesCard)(move) && move.location.type === LocationType.PlayerSpeciesCardTableauSpot) {
       const card = this.material(MaterialType.SpeciesCard).index(move.itemIndex).getItem<KnownSpeciesCardId>()!
       const characteristics = speciesCardCharacteristics[card.id.front]
-      const cubeMaterial = this.material(MaterialType.Cube)
-      return (cubeMaterial.location(LocationType.RecycledCubesSpot).moveItems((item) => ({
-        type: LocationType.CubeStockpileSpot,
-        id: item.id
-      })) as BiotopesMove[]).concat(this.materialHelper.reserveCubeMaterial.id(characteristics.biotope).moveItem({
-        type: LocationType.CubeSpotOnPlayerSpeciesCard,
-        player: move.location.player,
-        parent: move.itemIndex
-      })).concat(this.startPlayerTurn(RuleId.ChooseAction, this.nextPlayer))
+      const cubeMaterial = this.materialHelper.cubeMaterial
+      return [
+        cubeMaterial.location(LocationType.RecycledCubesSpot).deleteItemsAtOnce(),
+        cubeMaterial.createItem({
+          id: characteristics.biotope,
+          location: {
+            type: LocationType.CubeSpotOnPlayerSpeciesCard,
+            player: move.location.player,
+            parent: move.itemIndex
+          }
+        }),
+        this.startPlayerTurn(RuleId.ChooseAction, this.playerHelper.nextPlayer)
+      ]
     }
     return super.afterItemMove(move, _context)
   }

@@ -73,8 +73,7 @@ export class BiotopesRules
     [MaterialType.Cube]: {
       [LocationType.CubeSpotOnEcosystemBoard]: new PositiveSequenceStrategy(),
       [LocationType.RecycledCubesSpot]: new PositiveSequenceStrategy(),
-      [LocationType.CubeSpotOnPlayerBiotopesCard]: new BiotopeCubeStrategy(),
-      [LocationType.CubeStockpileSpot]: new BiotopeCubeStrategy(true)
+      [LocationType.CubeSpotOnPlayerBiotopesCard]: new BiotopeCubeStrategy()
     }
   }
 

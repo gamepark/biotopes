@@ -21,16 +21,17 @@ export class EndOfCycleRule extends PlayerTurnRule<PlayerColor, MaterialType, Lo
     return [
       rivers.location((l) => l.x === 2).moveItemsAtOnce({ type: LocationType.SpeciesDiscardsSpot }),
       rivers.location((l) => (l.x ?? 99) < 2).sort((card) => -(card.location.x ?? 0)).moveItemsAtOnce({ x: 2 }),
-      this.materialHelper.speciesCardMaterial.index(indexes).moveItemsAtOnce({ type: LocationType.SpeciesRiversGrid }),
-      this.material(MaterialType.CycleToken).moveItem((token) => ({
-        type: LocationType.CycleTokenSpotOnEnvironmentalConditionsBoard,
-        x: Math.min((token.location.x ?? 0) + 1, 4)
-      })),
-      this.material(MaterialType.InitiativeToken).moveItem({
-        type: LocationType.PlayerInitiativeTokenSpot,
-        player: nextPlayerWithInitiative
-      }),
-      this.startPlayerTurn(RuleId.PrimaryProduction, nextPlayerWithInitiative)
+      this.materialHelper.speciesCardMaterial.index(indexes).moveItemsAtOnce({ type: LocationType.SpeciesRiversGrid }) as BiotopesMove
     ]
+      .concat(this.materialHelper.cubeMaterial.location(LocationType.CubeSpotOnEcosystemBoard).deleteItemsAtOnce(),
+        this.material(MaterialType.CycleToken).moveItem((token) => ({
+          type: LocationType.CycleTokenSpotOnEnvironmentalConditionsBoard,
+          x: Math.min((token.location.x ?? 0) + 1, 4)
+        })),
+        this.material(MaterialType.InitiativeToken).moveItem({
+          type: LocationType.PlayerInitiativeTokenSpot,
+          player: nextPlayerWithInitiative
+        }),
+        this.startPlayerTurn(RuleId.PrimaryProduction, nextPlayerWithInitiative))
   }
 }

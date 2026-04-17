@@ -35,8 +35,6 @@ export class SpeciesStrategy<Strategy extends LocationStrategy> implements Locat
     delegate?.removeItem?.(material.location((l) => l.y === dietType), item)
   }
 
-
-
   private getDelegateFromCardId(dietType: SpeciesDietType) {
     switch (dietType) {
       case SpeciesDietType.Herbivore:

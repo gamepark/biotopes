@@ -1,7 +1,9 @@
 import { ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
+import { countBy } from 'es-toolkit'
 import { BiotopesMove, isBiotopesMoveItemType } from '../../../BiotopeTypes'
 import { LocationType } from '../../../material/LocationType'
 import { MaterialType } from '../../../material/MaterialType'
+import { KnownSpeciesCardId, SpeciesDietType } from '../../../material/SpeciesCard'
 import { Memory } from '../../../Memory'
 import { PlayerColor } from '../../../PlayerColor'
 import { MaterialHelper } from '../../helpers/MaterialHelper'
@@ -29,11 +31,22 @@ export class EvolutionActionPickCardsRule extends PlayerTurnRule<PlayerColor, Ma
       const newNumberOfCardsToDraw = this.memorize<number>(Memory.NumberOfCardsToPickForEvolution, (oldValue) => oldValue - 1)
       if (newNumberOfCardsToDraw === 0) {
         this.forget(Memory.NumberOfCardsToPickForEvolution)
-        return [
+        const riverMaterial = this.materialHelper.speciesCardMaterial.location(LocationType.SpeciesRiversGrid)
+        const consequences: BiotopesMove[] = [
           this.materialHelper.playerSpeciesCardHand.length > 5
             ? this.startRule(RuleId.EvolutionActionDiscardCardsFromHand)
             : this.startPlayerTurn(RuleId.ChooseAction, this.playerHelper.nextPlayer)
         ]
+        if (riverMaterial.length < 9) {
+          const riverCounts = countBy(riverMaterial.getItems<KnownSpeciesCardId>(), (card) => card.location.y as SpeciesDietType)
+          const riverMove: BiotopesMove = riverMaterial.sort((card) => card.location.y ?? 0, (card) => -(card.location.x ?? 0)).moveItemsAtOnce({ x: 2 })
+          const indexesToDraw: number[] = this.materialHelper.herbivoresDeckMaterial.limit(3 - (riverCounts[SpeciesDietType.Herbivore] ?? 0)).getIndexes()
+            .concat(this.materialHelper.insectivoresDeckMaterial.limit(3 - (riverCounts[SpeciesDietType.Insectivore] ?? 0)).getIndexes())
+            .concat(this.materialHelper.carnivoreDeckMaterial.limit(3 - (riverCounts[SpeciesDietType.Carnivore] ?? 0)).getIndexes())
+          return [riverMove, this.materialHelper.speciesCardMaterial.index(indexesToDraw).moveItemsAtOnce({ type: LocationType.SpeciesRiversGrid }) as BiotopesMove]
+            .concat(consequences)
+        }
+        return consequences
       }
     }
     return super.afterItemMove(move, _context)

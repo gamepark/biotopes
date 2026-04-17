@@ -9,6 +9,8 @@
   "header.expansionAction.chooseCube.player": "{player} must place a cube on the expansion slot of their board",
   "header.expansionAction.placeToken.you": "You must place a territory token on a <biotope/> hex on the Central Landscape",
   "header.expansionAction.placeToken.player": "{player} must place a territory token on a <biotope/> hex on the Central Landscape",
+  "header.evolutionAction.placeCubesDiscardCards.you": "You must place a cube, discard cards or <end>continue to picking cards</end>",
+  "header.evolutionAction.placeCubesDiscardCards.player": "{player} must place a cube, discard cards or continue to picking cards",
   "biotope.mountain": "mountain",
   "biotope.forest": "forest",
   "biotope.meadow": "meadow",

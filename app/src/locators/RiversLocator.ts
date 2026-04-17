@@ -3,8 +3,8 @@ import { MaterialType } from '@gamepark/biotopes/material/MaterialType.ts'
 import { SpeciesDietType } from '@gamepark/biotopes/material/SpeciesCard.ts'
 import { PlayerColor } from '@gamepark/biotopes/PlayerColor.ts'
 import { RuleId } from '@gamepark/biotopes/rules/RuleId.ts'
-import { GridBoundaries, GridLocator, MaterialContext } from '@gamepark/react-game'
-import { Coordinates, Location } from '@gamepark/rules-api'
+import { GridBoundaries, GridLocator, ItemContext, MaterialContext } from '@gamepark/react-game'
+import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
 
 class RiversLocator extends GridLocator<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   gap = { x: 7.5, y: 5 }
@@ -18,6 +18,10 @@ class RiversLocator extends GridLocator<PlayerColor, MaterialType, LocationType,
 
   public getBoundaries(): GridBoundaries | undefined {
     return { xMin: 0, xMax: 2, yMin: SpeciesDietType.Herbivore, yMax: SpeciesDietType.Carnivore }
+  }
+
+  public getHoverTransform(_item: MaterialItem<PlayerColor, LocationType>, _context: ItemContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>): string[] {
+    return super.getHoverTransform(_item, _context).concat("scale(2.5)", "translateZ(5em)")
   }
 }
 
