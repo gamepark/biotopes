@@ -5,10 +5,10 @@ import { PlayerColor } from '@gamepark/biotopes/PlayerColor'
 import { RuleId } from '@gamepark/biotopes/rules/RuleId.ts'
 import { FlatMaterialDescription, MaterialContext } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
-import ForestCube from '../images/Cubes/ForestCube.png'
-import MeadowCube from '../images/Cubes/MeadowCube.png'
-import MountainCube from '../images/Cubes/MountainCube.png'
-import WetlandCube from '../images/Cubes/WetlandCube.png'
+import ForestCube from '../images/Cubes/ForestCube.svg?url'
+import MeadowCube from '../images/Cubes/MeadowCube.svg?url'
+import MountainCube from '../images/Cubes/MountainCube.svg?url'
+import WetlandCube from '../images/Cubes/WetlandCube.svg?url'
 
 class CubeDescription extends FlatMaterialDescription<PlayerColor, MaterialType, LocationType, BiotopeType, RuleId, PlayerColor> {
   width = 0.8

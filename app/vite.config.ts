@@ -2,7 +2,6 @@ import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 import { defineConfig, loadEnv, PluginOption } from 'vite'
 import { imagetools } from 'vite-imagetools'
-import vitePluginSvgr from 'vite-plugin-svgr'
 import { version } from './package.json'
 
 function translationHmrPlugin(): PluginOption {
@@ -65,8 +64,7 @@ export default defineConfig(({ mode }) => {
       react({ jsxImportSource: '@emotion/react' }),
       imagetools({ defaultDirectives: () => new URLSearchParams({ format: 'webp' }) }),
       translationHmrPlugin(),
-      localeUrlPlugin(),
-      vitePluginSvgr()
+      localeUrlPlugin()
     ]
   }
 })

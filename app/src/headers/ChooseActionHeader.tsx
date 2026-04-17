@@ -5,11 +5,11 @@ import {
   isExpansionChooseActionCustomMove,
   isPassCycleCustomMove
 } from '@gamepark/biotopes/material/CustomMoveType.ts'
-import { HeaderText } from '@gamepark/react-game'
+import { HeaderText, Picture } from '@gamepark/react-game'
 import { FC } from 'react'
-import AdaptationSymbol from '../images/Symbols/Adaptation.svg?react'
-import ExpansionSymbol from '../images/Symbols/Expansion.svg?react'
-import EvolutionSymbol from '../images/Symbols/Evolution.svg?react'
+import AdaptationSymbol from '../images/Symbols/Adaptation.svg?inline'
+import ExpansionSymbol from '../images/Symbols/Expansion.svg?inline'
+import EvolutionSymbol from '../images/Symbols/Evolution.svg?inline'
 
 export const ChooseActionHeader: FC = () => {
   return (
@@ -22,9 +22,9 @@ export const ChooseActionHeader: FC = () => {
         pass: isPassCycleCustomMove
       }}
       components={{
-        adaptationSymbol: <AdaptationSymbol css={symbolCss} />,
-        evolutionSymbol: <EvolutionSymbol css={symbolCss} />,
-        expansionSymbol: <ExpansionSymbol css={symbolCss} />
+        adaptationSymbol: <Picture src={AdaptationSymbol} css={symbolCss} />,
+        evolutionSymbol: <Picture src={EvolutionSymbol} css={symbolCss} />,
+        expansionSymbol: <Picture src={ExpansionSymbol} css={symbolCss} />
       }}
     />
   )
