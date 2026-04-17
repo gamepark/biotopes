@@ -13,5 +13,4 @@ export class EuropeanRabbitCharacteristics extends MeadowHerbivoreCharacteristic
   get effectType(): unknown {
     return undefined
   }
-
 }

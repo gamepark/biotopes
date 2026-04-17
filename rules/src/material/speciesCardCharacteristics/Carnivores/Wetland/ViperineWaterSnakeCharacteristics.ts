@@ -17,5 +17,4 @@ export class ViperineWaterSnakeCharacteristics extends WetlandCarnivoreCharacter
   get effectType(): unknown {
     return undefined
   }
-
 }

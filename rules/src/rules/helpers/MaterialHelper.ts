@@ -6,8 +6,7 @@ import { PlayerColor } from '../../PlayerColor'
 import { RuleId } from '../RuleId'
 import { PlayerHelper } from './PlayerHelper'
 
-export class MaterialHelper extends MaterialRulesPart<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>{
-
+export class MaterialHelper extends MaterialRulesPart<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly playerHelper = new PlayerHelper(this.game)
 
   public get cubeMaterial() {

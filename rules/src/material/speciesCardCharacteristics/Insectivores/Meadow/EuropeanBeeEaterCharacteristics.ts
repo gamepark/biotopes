@@ -17,5 +17,4 @@ export class EuropeanBeeEaterCharacteristics extends MeadowInsectivoreCharacteri
   get effectType(): unknown {
     return undefined
   }
-
 }

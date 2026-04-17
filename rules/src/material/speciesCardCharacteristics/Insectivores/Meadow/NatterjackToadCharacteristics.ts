@@ -17,5 +17,4 @@ export class NatterjackToadCharacteristics extends MeadowInsectivoreCharacterist
   get effectType(): unknown {
     return undefined
   }
-
 }

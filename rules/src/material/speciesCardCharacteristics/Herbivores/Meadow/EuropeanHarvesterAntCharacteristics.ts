@@ -13,5 +13,4 @@ export class EuropeanHarvesterAntCharacteristics extends MeadowHerbivoreCharacte
   get effectType(): unknown {
     return undefined
   }
-
 }

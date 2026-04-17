@@ -17,5 +17,4 @@ export class EuropeanTreeFrogCharacteristics extends ForestInsectivoreCharacteri
   get effectType(): unknown {
     return undefined
   }
-
 }

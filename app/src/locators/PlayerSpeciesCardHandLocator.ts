@@ -9,7 +9,7 @@ export class PlayerSpeciesCardHandLocator extends HandLocator<PlayerColor, Mater
   maxAngle = 5
   gapMaxAngle = 2
   clockwise = true
-  coordinates = { x: -35, y: -2.5}
+  coordinates = { x: -35, y: -2.5 }
 
   public hide(item: MaterialItem<PlayerColor, LocationType>, context: ItemContext<PlayerColor, MaterialType, LocationType, number, number>): boolean {
     return item.location.player !== (context.rules.game.view ?? context.player ?? context.rules.players[0])

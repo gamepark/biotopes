@@ -13,7 +13,6 @@ import { MaterialHelper } from '../../../helpers/MaterialHelper'
 import { RuleId } from '../../../RuleId'
 
 export class ExpansionActionChooseCubeRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-
   private readonly colonizationHelper = new ColonizationHelper(this.game)
   private readonly materialHelper = new MaterialHelper(this.game)
 
@@ -34,7 +33,8 @@ export class ExpansionActionChooseCubeRule extends PlayerTurnRule<PlayerColor, M
         const card = playerSpeciesCard.index(cardIndex).getItem<KnownSpeciesCardId>()!
         const characteristics = speciesCardCharacteristics[card.id.front]
         return characteristics.cubeType === CubeType.Insect
-      }).moveItems(destination)
+      })
+      .moveItems(destination)
     const pollinatingSpeciesCubesMoves: BiotopesMove[] = []
     return biotopeCubeMoves.concat(insectCubeMoves).concat(pollinatingSpeciesCubesMoves)
   }

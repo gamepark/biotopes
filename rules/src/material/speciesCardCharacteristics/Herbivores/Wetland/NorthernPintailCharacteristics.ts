@@ -13,5 +13,4 @@ export class NorthernPintailCharacteristics extends WetlandHerbivoreCharacterist
   get effectType(): unknown {
     return undefined
   }
-
 }

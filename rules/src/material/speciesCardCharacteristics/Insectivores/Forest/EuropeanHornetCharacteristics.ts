@@ -17,5 +17,4 @@ export class EuropeanHornetCharacteristics extends ForestInsectivoreCharacterist
   get effectType(): unknown {
     return undefined
   }
-
 }

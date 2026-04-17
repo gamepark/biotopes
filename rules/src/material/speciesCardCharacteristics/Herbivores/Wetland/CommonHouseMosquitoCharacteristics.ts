@@ -13,5 +13,4 @@ export class CommonHouseMosquitoCharacteristics extends WetlandHerbivoreCharacte
   get effectType(): unknown {
     return undefined
   }
-
 }

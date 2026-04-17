@@ -10,7 +10,10 @@ class RecycledCubeLocator extends ListLocator<PlayerColor, MaterialType, Locatio
   maxCount = 3
   gap = { x: 1 }
 
-  public getCoordinates(_location: Location<PlayerColor, LocationType, CubeType>, _context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>): Partial<Coordinates> {
+  public getCoordinates(
+    _location: Location<PlayerColor, LocationType, CubeType>,
+    _context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
+  ): Partial<Coordinates> {
     switch (_location.id) {
       case CubeType.Plant:
         return { x: -10, y: 0 }

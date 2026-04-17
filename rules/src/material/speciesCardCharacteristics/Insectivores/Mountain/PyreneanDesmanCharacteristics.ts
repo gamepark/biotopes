@@ -17,5 +17,4 @@ export class PyreneanDesmanCharacteristics extends MountainInsectivoreCharacteri
   get effectType(): unknown {
     return undefined
   }
-
 }

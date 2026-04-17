@@ -17,5 +17,4 @@ export class EurasianLynxCharacteristics extends MountainCarnivoreCharacteristic
   get effectType(): unknown {
     return undefined
   }
-
 }

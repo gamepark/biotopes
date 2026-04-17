@@ -17,5 +17,4 @@ export class CommonParsleyFrogCharacteristics extends MeadowInsectivoreCharacter
   get effectType(): unknown {
     return undefined
   }
-
 }

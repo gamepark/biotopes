@@ -17,5 +17,4 @@ export class GrassFrogCharacteristics extends WetlandInsectivoreCharacteristics 
   get effectType(): unknown {
     return undefined
   }
-
 }

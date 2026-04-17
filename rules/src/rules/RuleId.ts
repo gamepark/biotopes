@@ -18,5 +18,5 @@ export enum RuleId {
   MigrationActionMoveTerritoryTokenOnMountain,
   MigrationActionMoveTerritoryTokenOnForest,
   MigrationActionMoveTerritoryTokenOnMeadow,
-  MigrationActionMoveTerritoryTokenOnWetland,
+  MigrationActionMoveTerritoryTokenOnWetland
 }

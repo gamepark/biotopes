@@ -12,66 +12,75 @@ import { PlayerHelper } from '../../../helpers/PlayerHelper'
 import { RuleId } from '../../../RuleId'
 
 export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-
   private readonly landscapeHelper = new LandscapeHelper(this.game)
   private readonly materialHelper = new MaterialHelper(this.game)
   private readonly playerHelper = new PlayerHelper(this.game)
 
   public computeReachableBiotopeTypes(distance: number = 1): BiotopeType[] {
-    return uniq(this.computeReachableHexes(distance)
-      .map((coords) => this.landscapeHelper.landscape.getValue(coords))
-      .filter((biotope) => biotope !== undefined))
+    return uniq(
+      this.computeReachableHexes(distance)
+        .map((coords) => this.landscapeHelper.landscape.getValue(coords))
+        .filter((biotope) => biotope !== undefined)
+    )
   }
 
   public computeReachableHexes(distance: number = 1): XYCoordinates[] {
-    const otherTokensCoords = this.materialHelper.centralLandscapeTerritoryTokenMaterial
-      .getItems()
-      .map((token) => ({
-        x: token.location.x!,
-        y: token.location.y!
-      }))
+    const otherTokensCoords = this.materialHelper.centralLandscapeTerritoryTokenMaterial.getItems().map((token) => ({
+      x: token.location.x!,
+      y: token.location.y!
+    }))
     return this.materialHelper.playerTerritoryTokenOnCentralLandscape
       .getItems()
-      .flatMap((token) => this.computeReachableHexesFromCoords({x: token.location.x!, y: token.location.y!}, otherTokensCoords, distance))
+      .flatMap((token) => this.computeReachableHexesFromCoords({ x: token.location.x!, y: token.location.y! }, otherTokensCoords, distance))
   }
 
   public computeReachableHexesOfType(biotopeType: BiotopeType, distance: number = 1): XYCoordinates[] {
-    return this.computeReachableHexes(distance)
-      .filter((coords) => this.landscapeHelper.landscape.getValue(coords) === biotopeType)
+    return this.computeReachableHexes(distance).filter((coords) => this.landscapeHelper.landscape.getValue(coords) === biotopeType)
   }
 
-  public  computeReachableHexesFromCoords(coords: XYCoordinates, otherTokenCoordinates: XYCoordinates[], distance: number = 1): XYCoordinates[] {
-    return range(1, distance + 1).flatMap((dist) => getHexagonsAtDistance(coords, dist))
+  public computeReachableHexesFromCoords(coords: XYCoordinates, otherTokenCoordinates: XYCoordinates[], distance: number = 1): XYCoordinates[] {
+    return range(1, distance + 1)
+      .flatMap((dist) => getHexagonsAtDistance(coords, dist))
       .filter((coords) => otherTokenCoordinates.find((otherTokenCoords) => isEqual(coords, otherTokenCoords)) === undefined)
   }
 
-  public computeReachableHexesOfTypeFromCoords(coords: XYCoordinates, otherTokenCoordinates: XYCoordinates[], biotopeType: BiotopeType, distance: number = 1): XYCoordinates[] {
-    return this.computeReachableHexesFromCoords(coords, otherTokenCoordinates, distance)
-      .filter((coords) =>  this.landscapeHelper.landscape.getValue(coords) === biotopeType)
+  public computeReachableHexesOfTypeFromCoords(
+    coords: XYCoordinates,
+    otherTokenCoordinates: XYCoordinates[],
+    biotopeType: BiotopeType,
+    distance: number = 1
+  ): XYCoordinates[] {
+    return this.computeReachableHexesFromCoords(coords, otherTokenCoordinates, distance).filter(
+      (coords) => this.landscapeHelper.landscape.getValue(coords) === biotopeType
+    )
   }
 
   public getPlaceTerritoryTokenMoves(destinationBiotope: BiotopeType): BiotopesMove[] {
-    return this.computeReachableHexesOfType(destinationBiotope)
-      .map(({ x, y }) =>
-        this.materialHelper.availablePlayerTerritoryToken.moveItem({
-          type: LocationType.CentralLandscapeSpot,
-          x: x,
-          y: y
-        })
-      )
+    return this.computeReachableHexesOfType(destinationBiotope).map(({ x, y }) =>
+      this.materialHelper.availablePlayerTerritoryToken.moveItem({
+        type: LocationType.CentralLandscapeSpot,
+        x: x,
+        y: y
+      })
+    )
   }
 
   public getMigrationMoveTerritoryTokenMoves(destinationBiotope: BiotopeType) {
     return this.materialHelper.playerTerritoryTokenOnCentralLandscape.getItems().flatMap((token, index) => {
       const centralLandscapeTokenMaterial = this.materialHelper.centralLandscapeTerritoryTokenMaterial
-      const otherTokenCoordinates = centralLandscapeTokenMaterial.getItems()
-        .map((token) => ({ x: token.location.x!, y: token.location.y! }))
-      return this.computeReachableHexesOfTypeFromCoords({x: token.location.x!, y: token.location.y!}, otherTokenCoordinates, destinationBiotope, 3)
-        .map<BiotopesMove>(({ x, y }) => centralLandscapeTokenMaterial.index(index).moveItem({
+      const otherTokenCoordinates = centralLandscapeTokenMaterial.getItems().map((token) => ({ x: token.location.x!, y: token.location.y! }))
+      return this.computeReachableHexesOfTypeFromCoords(
+        { x: token.location.x!, y: token.location.y! },
+        otherTokenCoordinates,
+        destinationBiotope,
+        3
+      ).map<BiotopesMove>(({ x, y }) =>
+        centralLandscapeTokenMaterial.index(index).moveItem({
           type: LocationType.CentralLandscapeSpot,
           x: x,
           y: y
-        }))
+        })
+      )
     })
   }
 

@@ -17,5 +17,4 @@ export class BeardedVultureCharacteristics extends MountainCarnivoreCharacterist
   get effectType(): unknown {
     return undefined
   }
-
 }

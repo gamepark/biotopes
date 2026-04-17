@@ -17,5 +17,4 @@ export class EurasianBadgerCharacteristics extends ForestCarnivoreCharacteristic
   get effectType(): unknown {
     return undefined
   }
-
 }

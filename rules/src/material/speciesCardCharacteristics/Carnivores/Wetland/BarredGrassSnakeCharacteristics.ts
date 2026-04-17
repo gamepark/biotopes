@@ -17,5 +17,4 @@ export class BarredGrassSnakeCharacteristics extends WetlandCarnivoreCharacteris
   get effectType(): unknown {
     return undefined
   }
-
 }

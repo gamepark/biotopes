@@ -13,5 +13,4 @@ export class LargeCopperCharacteristics extends WetlandHerbivoreCharacteristics 
   get effectType(): unknown {
     return undefined
   }
-
 }

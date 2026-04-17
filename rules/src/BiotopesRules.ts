@@ -13,18 +13,10 @@ import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
 import { AdaptationActionRule } from './rules/actions/adaptation/AdaptationActionRule'
 import { ExpansionActionChooseCubeRule } from './rules/actions/colonization/expansion/ExpansionActionChooseCubeRule'
-import {
-  ExpansionActionPlaceTerritoryTokenOnForestRule
-} from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnForestRule'
-import {
-  ExpansionActionPlaceTerritoryTokenOnMeadowRule
-} from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnMeadowRule'
-import {
-  ExpansionActionPlaceTerritoryTokenOnMountainRule
-} from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnMountainRule'
-import {
-  ExpansionActionPlaceTerritoryTokenOnWetlandRule
-} from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnWetlandRule'
+import { ExpansionActionPlaceTerritoryTokenOnForestRule } from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnForestRule'
+import { ExpansionActionPlaceTerritoryTokenOnMeadowRule } from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnMeadowRule'
+import { ExpansionActionPlaceTerritoryTokenOnMountainRule } from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnMountainRule'
+import { ExpansionActionPlaceTerritoryTokenOnWetlandRule } from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnWetlandRule'
 import { MigrationActionChooseCubeRule } from './rules/actions/colonization/migration/MigrationActionChooseCubeRule'
 import { MigrationActionMoveTerritoryTokenOnForestRule } from './rules/actions/colonization/migration/MigrationActionMoveTerritoryTokenOnForestRule'
 import { MigrationActionMoveTerritoryTokenOnMeadowRule } from './rules/actions/colonization/migration/MigrationActionMoveTerritoryTokenOnMeadowRule'

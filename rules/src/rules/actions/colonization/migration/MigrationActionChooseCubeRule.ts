@@ -13,7 +13,6 @@ import { RuleId } from '../../../RuleId'
 import { ColonizationHelper } from '../helpers/ColonizationHelper'
 
 export class MigrationActionChooseCubeRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-
   private readonly materialHelper = new MaterialHelper(this.game)
   private readonly colonizationHelper = new ColonizationHelper(this.game)
 
@@ -25,16 +24,20 @@ export class MigrationActionChooseCubeRule extends PlayerTurnRule<PlayerColor, M
         return cardCubeType === CubeType.Bird || cardCubeType === CubeType.AmphibianReptile
       })
       .getIndexes()
-      .flatMap<BiotopesMove>((cardIndex) => this.materialHelper.playerCubesOnSpeciesCards
-        .parent(cardIndex)
-        .id<BiotopeType>((biotopeType) => biotopesToExtendTo.includes(biotopeType))
-        .moveItems({ type: LocationType.CubeSpotOnEcosystemBoard, id: EcosystemActionType.Migration,  player: this.player }))
+      .flatMap<BiotopesMove>((cardIndex) =>
+        this.materialHelper.playerCubesOnSpeciesCards
+          .parent(cardIndex)
+          .id<BiotopeType>((biotopeType) => biotopesToExtendTo.includes(biotopeType))
+          .moveItems({ type: LocationType.CubeSpotOnEcosystemBoard, id: EcosystemActionType.Migration, player: this.player })
+      )
   }
 
   public afterItemMove(move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): BiotopesMove[] {
-    if (isBiotopesMoveItemType(MaterialType.Cube)(move)
-      && move.location.type === LocationType.CubeSpotOnEcosystemBoard
-      && move.location.id === EcosystemActionType.Migration) {
+    if (
+      isBiotopesMoveItemType(MaterialType.Cube)(move) &&
+      move.location.type === LocationType.CubeSpotOnEcosystemBoard &&
+      move.location.id === EcosystemActionType.Migration
+    ) {
       const cubeType = this.materialHelper.cubeMaterial.index(move.itemIndex).getItem<BiotopeType>()!.id
       const nextRule = this.getNextRuleFromBiotopeType(cubeType)
       return [this.startRule(nextRule)]
@@ -42,7 +45,13 @@ export class MigrationActionChooseCubeRule extends PlayerTurnRule<PlayerColor, M
     return super.afterItemMove(move, _context)
   }
 
-  private getNextRuleFromBiotopeType(cubeType: BiotopeType): RuleId.MigrationActionMoveTerritoryTokenOnMountain | RuleId.MigrationActionMoveTerritoryTokenOnForest | RuleId.MigrationActionMoveTerritoryTokenOnMeadow | RuleId.MigrationActionMoveTerritoryTokenOnWetland {
+  private getNextRuleFromBiotopeType(
+    cubeType: BiotopeType
+  ):
+    | RuleId.MigrationActionMoveTerritoryTokenOnMountain
+    | RuleId.MigrationActionMoveTerritoryTokenOnForest
+    | RuleId.MigrationActionMoveTerritoryTokenOnMeadow
+    | RuleId.MigrationActionMoveTerritoryTokenOnWetland {
     switch (cubeType) {
       case BiotopeType.Mountain:
         return RuleId.MigrationActionMoveTerritoryTokenOnMountain

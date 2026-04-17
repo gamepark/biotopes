@@ -17,5 +17,4 @@ export class WesternGreenLizardCharacteristics extends ForestInsectivoreCharacte
   get effectType(): unknown {
     return undefined
   }
-
 }

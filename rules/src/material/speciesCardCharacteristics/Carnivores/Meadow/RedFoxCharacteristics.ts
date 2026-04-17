@@ -17,5 +17,4 @@ export class RedFoxCharacteristics extends MeadowCarnivoreCharacteristics {
   get effectType(): unknown {
     return undefined
   }
-
 }

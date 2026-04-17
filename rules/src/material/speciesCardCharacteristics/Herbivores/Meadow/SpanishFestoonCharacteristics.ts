@@ -13,5 +13,4 @@ export class SpanishFestoonCharacteristics extends MeadowHerbivoreCharacteristic
   get effectType(): unknown {
     return undefined
   }
-
 }

@@ -13,5 +13,4 @@ export class MuteSwanCharacteristics extends WetlandHerbivoreCharacteristics {
   get effectType(): unknown {
     return undefined
   }
-
 }

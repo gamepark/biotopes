@@ -8,7 +8,10 @@ import { decksLocator } from './DecksLocator.ts'
 
 class DiscardsLocator extends DeckLocator<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   maxCount = 40
-  public getCoordinates(location: Location<PlayerColor, LocationType>, _context: MaterialContext<PlayerColor, MaterialType, LocationType>): Partial<Coordinates> {
+  public getCoordinates(
+    location: Location<PlayerColor, LocationType>,
+    _context: MaterialContext<PlayerColor, MaterialType, LocationType>
+  ): Partial<Coordinates> {
     const deckCoordinates = decksLocator.getCoordinates(location, _context)
     return { x: deckCoordinates.x! - 8, y: deckCoordinates.y }
   }

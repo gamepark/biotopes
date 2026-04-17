@@ -17,5 +17,4 @@ export class GreatCrestedNewtCharacteristics extends WetlandInsectivoreCharacter
   get effectType(): unknown {
     return undefined
   }
-
 }

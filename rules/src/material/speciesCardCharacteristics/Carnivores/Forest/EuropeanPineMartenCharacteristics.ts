@@ -17,5 +17,4 @@ export class EuropeanPineMartenCharacteristics extends ForestCarnivoreCharacteri
   get effectType(): unknown {
     return undefined
   }
-
 }

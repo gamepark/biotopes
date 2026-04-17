@@ -1,7 +1,7 @@
 import { CubeType } from '../../../CubeType'
 import { MeadowCarnivoreCharacteristics } from '../../SpeciesCharacteristics'
 
-export  class WhiteStorkCharacteristics extends MeadowCarnivoreCharacteristics {
+export class WhiteStorkCharacteristics extends MeadowCarnivoreCharacteristics {
   get cubeType(): CubeType {
     return CubeType.Bird
   }
@@ -17,5 +17,4 @@ export  class WhiteStorkCharacteristics extends MeadowCarnivoreCharacteristics {
   get effectType(): unknown {
     return undefined
   }
-
 }

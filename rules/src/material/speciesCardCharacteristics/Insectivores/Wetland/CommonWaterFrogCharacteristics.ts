@@ -17,5 +17,4 @@ export class CommonWaterFrogCharacteristics extends WetlandInsectivoreCharacteri
   get effectType(): unknown {
     return undefined
   }
-
 }

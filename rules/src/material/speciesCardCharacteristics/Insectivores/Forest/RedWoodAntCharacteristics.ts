@@ -17,5 +17,4 @@ export class RedWoodAntCharacteristics extends ForestInsectivoreCharacteristics 
   get effectType(): unknown {
     return undefined
   }
-
 }

@@ -17,5 +17,4 @@ export class EuropeanOtterCharacteristics extends WetlandCarnivoreCharacteristic
   get effectType(): unknown {
     return undefined
   }
-
 }

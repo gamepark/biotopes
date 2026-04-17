@@ -13,5 +13,4 @@ export class EuropeanGoldfinchCharacteristics extends MeadowHerbivoreCharacteris
   get effectType(): unknown {
     return undefined
   }
-
 }

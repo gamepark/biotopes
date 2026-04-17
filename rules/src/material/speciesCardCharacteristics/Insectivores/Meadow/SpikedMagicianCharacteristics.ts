@@ -17,5 +17,4 @@ export class SpikedMagicianCharacteristics extends MeadowInsectivoreCharacterist
   get effectType(): unknown {
     return undefined
   }
-
 }

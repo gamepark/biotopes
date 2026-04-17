@@ -1,7 +1,7 @@
 import { CubeType } from '../../../CubeType'
 import { MeadowHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
 
-export class EurasianHarvestMouseCharacteristics  extends MeadowHerbivoreCharacteristics {
+export class EurasianHarvestMouseCharacteristics extends MeadowHerbivoreCharacteristics {
   get cubeType(): CubeType {
     return CubeType.Mammal
   }
@@ -13,5 +13,4 @@ export class EurasianHarvestMouseCharacteristics  extends MeadowHerbivoreCharact
   get effectType(): unknown {
     return undefined
   }
-
 }

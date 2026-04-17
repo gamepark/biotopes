@@ -18,9 +18,11 @@ export class SpeciesRiverStrategy extends FillGapStrategy<PlayerColor, MaterialT
   }
 
   public removeItem(material: Material<PlayerColor, MaterialType, LocationType>, item: MaterialItem<PlayerColor, LocationType>): void {
-    if (item.location.x! > (2 - material.length)) {
-      material.location((l) => l.x! < item.location.x!).getItems().forEach((card) => card.location.x! += 1)
+    if (item.location.x! > 2 - material.length) {
+      material
+        .location((l) => l.x! < item.location.x!)
+        .getItems()
+        .forEach((card) => (card.location.x! += 1))
     }
   }
-
 }

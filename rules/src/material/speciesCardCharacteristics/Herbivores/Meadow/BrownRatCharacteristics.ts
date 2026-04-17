@@ -13,5 +13,4 @@ export class BrownRatCharacteristics extends MeadowHerbivoreCharacteristics {
   get effectType(): unknown {
     return undefined
   }
-
 }

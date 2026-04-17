@@ -17,5 +17,4 @@ export class EuropeanPolecatCharacteristics extends MountainCarnivoreCharacteris
   get effectType(): unknown {
     return undefined
   }
-
 }

@@ -11,7 +11,6 @@ import { PlayerHelper } from '../../helpers/PlayerHelper'
 import { RuleId } from '../../RuleId'
 
 export class EvolutionActionPickCardsRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-
   private readonly materialHelper = new MaterialHelper(this.game)
   private readonly playerHelper = new PlayerHelper(this.game)
 
@@ -20,7 +19,9 @@ export class EvolutionActionPickCardsRule extends PlayerTurnRule<PlayerColor, Ma
       type: LocationType.PlayerSpeciesCardHandSpot,
       player: this.player
     }
-    return this.materialHelper.speciesCardMaterial.location(LocationType.SpeciesRiversGrid).moveItems(handLocation)
+    return this.materialHelper.speciesCardMaterial
+      .location(LocationType.SpeciesRiversGrid)
+      .moveItems(handLocation)
       .concat(this.materialHelper.herbivoresDeckMaterial.dealOne(handLocation))
       .concat(this.materialHelper.insectivoresDeckMaterial.dealOne(handLocation))
       .concat(this.materialHelper.carnivoreDeckMaterial.dealOne(handLocation))
@@ -39,11 +40,17 @@ export class EvolutionActionPickCardsRule extends PlayerTurnRule<PlayerColor, Ma
         ]
         if (riverMaterial.length < 9) {
           const riverCounts = countBy(riverMaterial.getItems<KnownSpeciesCardId>(), (card) => card.location.y as SpeciesDietType)
-          const indexesToDraw: number[] = this.materialHelper.herbivoresDeckMaterial.limit(3 - (riverCounts[SpeciesDietType.Herbivore] ?? 0)).getIndexes()
+          const indexesToDraw: number[] = this.materialHelper.herbivoresDeckMaterial
+            .limit(3 - (riverCounts[SpeciesDietType.Herbivore] ?? 0))
+            .getIndexes()
             .concat(this.materialHelper.insectivoresDeckMaterial.limit(3 - (riverCounts[SpeciesDietType.Insectivore] ?? 0)).getIndexes())
             .concat(this.materialHelper.carnivoreDeckMaterial.limit(3 - (riverCounts[SpeciesDietType.Carnivore] ?? 0)).getIndexes())
-          return [this.materialHelper.speciesCardMaterial.index(indexesToDraw).deck().dealAtOnce({ type: LocationType.SpeciesRiversGrid }, indexesToDraw.length) as BiotopesMove]
-            .concat(consequences)
+          return [
+            this.materialHelper.speciesCardMaterial
+              .index(indexesToDraw)
+              .deck()
+              .dealAtOnce({ type: LocationType.SpeciesRiversGrid }, indexesToDraw.length) as BiotopesMove
+          ].concat(consequences)
         }
         return consequences
       }
