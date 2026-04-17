@@ -5,8 +5,10 @@ import { CubeType } from '../material/CubeType'
 import {
   ChooseActionCustomMoveData,
   CustomMoveType,
-  isAdaptationChooseActionCustomMove, isEvolutionChooseActionCustomMove,
+  isAdaptationChooseActionCustomMove,
+  isEvolutionChooseActionCustomMove,
   isExpansionChooseActionCustomMove,
+  isMigrationChooseActionCustomMove,
   isPassCycleCustomMove
 } from '../material/CustomMoveType'
 import { EcosystemActionType, ecosystemActionType } from '../material/EcosystemActionType'
@@ -17,6 +19,7 @@ import { speciesCardCharacteristics } from '../material/SpeciesCardCharacteristi
 import { Memory } from '../Memory'
 import { PlayerColor } from '../PlayerColor'
 import { ExpansionActionChooseCubeRule } from './actions/colonization/expansion/ExpansionActionChooseCubeRule'
+import { MigrationActionChooseCubeRule } from './actions/colonization/migration/MigrationActionChooseCubeRule'
 import { MaterialHelper } from './helpers/MaterialHelper'
 import { PlayerHelper } from './helpers/PlayerHelper'
 import { RuleId } from './RuleId'
@@ -46,6 +49,9 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
     if (isEvolutionChooseActionCustomMove(move)) {
       return [this.startRule(RuleId.EvolutionActionPlaceCubesAndDiscardCards)]
     }
+    if (isMigrationChooseActionCustomMove(move)) {
+      return [this.startRule(RuleId.MigrationActionChooseCube)]
+    }
     if (isPassCycleCustomMove(move)) {
       this.memorize<PlayerColor[] | undefined>(Memory.PassedPlayers, (oldValue) => oldValue?.concat(this.player) ?? [this.player])
       return [this.startPlayerTurn(this.playerHelper.nextPlayer === this.player ? RuleId.EndOfCycle : RuleId.ChooseAction, this.nextPlayer)]
@@ -61,6 +67,8 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
         return this.canAdaptCardFromHand()
       case EcosystemActionType.Evolution:
         return !this.materialHelper.cubeMaterial.location(LocationType.CubeSpotOnEcosystemBoard).player(this.player).locationId(EcosystemActionType.Evolution).exists
+      case EcosystemActionType.Migration:
+        return new MigrationActionChooseCubeRule(this.game).getPlayerMoves().length > 0
       default:
         return true
     }

@@ -25,6 +25,11 @@ import {
 import {
   ExpansionActionPlaceTerritoryTokenOnWetlandRule
 } from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnWetlandRule'
+import { MigrationActionChooseCubeRule } from './rules/actions/colonization/migration/MigrationActionChooseCubeRule'
+import { MigrationActionMoveTerritoryTokenOnForestRule } from './rules/actions/colonization/migration/MigrationActionMoveTerritoryTokenOnForestRule'
+import { MigrationActionMoveTerritoryTokenOnMeadowRule } from './rules/actions/colonization/migration/MigrationActionMoveTerritoryTokenOnMeadowRule'
+import { MigrationActionMoveTerritoryTokenOnMountainRule } from './rules/actions/colonization/migration/MigrationActionMoveTerritoryTokenOnMountainRule'
+import { MigrationActionMoveTerritoryTokenOnWetlandRule } from './rules/actions/colonization/migration/MigrationActionMoveTerritoryTokenOnWetlandRule'
 import { EvolutionActionDiscardCardsFromHandRule } from './rules/actions/evolution/EvolutionActionDiscardCardsFromHandRule'
 import { EvolutionActionPickCardsRule } from './rules/actions/evolution/EvolutionActionPickCardsRule'
 import { EvolutionActionPlaceCubesAndDiscardCardsRule } from './rules/actions/evolution/EvolutionActionPlaceCubesAndDiscardCardsRule'
@@ -99,7 +104,12 @@ export class BiotopesRules
     [RuleId.EndOfCycle]: EndOfCycleRule,
     [RuleId.EvolutionActionPlaceCubesAndDiscardCards]: EvolutionActionPlaceCubesAndDiscardCardsRule,
     [RuleId.EvolutionActionPickCards]: EvolutionActionPickCardsRule,
-    [RuleId.EvolutionActionDiscardCardsFromHand]: EvolutionActionDiscardCardsFromHandRule
+    [RuleId.EvolutionActionDiscardCardsFromHand]: EvolutionActionDiscardCardsFromHandRule,
+    [RuleId.MigrationActionChooseCube]: MigrationActionChooseCubeRule,
+    [RuleId.MigrationActionMoveTerritoryTokenOnMountain]: MigrationActionMoveTerritoryTokenOnMountainRule,
+    [RuleId.MigrationActionMoveTerritoryTokenOnForest]: MigrationActionMoveTerritoryTokenOnForestRule,
+    [RuleId.MigrationActionMoveTerritoryTokenOnMeadow]: MigrationActionMoveTerritoryTokenOnMeadowRule,
+    [RuleId.MigrationActionMoveTerritoryTokenOnWetland]: MigrationActionMoveTerritoryTokenOnWetlandRule
   }
 
   giveTime(): number {
