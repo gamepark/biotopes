@@ -1,25 +1,32 @@
-import { MaterialMove, PlayMoveContext } from '@gamepark/rules-api'
-import { BiotopesItemMove, isBiotopesMoveItemTypeAtOnce } from '../BiotopeTypes'
+import { PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
+import { BiotopesItemMove, BiotopesMove, isBiotopesMoveItemTypeAtOnce } from '../BiotopeTypes'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { SpeciesCardId, SpeciesCardType, SpeciesDietType } from '../material/SpeciesCard'
 import { PlayerColor } from '../PlayerColor'
-import { BiotopesPlayerTurnRule } from './BiotopesPlayerTurnRule'
+import { MaterialHelper } from './helpers/MaterialHelper'
+import { PlayerHelper } from './helpers/PlayerHelper'
 import { RuleId } from './RuleId'
 
-export class GameSetupHandMulliganRule extends BiotopesPlayerTurnRule {
-  public getPlayerMoves(): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
-    const nextRule = this.isLastPlayer() ? RuleId.GameSetupPlaceTerritoryTokens : RuleId.GameSetupHandMulligan
+export class GameSetupHandMulliganRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
+
+  private readonly materialHelper = new MaterialHelper(this.game)
+  private readonly playerHelper = new PlayerHelper(this.game)
+
+  public getPlayerMoves(): BiotopesMove[] {
+    const nextRule = this.playerHelper.isLastPlayer ? RuleId.GameSetupPlaceTerritoryTokens : RuleId.GameSetupHandMulligan
     return [
-      this.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardHandSpot).player(this.player).moveItemsAtOnce({
-        type: LocationType.SpeciesDiscardsSpot
-      }) as MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
-    ].concat(this.startPlayerTurn(nextRule, this.nextPlayer))
+      this.materialHelper.playerSpeciesCardHand.moveItemsAtOnce({
+        type: LocationType.SpeciesDiscardsSpot,
+        y: SpeciesDietType.Herbivore
+      }),
+      this.startPlayerTurn(nextRule, this.nextPlayer)
+    ]
   }
 
-  public afterItemMove(move: BiotopesItemMove, _context?: PlayMoveContext): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
+  public afterItemMove(move: BiotopesItemMove, _context?: PlayMoveContext): BiotopesMove[] {
     if (isBiotopesMoveItemTypeAtOnce(MaterialType.SpeciesCard)(move) && move.location.type === LocationType.SpeciesDiscardsSpot) {
-      const herbivoresDeck = this.herbivoresDeckMaterial.deck()
+      const herbivoresDeck = this.materialHelper.herbivoresDeckMaterial.deck()
       const mountainHerbivoreIndex = herbivoresDeck
         .id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreMountain)
         .limit(1)
@@ -37,7 +44,7 @@ export class GameSetupHandMulliganRule extends BiotopesPlayerTurnRule {
         .limit(1)
         .getIndex()
       const cardsToDealIndexes = [mountainHerbivoreIndex, forestHerbivoreIndex, meadowHerbivoreIndex, wetlandHerbivoreIndex]
-      const nextRule = this.isLastPlayer() ? RuleId.GameSetupPlaceTerritoryTokens : RuleId.GameSetupHandMulligan
+      const nextRule = this.playerHelper.isLastPlayer ? RuleId.GameSetupPlaceTerritoryTokens : RuleId.GameSetupHandMulligan
       return [
         herbivoresDeck.index(cardsToDealIndexes).dealAtOnce(
           {
@@ -50,7 +57,7 @@ export class GameSetupHandMulliganRule extends BiotopesPlayerTurnRule {
       ]
     }
     if (isBiotopesMoveItemTypeAtOnce(MaterialType.SpeciesCard)(move) && move.location.type === LocationType.PlayerSpeciesCardHandSpot) {
-      return move.reveal === undefined ? [] : [this.material(MaterialType.SpeciesCard).location((l) => l.type === LocationType.SpeciesDecksSpot && l.y === SpeciesDietType.Herbivore).shuffle()]
+      return move.reveal === undefined ? [] : [this.materialHelper.herbivoresDeckMaterial.shuffle()]
     }
     return super.afterItemMove(move, _context)
   }

@@ -1,10 +1,10 @@
-import { MaterialGameSetup, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
+import { MaterialGameSetup, XYCoordinates } from '@gamepark/rules-api'
 import { randomInt, sample, sampleSize } from 'es-toolkit'
 import { BiotopesOptions } from './BiotopesOptions'
 import { BiotopesRules } from './BiotopesRules'
 import { EnvironmentalConditionsBoardSide } from './EnvironmentalConditionsBoardSide'
 import { advancedCardsByBiotope, basicBiotopeCards, getBiotopeCardType } from './material/BiotopeCard'
-import { BiotopeType, biotopeType } from './material/BiotopeType'
+import { biotopeType } from './material/BiotopeType'
 import { biotopeEnvironmentalConditionTokens, speciesTypeEnvironmentalConditionTokens } from './material/EnvironmentalConditionToken'
 import { LandscapeTile, landscapeTiles } from './material/LandscapeTile'
 import { LocationType } from './material/LocationType'
@@ -64,7 +64,6 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
     this.memorize<EnvironmentalConditionsBoardSide>(Memory.AntSide, EnvironmentalConditionsBoardSide.Butterfly)
     this.setupLandscape()
     this.setupTokens()
-    this.setupCubes()
     this.setupBiotopeCards(options.advancedBiotopes ?? false)
     this.setupDecks()
     this.setupHands()
@@ -114,18 +113,6 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
         })
       )
     )
-  }
-
-  setupCubes() {
-    const cubes = biotopeType.map(
-      (biotope) =>
-        ({
-          id: biotope,
-          location: { type: LocationType.CubeStockpileSpot, id: biotope },
-          quantity: this.game.players.length * 8
-        }) as MaterialItem<PlayerColor, LocationType, BiotopeType>
-    )
-    this.material(MaterialType.Cube).createItems(cubes)
   }
 
   setupBiotopeCards(advancedBiotopes: boolean) {

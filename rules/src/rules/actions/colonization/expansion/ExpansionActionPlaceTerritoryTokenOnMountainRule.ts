@@ -1,6 +1,21 @@
-import { ExpansionActionPlaceTerritoryTokenRule } from './ExpansionActionPlaceTerritoryTokenRule'
+import { ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
+import { BiotopesMove } from '../../../../BiotopeTypes'
+import { LocationType } from '../../../../material/LocationType'
+import { MaterialType } from '../../../../material/MaterialType'
+import { PlayerColor } from '../../../../PlayerColor'
+import { ColonizationHelper } from '../../../helpers/ColonizationHelper'
+import { RuleId } from '../../../RuleId'
 import { BiotopeType } from '../../../../material/BiotopeType'
 
-export class ExpansionActionPlaceTerritoryTokenOnMountainRule extends ExpansionActionPlaceTerritoryTokenRule {
-  biotopeToExpandTo = BiotopeType.Mountain
+export class ExpansionActionPlaceTerritoryTokenOnMountainRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
+
+  private readonly colonizationHelper = new ColonizationHelper(this.game)
+
+  public getPlayerMoves(): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
+    return this.colonizationHelper.getPlaceTerritoryTokenMoves(BiotopeType.Mountain)
+  }
+
+  public afterItemMove(move: ItemMove<PlayerColor, MaterialType, LocationType>, context?: PlayMoveContext): BiotopesMove[] {
+    return this.colonizationHelper.afterPlaceTerritoryTokenMove(move, context)
+  }
 }

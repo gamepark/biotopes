@@ -1,4 +1,13 @@
-import { MaterialGame, MaterialMove, isMoveItemType, isMoveItemTypeAtOnce, ItemMove, isMoveItemsAtOnce, isStartPlayerTurn } from '@gamepark/rules-api'
+import {
+  MaterialGame,
+  MaterialMove,
+  isMoveItemType,
+  isMoveItemTypeAtOnce,
+  ItemMove,
+  isMoveItemsAtOnce,
+  isStartPlayerTurn,
+  PlayerTurnRule
+} from '@gamepark/rules-api'
 import { PlayerColor } from './PlayerColor'
 import { MaterialType } from './material/MaterialType'
 import { LocationType } from './material/LocationType'
@@ -9,6 +18,8 @@ export type BiotopesMove = MaterialMove<PlayerColor, MaterialType, LocationType,
 export type BiotopesGame = MaterialGame<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
 
 export type BiotopesItemMove = ItemMove<PlayerColor, MaterialType, LocationType>
+
+export type BiotopesPlayerTurnRule = PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
 
 export const isBiotopesMoveItemType = isMoveItemType<MaterialType>
 

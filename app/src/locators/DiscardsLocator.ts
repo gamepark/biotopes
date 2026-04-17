@@ -6,7 +6,7 @@ import { DeckLocator, MaterialContext } from '@gamepark/react-game'
 import { Coordinates, Location } from '@gamepark/rules-api'
 import { decksLocator } from './DecksLocator.ts'
 
-class DecksLocator extends DeckLocator<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
+class DiscardsLocator extends DeckLocator<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   maxCount = 40
   public getCoordinates(location: Location<PlayerColor, LocationType>, _context: MaterialContext<PlayerColor, MaterialType, LocationType>): Partial<Coordinates> {
     const deckCoordinates = decksLocator.getCoordinates(location, _context)
@@ -14,4 +14,4 @@ class DecksLocator extends DeckLocator<PlayerColor, MaterialType, LocationType, 
   }
 }
 
-export const discardsLocator = new DecksLocator()
+export const discardsLocator = new DiscardsLocator()
