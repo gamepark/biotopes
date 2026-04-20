@@ -9,7 +9,6 @@ import { PlayerHelper } from './helpers/PlayerHelper'
 import { RuleId } from './RuleId'
 
 export class GameSetupHandMulliganRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-
   private readonly materialHelper = new MaterialHelper(this.game)
   private readonly playerHelper = new PlayerHelper(this.game)
 

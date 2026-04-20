@@ -64,7 +64,10 @@ class CubeOnEcosystemBoardLocator extends ListLocator<PlayerColor, MaterialType,
     return item.location.player !== (context.rules.game.view ?? context.player ?? context.rules.players[0])
   }
 
-  public getLocationIndex(location: Location<PlayerColor, LocationType>, _context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>): number | undefined {
+  public getLocationIndex(
+    location: Location<PlayerColor, LocationType>,
+    _context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
+  ): number | undefined {
     if (location.id === EcosystemActionType.Evolution) {
       return (location.x ?? 1) - 1
     }

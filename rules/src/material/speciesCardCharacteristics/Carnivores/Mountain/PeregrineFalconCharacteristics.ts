@@ -17,5 +17,4 @@ export class PeregrineFalconCharacteristics extends MountainCarnivoreCharacteris
   get effectType(): unknown {
     return undefined
   }
-
 }

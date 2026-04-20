@@ -2,7 +2,8 @@ import { css } from '@emotion/react'
 import {
   isAdaptationChooseActionCustomMove,
   isEvolutionChooseActionCustomMove,
-  isExpansionChooseActionCustomMove, isMigrationChooseActionCustomMove,
+  isExpansionChooseActionCustomMove,
+  isMigrationChooseActionCustomMove,
   isPassCycleCustomMove
 } from '@gamepark/biotopes/material/CustomMoveType.ts'
 import { HeaderText, Picture } from '@gamepark/react-game'

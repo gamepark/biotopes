@@ -17,5 +17,4 @@ export class RedKiteCharacteristics extends MeadowCarnivoreCharacteristics {
   get effectType(): unknown {
     return undefined
   }
-
 }

@@ -13,5 +13,4 @@ export class SouthwesternWaterVoleCharacteristics extends WetlandHerbivoreCharac
   get effectType(): unknown {
     return undefined
   }
-
 }

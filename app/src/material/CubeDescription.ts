@@ -23,14 +23,19 @@ class CubeDescription extends FlatMaterialDescription<PlayerColor, MaterialType,
 
   transparency = true
 
-  public getStockLocation(item: MaterialItem<PlayerColor, LocationType, BiotopeType>, _context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>): Location<PlayerColor, LocationType> | undefined {
+  public getStockLocation(
+    item: MaterialItem<PlayerColor, LocationType, BiotopeType>,
+    _context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
+  ): Location<PlayerColor, LocationType> | undefined {
     return {
       type: LocationType.CubeStockpileSpot,
       id: item.id
     }
   }
 
-  public getStaticItems(_context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>): MaterialItem<PlayerColor, LocationType, BiotopeType>[] {
+  public getStaticItems(
+    _context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
+  ): MaterialItem<PlayerColor, LocationType, BiotopeType>[] {
     return biotopeType.map((type) => ({ id: type, quantity: 40, location: { type: LocationType.CubeStockpileSpot, id: type } }))
   }
 }

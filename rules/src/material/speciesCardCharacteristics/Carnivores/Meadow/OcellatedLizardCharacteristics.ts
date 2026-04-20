@@ -17,5 +17,4 @@ export class OcellatedLizardCharacteristics extends MeadowCarnivoreCharacteristi
   get effectType(): unknown {
     return undefined
   }
-
 }

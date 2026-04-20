@@ -17,5 +17,4 @@ export class CommonGenetCharacteristics extends ForestCarnivoreCharacteristics {
   get effectType(): unknown {
     return undefined
   }
-
 }

@@ -10,7 +10,7 @@ import changeView = MaterialMoveBuilder.changeView
 const isPlayerBeingViewed = (me: PlayerColor | undefined, player: PlayerColor, rules: BiotopesRules | undefined) => {
   if (me !== undefined) {
     if (rules?.game.view === undefined) {
-      return  me === player
+      return me === player
     }
     return player === rules.game.view
   }
@@ -33,7 +33,13 @@ export const PlayerPanels = () => {
   return createPortal(
     <>
       {players.map((player, index) => (
-        <StyledPlayerPanel key={player.id} player={player} css={panelPosition(index)} onClick={isPlayerBeingViewed(me, player.id, rules) ? undefined : () => play(changeView(player.id)) } activeRing />
+        <StyledPlayerPanel
+          key={player.id}
+          player={player}
+          css={panelPosition(index)}
+          onClick={isPlayerBeingViewed(me, player.id, rules) ? undefined : () => play(changeView(player.id))}
+          activeRing
+        />
       ))}
     </>,
     root

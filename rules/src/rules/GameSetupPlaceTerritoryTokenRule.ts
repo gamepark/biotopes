@@ -8,7 +8,6 @@ import { RuleId } from './RuleId'
 import { BiotopesMove, isBiotopesMoveItemType } from '../BiotopeTypes'
 
 export class GameSetupPlaceTerritoryTokenRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-
   private readonly landscapeHelper = new LandscapeHelper(this.game)
   private readonly materialHelper = new MaterialHelper(this.game)
 
@@ -28,10 +27,7 @@ export class GameSetupPlaceTerritoryTokenRule extends PlayerTurnRule<PlayerColor
     )
   }
 
-  public afterItemMove(
-    move: ItemMove<PlayerColor, MaterialType, LocationType>,
-    _context?: PlayMoveContext
-  ): BiotopesMove[] {
+  public afterItemMove(move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): BiotopesMove[] {
     if (isBiotopesMoveItemType(MaterialType.TerritoryToken)(move) && move.location.type === LocationType.CentralLandscapeSpot) {
       const nextRule = this.areAllTokenPlaced() ? RuleId.GameSetupRiver : RuleId.GameSetupPlaceTerritoryTokens
       return [this.startPlayerTurn(nextRule, this.nextPlayer)]
@@ -51,9 +47,7 @@ export class GameSetupPlaceTerritoryTokenRule extends PlayerTurnRule<PlayerColor
         ?.map((item) => ({ x: item.location.x!, y: item.location.y! }))
         .flatMap((coords) => getAdjacentHexagons(coords).concat(coords)) ?? []
     const otherPlayersTerritoryTokenCoords =
-      this.materialHelper.otherPlayersTerritoryTokensOnCentralLandscape
-        .getItems()
-        ?.map((token) => ({ x: token.location.x!, y: token.location.y! })) ?? []
+      this.materialHelper.otherPlayersTerritoryTokensOnCentralLandscape.getItems()?.map((token) => ({ x: token.location.x!, y: token.location.y! })) ?? []
     return playerAlreadyPlacedTokenCoords.concat(otherPlayersTerritoryTokenCoords)
   }
 }

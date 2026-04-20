@@ -17,5 +17,4 @@ export class SpanishPsammodromusCharacteristics extends MeadowInsectivoreCharact
   get effectType(): unknown {
     return undefined
   }
-
 }

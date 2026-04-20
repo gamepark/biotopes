@@ -1,4 +1,4 @@
-import { ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
+import { ItemMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
 import { BiotopesMove } from '../../../../BiotopeTypes'
 import { LocationType } from '../../../../material/LocationType'
 import { MaterialType } from '../../../../material/MaterialType'
@@ -8,10 +8,9 @@ import { RuleId } from '../../../RuleId'
 import { BiotopeType } from '../../../../material/BiotopeType'
 
 export class ExpansionActionPlaceTerritoryTokenOnMeadowRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-
   private readonly colonizationHelper = new ColonizationHelper(this.game)
 
-  public getPlayerMoves(): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
+  public getPlayerMoves(): BiotopesMove[] {
     return this.colonizationHelper.getPlaceTerritoryTokenMoves(BiotopeType.Meadow)
   }
 

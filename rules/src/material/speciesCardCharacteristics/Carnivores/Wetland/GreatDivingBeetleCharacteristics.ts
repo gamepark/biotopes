@@ -17,5 +17,4 @@ export class GreatDivingBeetleCharacteristics extends WetlandCarnivoreCharacteri
   get effectType(): unknown {
     return undefined
   }
-
 }

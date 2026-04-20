@@ -17,5 +17,4 @@ export class WallcreeperCharacteristics extends MountainInsectivoreCharacteristi
   get effectType(): unknown {
     return undefined
   }
-
 }

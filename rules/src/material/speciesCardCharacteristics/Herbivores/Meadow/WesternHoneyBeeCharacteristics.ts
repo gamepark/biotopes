@@ -13,5 +13,4 @@ export class WesternHoneyBeeCharacteristics extends MeadowHerbivoreCharacteristi
   get effectType(): unknown {
     return undefined
   }
-
 }

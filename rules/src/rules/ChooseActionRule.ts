@@ -9,7 +9,8 @@ import {
   isEvolutionChooseActionCustomMove,
   isExpansionChooseActionCustomMove,
   isMigrationChooseActionCustomMove,
-  isPassCycleCustomMove
+  isPassCycleCustomMove,
+  isReproductionChooseActionCustomMove
 } from '../material/CustomMoveType'
 import { EcosystemActionType, ecosystemActionType } from '../material/EcosystemActionType'
 import { LocationType } from '../material/LocationType'
@@ -23,19 +24,16 @@ import { MigrationActionChooseCubeRule } from './actions/colonization/migration/
 import { MaterialHelper } from './helpers/MaterialHelper'
 import { PlayerHelper } from './helpers/PlayerHelper'
 import { RuleId } from './RuleId'
+import { ReproductionActionPlaceCubeRule } from './actions/reproduction/ReproductionActionPlaceCubeRule'
 
 export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-
   private readonly materialHelper = new MaterialHelper(this.game)
   private readonly playerHelper = new PlayerHelper(this.game)
 
   public getPlayerMoves(): BiotopesMove[] {
     return ecosystemActionType
       .filter((type) => this.canPerformAction(type))
-      .map(
-        (type) =>
-          this.customMove<CustomMoveType, ChooseActionCustomMoveData<typeof type>>(CustomMoveType.ChooseAction, { action: type }) as BiotopesMove
-      )
+      .map<BiotopesMove>((type) => this.customMove<CustomMoveType, ChooseActionCustomMoveData<typeof type>>(CustomMoveType.ChooseAction, { action: type }))
       .concat(this.customMove<CustomMoveType, undefined>(CustomMoveType.PassCycle))
   }
 
@@ -52,6 +50,9 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
     if (isMigrationChooseActionCustomMove(move)) {
       return [this.startRule(RuleId.MigrationActionChooseCube)]
     }
+    if (isReproductionChooseActionCustomMove(move)) {
+      return [this.startRule(RuleId.ReproductionActionPlaceCube)]
+    }
     if (isPassCycleCustomMove(move)) {
       this.memorize<PlayerColor[] | undefined>(Memory.PassedPlayers, (oldValue) => oldValue?.concat(this.player) ?? [this.player])
       return [this.startPlayerTurn(this.playerHelper.nextPlayer === this.player ? RuleId.EndOfCycle : RuleId.ChooseAction, this.nextPlayer)]
@@ -66,19 +67,29 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
       case EcosystemActionType.Adaptation:
         return this.canAdaptCardFromHand()
       case EcosystemActionType.Evolution:
-        return !this.materialHelper.cubeMaterial.location(LocationType.CubeSpotOnEcosystemBoard).player(this.player).locationId(EcosystemActionType.Evolution).exists
+        return !this.materialHelper.cubeMaterial.location(LocationType.CubeSpotOnEcosystemBoard).player(this.player).locationId(EcosystemActionType.Evolution)
+          .exists
       case EcosystemActionType.Migration:
         return new MigrationActionChooseCubeRule(this.game).getPlayerMoves().length > 0
+      case EcosystemActionType.Reproduction:
+        return (
+          new ReproductionActionPlaceCubeRule(this.game).getPlayerMoves().length > 0 &&
+          !this.materialHelper.cubeMaterial.location(LocationType.CubeSpotOnEcosystemBoard).player(this.player).locationId(EcosystemActionType.Reproduction)
+            .exists
+        )
       default:
         return true
     }
   }
 
   private canAdaptCardFromHand() {
-    const cubeCounts = countBy(this.materialHelper.playerCubesOnSpeciesCards.getItems().map((cube) => {
-      const parentCard = this.materialHelper.playerSpeciesCardTableau.index(cube.location.parent).getItem<KnownSpeciesCardId>()!
-      return speciesCardCharacteristics[parentCard.id.front].cubeType
-    }), (cubeType) => cubeType)
+    const cubeCounts = countBy(
+      this.materialHelper.playerCubesOnSpeciesCards.getItems().map((cube) => {
+        const parentCard = this.materialHelper.playerSpeciesCardTableau.index(cube.location.parent).getItem<KnownSpeciesCardId>()!
+        return speciesCardCharacteristics[parentCard.id.front].cubeType
+      }),
+      (cubeType) => cubeType
+    )
     cubeCounts[CubeType.Plant] = this.materialHelper.playerCubesOnBiotopeCards.length
     return this.materialHelper.playerSpeciesCardHand.getItems<KnownSpeciesCardId>().some((card) => {
       const characteristics = speciesCardCharacteristics[card.id.front]

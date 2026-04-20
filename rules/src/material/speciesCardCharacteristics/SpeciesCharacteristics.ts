@@ -114,7 +114,7 @@ export abstract class MeadowCarnivoreCharacteristics extends CarnivoreSpeciesCha
 }
 
 export abstract class WetlandCarnivoreCharacteristics extends CarnivoreSpeciesCharacteristics {
-  get biotope():  BiotopeType {
+  get biotope(): BiotopeType {
     return BiotopeType.Wetland
   }
 }

@@ -13,5 +13,4 @@ export class EurasianBeaverCharacteristics extends WetlandHerbivoreCharacteristi
   get effectType(): unknown {
     return undefined
   }
-
 }

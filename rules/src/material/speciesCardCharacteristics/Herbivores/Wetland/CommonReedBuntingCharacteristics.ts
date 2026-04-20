@@ -13,5 +13,4 @@ export class CommonReedBuntingCharacteristics extends WetlandHerbivoreCharacteri
   get effectType(): unknown {
     return undefined
   }
-
 }

@@ -17,5 +17,4 @@ export class AlpineMarmotCharacteristics extends MountainInsectivoreCharacterist
   get effectType(): unknown {
     return undefined
   }
-
 }

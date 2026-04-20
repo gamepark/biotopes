@@ -17,5 +17,4 @@ export class AlpineNewtCharacteristics extends MountainInsectivoreCharacteristic
   get effectType(): unknown {
     return undefined
   }
-
 }

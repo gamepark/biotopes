@@ -19,4 +19,11 @@ export enum RuleId {
   MigrationActionMoveTerritoryTokenOnForest,
   MigrationActionMoveTerritoryTokenOnMeadow,
   MigrationActionMoveTerritoryTokenOnWetland,
+  ReproductionActionPlaceCube,
+  ReproductionActionCreateCubes,
+  DiscardCardToDrawCube,
+  DrawMountainCube,
+  DrawForestCube,
+  DrawMeadowCube,
+  DrawWetlandCube
 }

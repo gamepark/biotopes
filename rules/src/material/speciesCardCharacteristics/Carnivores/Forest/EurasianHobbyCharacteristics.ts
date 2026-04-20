@@ -17,5 +17,4 @@ export class EurasianHobbyCharacteristics extends ForestCarnivoreCharacteristics
   get effectType(): unknown {
     return undefined
   }
-
 }

@@ -5,7 +5,6 @@ import { MaterialType } from '../../material/MaterialType'
 import { PlayerColor } from '../../PlayerColor'
 
 export class BiotopeCubeStrategy implements LocationStrategy<PlayerColor, MaterialType, LocationType> {
-
   private readonly enforce: boolean = false
 
   constructor(enforce = false) {
@@ -16,5 +15,4 @@ export class BiotopeCubeStrategy implements LocationStrategy<PlayerColor, Materi
       item.location.id = item.id
     }
   }
-
 }

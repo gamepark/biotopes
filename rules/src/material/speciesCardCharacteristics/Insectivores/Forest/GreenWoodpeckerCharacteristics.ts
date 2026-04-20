@@ -17,5 +17,4 @@ export class GreenWoodpeckerCharacteristics extends ForestInsectivoreCharacteris
   get effectType(): unknown {
     return undefined
   }
-
 }

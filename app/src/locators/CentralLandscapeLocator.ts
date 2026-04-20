@@ -29,8 +29,8 @@ class CentralLandscapeLocator extends HexagonalGridLocator<PlayerColor, Material
   }
 
   getLocations(context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>): Partial<Location<PlayerColor, LocationType>>[] {
-     const landscape = new LandscapeHelper(context.rules.game).gridWithCoordinates
-     return landscape.map(({ x, y }) => ({ type: LocationType.CentralLandscapeSpot, x: x, y: y }))
+    const landscape = new LandscapeHelper(context.rules.game).gridWithCoordinates
+    return landscape.map(({ x, y }) => ({ type: LocationType.CentralLandscapeSpot, x: x, y: y }))
   }
 }
 

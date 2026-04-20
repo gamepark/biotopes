@@ -17,10 +17,10 @@ import { RuleId } from './rules/RuleId'
 
 const landscapeSetupCoordinate: Record<number, (XYCoordinates & { rotation?: number } & { id?: LandscapeTile })[]> = {
   2: [
-    { x: -2, y: -1, rotation: 0, id: LandscapeTile.A1 },
-    { x: 1, y: -2, rotation: 1, id: LandscapeTile.A2 },
-    { x: -1, y: 1, rotation: 3, id: LandscapeTile.A3 },
-    { x: 2, y: 0, rotation: 1, id: LandscapeTile.A4 }
+    { x: -2, y: -1 },
+    { x: 1, y: -2 },
+    { x: -1, y: 1 },
+    { x: 2, y: 0 }
   ],
   3: [
     { x: -3, y: -1 },
@@ -144,22 +144,31 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
         location: { type: LocationType.SpeciesDecksSpot }
       }))
     )
-    speciesDietTypes.forEach((deck) => this.material(MaterialType.SpeciesCard).location(LocationType.SpeciesDecksSpot).location((l) => l.y === deck).shuffle())
+    speciesDietTypes.forEach((deck) =>
+      this.material(MaterialType.SpeciesCard)
+        .location(LocationType.SpeciesDecksSpot)
+        .location((l) => l.y === deck)
+        .shuffle()
+    )
   }
 
   private setupHands() {
-    const herbivoresDeckMaterial = this.material(MaterialType.SpeciesCard).location(LocationType.SpeciesDecksSpot).location((l) => l.y === SpeciesDietType.Herbivore).deck()
+    const herbivoresDeckMaterial = this.material(MaterialType.SpeciesCard)
+      .location(LocationType.SpeciesDecksSpot)
+      .location((l) => l.y === SpeciesDietType.Herbivore)
+      .deck()
     const mountainHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreMountain)
     const forestHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreForest)
     const meadowHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreMeadow)
     const wetlandsHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreWetland)
     this.players.forEach((player, index) => {
-      herbivoresDeckMaterial.index([
-        mountainHerbivores.entries[index][0],
-        forestHerbivores.entries[index][0],
-        meadowHerbivores.entries[index][0],
-        wetlandsHerbivores.entries[index][0]
-      ])
+      herbivoresDeckMaterial
+        .index([
+          mountainHerbivores.entries[index][0],
+          forestHerbivores.entries[index][0],
+          meadowHerbivores.entries[index][0],
+          wetlandsHerbivores.entries[index][0]
+        ])
         .dealAtOnce(
           {
             type: LocationType.PlayerSpeciesCardHandSpot,

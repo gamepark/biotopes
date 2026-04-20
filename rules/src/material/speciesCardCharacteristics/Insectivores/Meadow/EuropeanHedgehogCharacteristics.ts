@@ -17,5 +17,4 @@ export class EuropeanHedgehogCharacteristics extends MeadowInsectivoreCharacteri
   get effectType(): unknown {
     return undefined
   }
-
 }

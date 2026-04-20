@@ -17,5 +17,4 @@ export class EuropeanCrestedTitCharacteristics extends ForestInsectivoreCharacte
   get effectType(): unknown {
     return undefined
   }
-
 }

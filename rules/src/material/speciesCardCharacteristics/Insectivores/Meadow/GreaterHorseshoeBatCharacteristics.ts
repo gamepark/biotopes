@@ -17,5 +17,4 @@ export class GreaterHorseshoeBatCharacteristics extends MeadowInsectivoreCharact
   get effectType(): unknown {
     return undefined
   }
-
 }

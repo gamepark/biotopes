@@ -17,5 +17,4 @@ export class MarbledNewtCharacteristics extends ForestInsectivoreCharacteristics
   get effectType(): unknown {
     return undefined
   }
-
 }

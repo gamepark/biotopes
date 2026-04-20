@@ -17,5 +17,4 @@ export class DaubentonsBatCharacteristics extends WetlandInsectivoreCharacterist
   get effectType(): unknown {
     return undefined
   }
-
 }

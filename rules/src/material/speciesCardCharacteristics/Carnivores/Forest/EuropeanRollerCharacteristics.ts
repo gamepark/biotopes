@@ -17,5 +17,4 @@ export class EuropeanRollerCharacteristics extends ForestCarnivoreCharacteristic
   get effectType(): unknown {
     return undefined
   }
-
 }

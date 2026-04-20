@@ -17,5 +17,4 @@ export class SquaccoHeronCharacteristics extends WetlandCarnivoreCharacteristics
   get effectType(): unknown {
     return undefined
   }
-
 }

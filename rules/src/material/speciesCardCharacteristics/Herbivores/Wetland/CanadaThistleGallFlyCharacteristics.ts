@@ -1,7 +1,7 @@
 import { CubeType } from '../../../CubeType'
 import { WetlandHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
 
-export class CanadaThistleGallFlyCharacteristics  extends WetlandHerbivoreCharacteristics {
+export class CanadaThistleGallFlyCharacteristics extends WetlandHerbivoreCharacteristics {
   get cubeType(): CubeType {
     return CubeType.Insect
   }
@@ -13,5 +13,4 @@ export class CanadaThistleGallFlyCharacteristics  extends WetlandHerbivoreCharac
   get effectType(): unknown {
     return undefined
   }
-
 }

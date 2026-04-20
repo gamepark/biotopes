@@ -17,5 +17,4 @@ export class AspicViperCharacteristics extends MountainCarnivoreCharacteristics 
   get effectType(): unknown {
     return undefined
   }
-
 }

@@ -13,5 +13,4 @@ export class MinotaurBeetleCharacteristics extends MeadowHerbivoreCharacteristic
   get effectType(): unknown {
     return undefined
   }
-
 }

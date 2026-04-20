@@ -17,5 +17,4 @@ export class GreenWhipSnakeCharacteristics extends MeadowCarnivoreCharacteristic
   get effectType(): unknown {
     return undefined
   }
-
 }

@@ -17,5 +17,4 @@ export class MerlinCharacteristics extends MeadowCarnivoreCharacteristics {
   get effectType(): unknown {
     return undefined
   }
-
 }

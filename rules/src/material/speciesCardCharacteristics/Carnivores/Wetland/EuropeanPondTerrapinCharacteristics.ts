@@ -17,5 +17,4 @@ export class EuropeanPondTerrapinCharacteristics extends WetlandCarnivoreCharact
   get effectType(): unknown {
     return undefined
   }
-
 }

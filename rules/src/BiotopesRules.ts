@@ -13,18 +13,10 @@ import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
 import { AdaptationActionRule } from './rules/actions/adaptation/AdaptationActionRule'
 import { ExpansionActionChooseCubeRule } from './rules/actions/colonization/expansion/ExpansionActionChooseCubeRule'
-import {
-  ExpansionActionPlaceTerritoryTokenOnForestRule
-} from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnForestRule'
-import {
-  ExpansionActionPlaceTerritoryTokenOnMeadowRule
-} from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnMeadowRule'
-import {
-  ExpansionActionPlaceTerritoryTokenOnMountainRule
-} from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnMountainRule'
-import {
-  ExpansionActionPlaceTerritoryTokenOnWetlandRule
-} from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnWetlandRule'
+import { ExpansionActionPlaceTerritoryTokenOnForestRule } from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnForestRule'
+import { ExpansionActionPlaceTerritoryTokenOnMeadowRule } from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnMeadowRule'
+import { ExpansionActionPlaceTerritoryTokenOnMountainRule } from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnMountainRule'
+import { ExpansionActionPlaceTerritoryTokenOnWetlandRule } from './rules/actions/colonization/expansion/ExpansionActionPlaceTerritoryTokenOnWetlandRule'
 import { MigrationActionChooseCubeRule } from './rules/actions/colonization/migration/MigrationActionChooseCubeRule'
 import { MigrationActionMoveTerritoryTokenOnForestRule } from './rules/actions/colonization/migration/MigrationActionMoveTerritoryTokenOnForestRule'
 import { MigrationActionMoveTerritoryTokenOnMeadowRule } from './rules/actions/colonization/migration/MigrationActionMoveTerritoryTokenOnMeadowRule'
@@ -43,6 +35,13 @@ import { RuleId } from './rules/RuleId'
 import { BiotopeCubeStrategy } from './strategies/location/BiotopeCubeStrategy'
 import { SpeciesRiverStrategy } from './strategies/location/SpeciesRiverStrategy'
 import { SpeciesStrategy } from './strategies/location/SpeciesStrategy'
+import { ReproductionActionPlaceCubeRule } from './rules/actions/reproduction/ReproductionActionPlaceCubeRule'
+import { ReproductionActionCreateCubesRule } from './rules/actions/reproduction/ReproductionActionCreateCubesRule'
+import { DiscardCardToDrawCubeRule } from './rules/actions/common/DiscardCardToDrawCubeRule'
+import { DrawMountainCubeRule } from './rules/actions/common/DrawMountainCubeRule'
+import { DrawForestCubeRule } from './rules/actions/common/DrawForestCubeRule'
+import { DrawMeadowCubeRule } from './rules/actions/common/DrawMeadowCubeRule'
+import { DrawWetlandCubeRule } from './rules/actions/common/DrawWetlandCubeRule'
 
 /**
  * This class implements the rules of the board game.
@@ -109,7 +108,14 @@ export class BiotopesRules
     [RuleId.MigrationActionMoveTerritoryTokenOnMountain]: MigrationActionMoveTerritoryTokenOnMountainRule,
     [RuleId.MigrationActionMoveTerritoryTokenOnForest]: MigrationActionMoveTerritoryTokenOnForestRule,
     [RuleId.MigrationActionMoveTerritoryTokenOnMeadow]: MigrationActionMoveTerritoryTokenOnMeadowRule,
-    [RuleId.MigrationActionMoveTerritoryTokenOnWetland]: MigrationActionMoveTerritoryTokenOnWetlandRule
+    [RuleId.MigrationActionMoveTerritoryTokenOnWetland]: MigrationActionMoveTerritoryTokenOnWetlandRule,
+    [RuleId.ReproductionActionPlaceCube]: ReproductionActionPlaceCubeRule,
+    [RuleId.ReproductionActionCreateCubes]: ReproductionActionCreateCubesRule,
+    [RuleId.DiscardCardToDrawCube]: DiscardCardToDrawCubeRule,
+    [RuleId.DrawMountainCube]: DrawMountainCubeRule,
+    [RuleId.DrawForestCube]: DrawForestCubeRule,
+    [RuleId.DrawMeadowCube]: DrawMeadowCubeRule,
+    [RuleId.DrawWetlandCube]: DrawWetlandCubeRule
   }
 
   giveTime(): number {

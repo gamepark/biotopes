@@ -17,5 +17,4 @@ export class ViviparousLizardCharacteristics extends MountainInsectivoreCharacte
   get effectType(): unknown {
     return undefined
   }
-
 }

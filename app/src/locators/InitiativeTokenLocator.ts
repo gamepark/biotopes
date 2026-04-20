@@ -7,7 +7,7 @@ import { MaterialItem } from '@gamepark/rules-api'
 import { ecosystemBoardLocator } from './EcosystemBoardLocator.ts'
 
 class InitiativeTokenLocator extends Locator<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-  coordinates = { x: ecosystemBoardLocator.coordinates.x - 8, y: ecosystemBoardLocator.coordinates.y - 10}
+  coordinates = { x: ecosystemBoardLocator.coordinates.x - 8, y: ecosystemBoardLocator.coordinates.y - 10 }
 
   public hide(item: MaterialItem<PlayerColor, LocationType>, context: ItemContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>): boolean {
     return item.location.player !== (context.rules.game.view ?? context.player ?? context.rules.game.players[0])

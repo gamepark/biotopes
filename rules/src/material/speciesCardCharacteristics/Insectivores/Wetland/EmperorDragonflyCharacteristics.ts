@@ -17,5 +17,4 @@ export class EmperorDragonflyCharacteristics extends WetlandInsectivoreCharacter
   get effectType(): unknown {
     return undefined
   }
-
 }

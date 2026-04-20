@@ -17,5 +17,4 @@ export class FireSalamanderCharacteristics extends MountainCarnivoreCharacterist
   get effectType(): unknown {
     return undefined
   }
-
 }

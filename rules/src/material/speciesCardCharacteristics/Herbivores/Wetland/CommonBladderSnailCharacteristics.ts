@@ -1,7 +1,7 @@
 import { CubeType } from '../../../CubeType'
 import { WetlandHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
 
-export class CommonBladderSnailCharacteristics extends WetlandHerbivoreCharacteristics  {
+export class CommonBladderSnailCharacteristics extends WetlandHerbivoreCharacteristics {
   get cubeType(): CubeType {
     return CubeType.Insect
   }
@@ -13,5 +13,4 @@ export class CommonBladderSnailCharacteristics extends WetlandHerbivoreCharacter
   get effectType(): unknown {
     return undefined
   }
-
 }

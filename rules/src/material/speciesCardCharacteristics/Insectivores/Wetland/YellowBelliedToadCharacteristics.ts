@@ -17,5 +17,4 @@ export class YellowBelliedToadCharacteristics extends WetlandInsectivoreCharacte
   get effectType(): unknown {
     return undefined
   }
-
 }

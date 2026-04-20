@@ -17,5 +17,4 @@ export class LadybirdSpiderCharacteristics extends MountainInsectivoreCharacteri
   get effectType(): unknown {
     return undefined
   }
-
 }

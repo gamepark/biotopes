@@ -17,5 +17,4 @@ export class BeardedReedlingCharacteristics extends WetlandInsectivoreCharacteri
   get effectType(): unknown {
     return undefined
   }
-
 }

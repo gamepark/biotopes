@@ -17,5 +17,4 @@ export class RedBilledChoughCharacteristics extends MountainInsectivoreCharacter
   get effectType(): unknown {
     return undefined
   }
-
 }

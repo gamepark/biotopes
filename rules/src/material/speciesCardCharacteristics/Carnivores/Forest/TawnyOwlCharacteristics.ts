@@ -17,5 +17,4 @@ export class TawnyOwlCharacteristics extends ForestCarnivoreCharacteristics {
   get effectType(): unknown {
     return undefined
   }
-
 }

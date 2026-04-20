@@ -11,7 +11,6 @@ import { MaterialHelper } from './helpers/MaterialHelper'
 import { RuleId } from './RuleId'
 
 export class PrimaryProductionRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-
   private readonly materialHelper = new MaterialHelper(this.game)
   private readonly landscapeHelper = new LandscapeHelper(this.game)
 
@@ -31,19 +30,24 @@ export class PrimaryProductionRule extends PlayerTurnRule<PlayerColor, MaterialT
           playerTokenCoordinates.map((coords) => this.landscapeHelper.landscape.getValue(coords)).filter((type) => type !== undefined),
           (type) => type
         )
-        return this.materialHelper.cubeMaterial.createItems(Object.entries(cubeCountByType).map(([biotopeType, cubeCount]) => {
-          const type = parseInt(biotopeType) as BiotopeType
-          const parentIndex = this.material(MaterialType.BiotopesCard).player(this.player).id<BiotopeCard>((id) => getBiotopeCardType(id) === type).getIndex()
-          return {
-            id: type,
-            quantity: cubeCount,
-            location: {
-              type: LocationType.CubeSpotOnPlayerBiotopesCard,
-              player: player,
-              parent: parentIndex
+        return this.materialHelper.cubeMaterial.createItemsAtOnce(
+          Object.entries(cubeCountByType).map(([biotopeType, cubeCount]) => {
+            const type = parseInt(biotopeType) as BiotopeType
+            const parentIndex = this.material(MaterialType.BiotopesCard)
+              .player(this.player)
+              .id<BiotopeCard>((id) => getBiotopeCardType(id) === type)
+              .getIndex()
+            return {
+              id: type,
+              quantity: cubeCount,
+              location: {
+                type: LocationType.CubeSpotOnPlayerBiotopesCard,
+                player: player,
+                parent: parentIndex
+              }
             }
-          }
-        }))
+          })
+        )
       })
       .concat(this.startPlayerTurn(RuleId.ChooseAction, this.player))
   }

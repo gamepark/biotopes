@@ -146,7 +146,7 @@ export const speciesCardCharacteristics: Record<SpeciesCard, SpeciesCharacterist
   [SpeciesCard.GreenWoodpecker]: new GreenWoodpeckerCharacteristics(),
   [SpeciesCard.MarbledNewt]: new MarbledNewtCharacteristics(),
   [SpeciesCard.RedwoodAnt]: new RedWoodAntCharacteristics(),
-  [SpeciesCard.WesternGreenLizard]:  new WesternGreenLizardCharacteristics(),
+  [SpeciesCard.WesternGreenLizard]: new WesternGreenLizardCharacteristics(),
   // Meadow
   [SpeciesCard.CommonParsleyFrog]: new CommonParsleyFrogCharacteristics(),
   [SpeciesCard.EuropeanBeeEater]: new EuropeanBeeEaterCharacteristics(),

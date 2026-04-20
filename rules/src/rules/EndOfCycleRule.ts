@@ -8,7 +8,6 @@ import { MaterialHelper } from './helpers/MaterialHelper'
 import { RuleId } from './RuleId'
 
 export class EndOfCycleRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-
   private readonly materialHelper = new MaterialHelper(this.game)
 
   public onRuleStart(_move: RuleMove<PlayerColor, RuleId>, _previousRule?: RuleStep, _context?: PlayMoveContext): BiotopesMove[] {
@@ -17,7 +16,9 @@ export class EndOfCycleRule extends PlayerTurnRule<PlayerColor, MaterialType, Lo
     const currentPlayerWithInitiativeIndex = this.game.players.indexOf(currentPlayerWithInitiative)
     const nextPlayerWithInitiative = this.game.players[(currentPlayerWithInitiativeIndex + 1) % this.game.players.length]
     const rivers = this.material(MaterialType.SpeciesCard).location(LocationType.SpeciesRiversGrid)
-    const indexes = [this.materialHelper.herbivoresDeckMaterial, this.materialHelper.insectivoresDeckMaterial, this.materialHelper.carnivoreDeckMaterial].map((deck) => deck.getIndex())
+    const indexes = [this.materialHelper.herbivoresDeckMaterial, this.materialHelper.insectivoresDeckMaterial, this.materialHelper.carnivoreDeckMaterial].map(
+      (deck) => deck.getIndex()
+    )
     return [
       rivers.location((l) => l.x === 2).moveItemsAtOnce({ type: LocationType.SpeciesDiscardsSpot }),
       this.materialHelper.speciesCardMaterial.index(indexes).deck().dealAtOnce({ type: LocationType.SpeciesRiversGrid }, 3),

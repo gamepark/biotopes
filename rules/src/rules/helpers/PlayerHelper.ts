@@ -6,8 +6,6 @@ import { PlayerColor } from '../../PlayerColor'
 import { RuleId } from '../RuleId'
 
 export class PlayerHelper extends MaterialRulesPart<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-
-
   public get player() {
     return this.game.rule!.player!
   }
