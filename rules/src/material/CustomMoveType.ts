@@ -47,6 +47,11 @@ export const isMigrationChooseActionCustomMove: (move: BiotopesMove) => move is 
   move
 ): move is ChooseActionCustomMove<typeof EcosystemActionType.Migration> => isChooseActionCustomMove(move) && move.data?.action === EcosystemActionType.Migration
 
+export const isReproductionChooseActionCustomMove: (move: BiotopesMove) => move is ChooseActionCustomMove<typeof EcosystemActionType.Reproduction> = (
+  move
+): move is ChooseActionCustomMove<typeof EcosystemActionType.Reproduction> =>
+  isChooseActionCustomMove(move) && move.data?.action === EcosystemActionType.Reproduction
+
 export const isEndOfEvolutionActionCustomMove: (move: BiotopesMove) => move is EndEvolutionActionCustomMove = isCustomMoveType<
   typeof CustomMoveType.EndEvolutionAction,
   undefined,

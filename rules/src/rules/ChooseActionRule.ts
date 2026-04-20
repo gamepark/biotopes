@@ -9,7 +9,8 @@ import {
   isEvolutionChooseActionCustomMove,
   isExpansionChooseActionCustomMove,
   isMigrationChooseActionCustomMove,
-  isPassCycleCustomMove
+  isPassCycleCustomMove,
+  isReproductionChooseActionCustomMove
 } from '../material/CustomMoveType'
 import { EcosystemActionType, ecosystemActionType } from '../material/EcosystemActionType'
 import { LocationType } from '../material/LocationType'
@@ -23,6 +24,7 @@ import { MigrationActionChooseCubeRule } from './actions/colonization/migration/
 import { MaterialHelper } from './helpers/MaterialHelper'
 import { PlayerHelper } from './helpers/PlayerHelper'
 import { RuleId } from './RuleId'
+import { ReproductionActionPlaceCubeRule } from './actions/reproduction/ReproductionActionPlaceCubeRule'
 
 export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
@@ -48,6 +50,9 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
     if (isMigrationChooseActionCustomMove(move)) {
       return [this.startRule(RuleId.MigrationActionChooseCube)]
     }
+    if (isReproductionChooseActionCustomMove(move)) {
+      return [this.startRule(RuleId.ReproductionActionPlaceCube)]
+    }
     if (isPassCycleCustomMove(move)) {
       this.memorize<PlayerColor[] | undefined>(Memory.PassedPlayers, (oldValue) => oldValue?.concat(this.player) ?? [this.player])
       return [this.startPlayerTurn(this.playerHelper.nextPlayer === this.player ? RuleId.EndOfCycle : RuleId.ChooseAction, this.nextPlayer)]
@@ -66,6 +71,12 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
           .exists
       case EcosystemActionType.Migration:
         return new MigrationActionChooseCubeRule(this.game).getPlayerMoves().length > 0
+      case EcosystemActionType.Reproduction:
+        return (
+          new ReproductionActionPlaceCubeRule(this.game).getPlayerMoves().length > 0 &&
+          !this.materialHelper.cubeMaterial.location(LocationType.CubeSpotOnEcosystemBoard).player(this.player).locationId(EcosystemActionType.Reproduction)
+            .exists
+        )
       default:
         return true
     }

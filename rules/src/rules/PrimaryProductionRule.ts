@@ -30,7 +30,7 @@ export class PrimaryProductionRule extends PlayerTurnRule<PlayerColor, MaterialT
           playerTokenCoordinates.map((coords) => this.landscapeHelper.landscape.getValue(coords)).filter((type) => type !== undefined),
           (type) => type
         )
-        return this.materialHelper.cubeMaterial.createItems(
+        return this.materialHelper.cubeMaterial.createItemsAtOnce(
           Object.entries(cubeCountByType).map(([biotopeType, cubeCount]) => {
             const type = parseInt(biotopeType) as BiotopeType
             const parentIndex = this.material(MaterialType.BiotopesCard)

@@ -35,6 +35,13 @@ import { RuleId } from './rules/RuleId'
 import { BiotopeCubeStrategy } from './strategies/location/BiotopeCubeStrategy'
 import { SpeciesRiverStrategy } from './strategies/location/SpeciesRiverStrategy'
 import { SpeciesStrategy } from './strategies/location/SpeciesStrategy'
+import { ReproductionActionPlaceCubeRule } from './rules/actions/reproduction/ReproductionActionPlaceCubeRule'
+import { ReproductionActionCreateCubesRule } from './rules/actions/reproduction/ReproductionActionCreateCubesRule'
+import { DiscardCardToDrawCubeRule } from './rules/actions/common/DiscardCardToDrawCubeRule'
+import { DrawMountainCubeRule } from './rules/actions/common/DrawMountainCubeRule'
+import { DrawForestCubeRule } from './rules/actions/common/DrawForestCubeRule'
+import { DrawMeadowCubeRule } from './rules/actions/common/DrawMeadowCubeRule'
+import { DrawWetlandCubeRule } from './rules/actions/common/DrawWetlandCubeRule'
 
 /**
  * This class implements the rules of the board game.
@@ -101,7 +108,14 @@ export class BiotopesRules
     [RuleId.MigrationActionMoveTerritoryTokenOnMountain]: MigrationActionMoveTerritoryTokenOnMountainRule,
     [RuleId.MigrationActionMoveTerritoryTokenOnForest]: MigrationActionMoveTerritoryTokenOnForestRule,
     [RuleId.MigrationActionMoveTerritoryTokenOnMeadow]: MigrationActionMoveTerritoryTokenOnMeadowRule,
-    [RuleId.MigrationActionMoveTerritoryTokenOnWetland]: MigrationActionMoveTerritoryTokenOnWetlandRule
+    [RuleId.MigrationActionMoveTerritoryTokenOnWetland]: MigrationActionMoveTerritoryTokenOnWetlandRule,
+    [RuleId.ReproductionActionPlaceCube]: ReproductionActionPlaceCubeRule,
+    [RuleId.ReproductionActionCreateCubes]: ReproductionActionCreateCubesRule,
+    [RuleId.DiscardCardToDrawCube]: DiscardCardToDrawCubeRule,
+    [RuleId.DrawMountainCube]: DrawMountainCubeRule,
+    [RuleId.DrawForestCube]: DrawForestCubeRule,
+    [RuleId.DrawMeadowCube]: DrawMeadowCubeRule,
+    [RuleId.DrawWetlandCube]: DrawWetlandCubeRule
   }
 
   giveTime(): number {
