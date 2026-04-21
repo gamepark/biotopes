@@ -10,6 +10,13 @@ import { LandscapeHelper } from '../../../helpers/LandscapeHelper'
 import { MaterialHelper } from '../../../helpers/MaterialHelper'
 import { PlayerHelper } from '../../../helpers/PlayerHelper'
 import { RuleId } from '../../../RuleId'
+import { EcosystemActionType } from '../../../../material/EcosystemActionType'
+import { KnownSpeciesCardId } from '../../../../material/SpeciesCard'
+import { speciesCardCharacteristics } from '../../../../material/SpeciesCardCharacteristics'
+import { SpeciesCardEffect } from '../../../../material/SpeciesCardEffect'
+import { BiotopesPendingEffect } from '../../../../material/effects/PendingEffect'
+import { Memory } from '../../../../Memory'
+import { PendingEffectType } from '../../../../material/effects/PendingEffectType'
 
 export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly landscapeHelper = new LandscapeHelper(this.game)
@@ -84,8 +91,28 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
     })
   }
 
-  public afterPlaceTerritoryTokenMove(move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): BiotopesMove[] {
+  public afterPlaceTerritoryTokenMove(
+    move: ItemMove<PlayerColor, MaterialType, LocationType>,
+    actionType: EcosystemActionType.Expansion | EcosystemActionType.Migration | EcosystemActionType.Competition,
+    _context?: PlayMoveContext
+  ): BiotopesMove[] {
     if (isBiotopesMoveItemType(MaterialType.TerritoryToken)(move) && move.location.type === LocationType.CentralLandscapeSpot) {
+      if (actionType === EcosystemActionType.Expansion) {
+        const cosmopolitanSpeciesMaterial = this.materialHelper.playerSpeciesCardTableau.id<KnownSpeciesCardId>(
+          (id) => speciesCardCharacteristics[id.front].effect === SpeciesCardEffect.CosmopolitanSpecies
+        )
+        if (cosmopolitanSpeciesMaterial.exists) {
+          this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) =>
+            [
+              {
+                type: PendingEffectType.DrawCards,
+                numberOfCardsToDraw: cosmopolitanSpeciesMaterial.length
+              } as BiotopesPendingEffect
+            ].concat(currentPendingEffects ?? [])
+          )
+          return [this.startRule(RuleId.DrawCards)]
+        }
+      }
       return [this.startPlayerTurn(RuleId.ChooseAction, this.playerHelper.nextPlayer)]
     }
     return []
