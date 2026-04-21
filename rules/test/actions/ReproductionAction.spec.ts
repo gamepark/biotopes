@@ -15,7 +15,7 @@ import { DiscardCardToDrawCubeRule } from '../../src/rules/actions/common/Discar
 import { DrawForestCubeRule } from '../../src/rules/actions/common/DrawForestCubeRule'
 import { BiotopesPendingEffect } from '../../src/material/effects/PendingEffect'
 import { Memory } from '../../src/Memory'
-import { SpeciesCardEffect } from '../../src/material/SpeciesCardEffect'
+import { PendingEffectType } from '../../src/material/effects/PendingEffectType'
 
 const setupGame = (cardWithCubes: { card: SpeciesCard; cubes: BiotopeType[] }[]) => {
   const setup = new BiotopesSetup()
@@ -319,7 +319,7 @@ describe('Reproduction tests', () => {
       expect(pendingEffects)
         .to.be.an('array')
         .that.has.length(1)
-        .and.deep.members([{ type: SpeciesCardEffect.FecundSpecies, numberOfCubesToDraw: 2 }])
+        .and.deep.members([{ type: PendingEffectType.DrawCubes, numberOfCubesToDraw: 2, ruleWhenFinished: RuleId.ReproductionActionCreateCubes }])
     })
 
     test('Given two fecund species are present, and one cube was placed, the game should proceed to DiscardCardToDrawCube rule and pending effect should have 1 cube to draw', () => {
@@ -376,7 +376,7 @@ describe('Reproduction tests', () => {
       expect(pendingEffects)
         .to.be.an('array')
         .that.has.length(1)
-        .and.deep.members([{ type: SpeciesCardEffect.FecundSpecies, numberOfCubesToDraw: 1 }])
+        .and.deep.members([{ type: PendingEffectType.DrawCubes, numberOfCubesToDraw: 1, ruleWhenFinished: RuleId.ReproductionActionCreateCubes }])
     })
 
     test('Given two fecund species are present, and two cubes being placed, the game should create relevant cubes, proceed to the ChooseAction rule with next player active', () => {

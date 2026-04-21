@@ -22,8 +22,6 @@ import { MigrationActionMoveTerritoryTokenOnForestRule } from './rules/actions/c
 import { MigrationActionMoveTerritoryTokenOnMeadowRule } from './rules/actions/colonization/migration/MigrationActionMoveTerritoryTokenOnMeadowRule'
 import { MigrationActionMoveTerritoryTokenOnMountainRule } from './rules/actions/colonization/migration/MigrationActionMoveTerritoryTokenOnMountainRule'
 import { MigrationActionMoveTerritoryTokenOnWetlandRule } from './rules/actions/colonization/migration/MigrationActionMoveTerritoryTokenOnWetlandRule'
-import { EvolutionActionDiscardCardsFromHandRule } from './rules/actions/evolution/EvolutionActionDiscardCardsFromHandRule'
-import { EvolutionActionPickCardsRule } from './rules/actions/evolution/EvolutionActionPickCardsRule'
 import { EvolutionActionPlaceCubesAndDiscardCardsRule } from './rules/actions/evolution/EvolutionActionPlaceCubesAndDiscardCardsRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
 import { EndOfCycleRule } from './rules/EndOfCycleRule'
@@ -42,6 +40,8 @@ import { DrawMountainCubeRule } from './rules/actions/common/DrawMountainCubeRul
 import { DrawForestCubeRule } from './rules/actions/common/DrawForestCubeRule'
 import { DrawMeadowCubeRule } from './rules/actions/common/DrawMeadowCubeRule'
 import { DrawWetlandCubeRule } from './rules/actions/common/DrawWetlandCubeRule'
+import { DrawCardsRule } from './rules/actions/common/DrawCardsRule'
+import { DiscardCardsFromHandRule } from './rules/actions/common/DiscardCardsFromHandRule'
 
 /**
  * This class implements the rules of the board game.
@@ -102,8 +102,6 @@ export class BiotopesRules
     [RuleId.AdaptationAction]: AdaptationActionRule,
     [RuleId.EndOfCycle]: EndOfCycleRule,
     [RuleId.EvolutionActionPlaceCubesAndDiscardCards]: EvolutionActionPlaceCubesAndDiscardCardsRule,
-    [RuleId.EvolutionActionPickCards]: EvolutionActionPickCardsRule,
-    [RuleId.EvolutionActionDiscardCardsFromHand]: EvolutionActionDiscardCardsFromHandRule,
     [RuleId.MigrationActionChooseCube]: MigrationActionChooseCubeRule,
     [RuleId.MigrationActionMoveTerritoryTokenOnMountain]: MigrationActionMoveTerritoryTokenOnMountainRule,
     [RuleId.MigrationActionMoveTerritoryTokenOnForest]: MigrationActionMoveTerritoryTokenOnForestRule,
@@ -115,7 +113,9 @@ export class BiotopesRules
     [RuleId.DrawMountainCube]: DrawMountainCubeRule,
     [RuleId.DrawForestCube]: DrawForestCubeRule,
     [RuleId.DrawMeadowCube]: DrawMeadowCubeRule,
-    [RuleId.DrawWetlandCube]: DrawWetlandCubeRule
+    [RuleId.DrawWetlandCube]: DrawWetlandCubeRule,
+    [RuleId.DrawCards]: DrawCardsRule,
+    [RuleId.DiscardCardsFromHand]: DiscardCardsFromHandRule
   }
 
   giveTime(): number {

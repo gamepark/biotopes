@@ -1,9 +1,9 @@
-import { SpeciesCardEffect } from '../SpeciesCardEffect'
-import { FecundSpeciesPendingEffect } from './FecundSpeciesPendingEffect'
-import { CosmopolitanSpeciesPendingEffect } from './CosmopolitanSpeciesPendingEffect'
+import { PendingEffectType } from './PendingEffectType'
+import { DrawCubesPendingEffect } from './DrawCubesPendingEffect'
+import { DrawCardsPendingEffect } from './DrawCardsPendingEffect'
 
-export type PendingEffect<T extends SpeciesCardEffect, D> = {
+export type PendingEffect<T extends PendingEffectType, D> = {
   type: T
 } & D
 
-export type BiotopesPendingEffect = FecundSpeciesPendingEffect | CosmopolitanSpeciesPendingEffect
+export type BiotopesPendingEffect = DrawCubesPendingEffect | DrawCardsPendingEffect

@@ -12,6 +12,9 @@ import { Memory } from '../../../Memory'
 import { PlayerColor } from '../../../PlayerColor'
 import { MaterialHelper } from '../../helpers/MaterialHelper'
 import { RuleId } from '../../RuleId'
+import { BiotopesPendingEffect } from '../../../material/effects/PendingEffect'
+import { PendingEffectType } from '../../../material/effects/PendingEffectType'
+import { DrawCardsPendingEffect } from '../../../material/effects/DrawCardsPendingEffect'
 
 export class EvolutionActionPlaceCubesAndDiscardCardsRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
@@ -62,20 +65,43 @@ export class EvolutionActionPlaceCubesAndDiscardCardsRule extends PlayerTurnRule
 
   public afterItemMove(move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): BiotopesMove[] {
     if (isBiotopesMoveItemType(MaterialType.SpeciesCard)(move) && move.location.type === LocationType.SpeciesDiscardsSpot) {
-      this.memorize<number | undefined>(Memory.NumberOfDiscardedCardForEvolution, (oldValue) => (oldValue ?? 0) + 1)
+      this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) => {
+        const currentDrawCardsAction = currentPendingEffects?.find<DrawCardsPendingEffect>(
+          (effect): effect is DrawCardsPendingEffect => effect.type === PendingEffectType.DrawCards
+        )
+        if (currentDrawCardsAction === undefined) {
+          return [{ type: PendingEffectType.DrawCards, numberOfCardsToDraw: 1 } as BiotopesPendingEffect].concat(currentPendingEffects ?? [])
+        }
+        currentDrawCardsAction.numberOfCardsToDraw += 1
+        return currentPendingEffects
+      })
     }
     return super.afterItemMove(move, _context)
   }
 
   public onCustomMove(move: CustomMove, _context?: PlayMoveContext): BiotopesMove[] {
     if (isEndOfEvolutionActionCustomMove(move)) {
-      this.memorize(
-        Memory.NumberOfCardsToPickForEvolution,
-        (this.remind<number | undefined>(Memory.NumberOfDiscardedCardForEvolution) ?? 0) +
-          this.materialHelper.cubeMaterial.location(LocationType.CubeSpotOnEcosystemBoard).locationId(EcosystemActionType.Evolution).player(this.player).length
-      )
-      this.forget(Memory.NumberOfDiscardedCardForEvolution)
-      return [this.startRule(RuleId.EvolutionActionPickCards)]
+      this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) => {
+        const currentDrawCardsAction = currentPendingEffects?.find<DrawCardsPendingEffect>(
+          (effect): effect is DrawCardsPendingEffect => effect.type === PendingEffectType.DrawCards
+        )
+        const numberOfCubes = this.materialHelper.cubeMaterial
+          .player(this.player)
+          .location(LocationType.CubeSpotOnEcosystemBoard)
+          .locationId(EcosystemActionType.Evolution)
+          .getQuantity()
+        if (currentDrawCardsAction === undefined) {
+          return [
+            {
+              type: PendingEffectType.DrawCards,
+              numberOfCardsToDraw: numberOfCubes
+            } as BiotopesPendingEffect
+          ].concat(currentPendingEffects ?? [])
+        }
+        currentDrawCardsAction.numberOfCardsToDraw += numberOfCubes
+        return currentPendingEffects
+      })
+      return [this.startRule(RuleId.DrawCards)]
     }
     return super.onCustomMove(move, _context)
   }

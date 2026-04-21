@@ -12,8 +12,6 @@ export enum RuleId {
   AdaptationAction,
   EndOfCycle,
   EvolutionActionPlaceCubesAndDiscardCards,
-  EvolutionActionPickCards,
-  EvolutionActionDiscardCardsFromHand,
   MigrationActionChooseCube,
   MigrationActionMoveTerritoryTokenOnMountain,
   MigrationActionMoveTerritoryTokenOnForest,
@@ -25,5 +23,7 @@ export enum RuleId {
   DrawMountainCube,
   DrawForestCube,
   DrawMeadowCube,
-  DrawWetlandCube
+  DrawWetlandCube,
+  DrawCards,
+  DiscardCardsFromHand
 }
