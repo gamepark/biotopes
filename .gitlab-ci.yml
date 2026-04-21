@@ -1,0 +1,78 @@
+.default_rules:
+    rules:
+        - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+        - if: $CI_PIPELINE_SOURCE == "push"
+          when: never
+
+stages:
+    - format-check
+    - lint
+    - test
+    - build
+
+format-check-job:
+    rules:
+        - !reference [.default_rules, rules]
+    stage: format-check
+    tags:
+        - docker
+        - shared
+    image: node:25-alpine
+    script:
+        - echo "Running prettier format check... This may take a while."
+        - rm /usr/local/bin/yarn*
+        - npm install -g corepack
+        - corepack enable yarn
+        - yarn install
+        - yarn workspace @gamepark/biotopes exec prettier --check **/*.{js,ts}
+        - yarn workspace @gamepark/biotopes-app exec prettier --check **/*.{js,ts,tsx}
+
+
+lint-job:
+    rules:
+        - !reference [.default_rules, rules]
+    stage: lint
+    tags:
+        - docker
+        - shared
+    image: node:25-alpine
+    script:
+        - echo "Running linter... This may take a while."
+        - rm /usr/local/bin/yarn*
+        - npm install -g corepack
+        - corepack enable yarn
+        - yarn install
+        - yarn run lint
+
+test-job:
+    rules:
+        - !reference [.default_rules, rules]
+    stage: test
+    tags:
+        - docker
+        - shared
+    image: node:25-alpine
+    script:
+        - echo "Running tests... This may take a while."
+        - rm /usr/local/bin/yarn*
+        - npm install -g corepack
+        - corepack enable yarn
+        - yarn install
+        - yarn workspace @gamepark/biotopes test
+
+build:
+    rules:
+        - !reference [.default_rules, rules]
+    stage: build
+    tags:
+        - docker
+        - shared
+    image: node:25-alpine
+    script:
+        - echo "Build app and rules... This may take a while."
+        - rm /usr/local/bin/yarn*
+        - npm install -g corepack
+        - corepack enable yarn
+        - yarn install
+        - yarn workspace @gamepark/biotopes run build
+        - yarn workspace @gamepark/biotopes-app run build

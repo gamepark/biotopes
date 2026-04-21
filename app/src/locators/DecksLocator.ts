@@ -3,16 +3,13 @@ import { MaterialType } from '@gamepark/biotopes/material/MaterialType.ts'
 import { SpeciesDietType } from '@gamepark/biotopes/material/SpeciesCard.ts'
 import { PlayerColor } from '@gamepark/biotopes/PlayerColor.ts'
 import { RuleId } from '@gamepark/biotopes/rules/RuleId.ts'
-import { DeckLocator, MaterialContext } from '@gamepark/react-game'
+import { DeckLocator } from '@gamepark/react-game'
 import { Coordinates, Location } from '@gamepark/rules-api'
 
 class DecksLocator extends DeckLocator<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   limit = undefined
 
-  public getCoordinates(
-    location: Location<PlayerColor, LocationType>,
-    _context: MaterialContext<PlayerColor, MaterialType, LocationType>
-  ): Partial<Coordinates> {
+  public getCoordinates(location: Location<PlayerColor, LocationType>): Partial<Coordinates> {
     switch (location.y as SpeciesDietType) {
       case SpeciesDietType.Herbivore:
         return { x: -22.5, y: -20 }
@@ -23,10 +20,7 @@ class DecksLocator extends DeckLocator<PlayerColor, MaterialType, LocationType, 
     }
   }
 
-  public getLocationIndex(
-    location: Location<PlayerColor, LocationType>,
-    _context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
-  ): number | undefined {
+  public getLocationIndex(location: Location<PlayerColor, LocationType>): number | undefined {
     return location.x
   }
 }

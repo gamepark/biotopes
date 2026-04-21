@@ -18,10 +18,7 @@ class CubeOnEcosystemBoardLocator extends ListLocator<PlayerColor, MaterialType,
     return ecosystemBoardDescription.getStaticItems(context).find((board) => board.location.player === location.player)
   }
 
-  getMaxCount(
-    location: Location<PlayerColor, LocationType, EcosystemActionType>,
-    _context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
-  ): number | undefined {
+  getMaxCount(location: Location<PlayerColor, LocationType, EcosystemActionType>): number | undefined {
     switch (location.id) {
       case EcosystemActionType.Adaptation:
         return 0

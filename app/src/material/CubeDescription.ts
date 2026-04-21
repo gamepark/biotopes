@@ -3,7 +3,7 @@ import { LocationType } from '@gamepark/biotopes/material/LocationType'
 import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
 import { PlayerColor } from '@gamepark/biotopes/PlayerColor'
 import { RuleId } from '@gamepark/biotopes/rules/RuleId.ts'
-import { FlatMaterialDescription, MaterialContext } from '@gamepark/react-game'
+import { FlatMaterialDescription } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
 import ForestCube from '../images/Cubes/ForestCube.svg?url'
 import MeadowCube from '../images/Cubes/MeadowCube.svg?url'
@@ -23,19 +23,14 @@ class CubeDescription extends FlatMaterialDescription<PlayerColor, MaterialType,
 
   transparency = true
 
-  public getStockLocation(
-    item: MaterialItem<PlayerColor, LocationType, BiotopeType>,
-    _context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
-  ): Location<PlayerColor, LocationType> | undefined {
+  public getStockLocation(item: MaterialItem<PlayerColor, LocationType, BiotopeType>): Location<PlayerColor, LocationType> | undefined {
     return {
       type: LocationType.CubeStockpileSpot,
       id: item.id
     }
   }
 
-  public getStaticItems(
-    _context: MaterialContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
-  ): MaterialItem<PlayerColor, LocationType, BiotopeType>[] {
+  public getStaticItems(): MaterialItem<PlayerColor, LocationType, BiotopeType>[] {
     return biotopeType.map((type) => ({ id: type, quantity: 40, location: { type: LocationType.CubeStockpileSpot, id: type } }))
   }
 }
