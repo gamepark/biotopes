@@ -1,20 +1,20 @@
 import { ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
-import { countBy } from 'es-toolkit'
-import { BiotopesMove, isBiotopesMoveItemType } from '../../../BiotopeTypes'
-import { LocationType } from '../../../material/LocationType'
-import { MaterialType } from '../../../material/MaterialType'
-import { KnownSpeciesCardId, SpeciesDietType } from '../../../material/SpeciesCard'
-import { Memory } from '../../../Memory'
 import { PlayerColor } from '../../../PlayerColor'
-import { MaterialHelper } from '../../helpers/MaterialHelper'
-import { PlayerHelper } from '../../helpers/PlayerHelper'
+import { MaterialType } from '../../../material/MaterialType'
+import { LocationType } from '../../../material/LocationType'
 import { RuleId } from '../../RuleId'
+import { MaterialHelper } from '../../helpers/MaterialHelper'
+import { BiotopesMove, isBiotopesMoveItemType } from '../../../BiotopeTypes'
+import { countBy } from 'es-toolkit'
+import { KnownSpeciesCardId, SpeciesDietType } from '../../../material/SpeciesCard'
+import { BiotopesPendingEffect } from '../../../material/effects/PendingEffect'
+import { Memory } from '../../../Memory'
+import { DrawCardsPendingEffect } from '../../../material/effects/DrawCardsPendingEffect'
 
-export class EvolutionActionPickCardsRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
+export class DrawCardsRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
-  private readonly playerHelper = new PlayerHelper(this.game)
 
-  public getPlayerMoves(): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
+  public getPlayerMoves(): BiotopesMove[] {
     const handLocation = {
       type: LocationType.PlayerSpeciesCardHandSpot,
       player: this.player
@@ -27,18 +27,19 @@ export class EvolutionActionPickCardsRule extends PlayerTurnRule<PlayerColor, Ma
       .concat(this.materialHelper.carnivoreDeckMaterial.dealOne(handLocation))
   }
 
-  public afterItemMove(move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): BiotopesMove[] {
-    if (isBiotopesMoveItemType(MaterialType.SpeciesCard)(move) && move.location.type === LocationType.PlayerSpeciesCardHandSpot) {
-      const newNumberOfCardsToDraw = this.memorize<number>(Memory.NumberOfCardsToPickForEvolution, (oldValue) => oldValue - 1)
-      if (newNumberOfCardsToDraw === 0) {
-        this.forget(Memory.NumberOfCardsToPickForEvolution)
+  public afterItemMove(
+    _move: ItemMove<PlayerColor, MaterialType, LocationType>,
+    _context?: PlayMoveContext
+  ): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
+    if (isBiotopesMoveItemType(MaterialType.SpeciesCard)(_move) && _move.location.type === LocationType.PlayerSpeciesCardHandSpot) {
+      const currentPendingEffect = this.memorize<BiotopesPendingEffect[]>(Memory.PendingEffects, (currentPendingEffects) => {
+        ;(currentPendingEffects[0] as DrawCardsPendingEffect).numberOfCardsToDraw -= 1
+        return currentPendingEffects
+      })[0] as DrawCardsPendingEffect
+      if (currentPendingEffect.numberOfCardsToDraw === 0) {
+        const ruleChangeConsequences = [this.startRule(RuleId.DiscardCardsFromHand)]
         const riverMaterial = this.materialHelper.speciesCardMaterial.location(LocationType.SpeciesRiversGrid)
-        const consequences: BiotopesMove[] = [
-          this.materialHelper.playerSpeciesCardHand.length > 5
-            ? this.startRule(RuleId.EvolutionActionDiscardCardsFromHand)
-            : this.startPlayerTurn(RuleId.ChooseAction, this.playerHelper.nextPlayer)
-        ]
-        if (riverMaterial.length < 9) {
+        if (riverMaterial.getQuantity() < 9) {
           const riverCounts = countBy(riverMaterial.getItems<KnownSpeciesCardId>(), (card) => card.location.y as SpeciesDietType)
           const indexesToDraw: number[] = this.materialHelper.herbivoresDeckMaterial
             .limit(3 - (riverCounts[SpeciesDietType.Herbivore] ?? 0))
@@ -50,11 +51,11 @@ export class EvolutionActionPickCardsRule extends PlayerTurnRule<PlayerColor, Ma
               .index(indexesToDraw)
               .deck()
               .dealAtOnce({ type: LocationType.SpeciesRiversGrid }, indexesToDraw.length) as BiotopesMove
-          ].concat(consequences)
+          ].concat(ruleChangeConsequences)
         }
-        return consequences
+        return ruleChangeConsequences
       }
     }
-    return super.afterItemMove(move, _context)
+    return super.afterItemMove(_move, _context)
   }
 }

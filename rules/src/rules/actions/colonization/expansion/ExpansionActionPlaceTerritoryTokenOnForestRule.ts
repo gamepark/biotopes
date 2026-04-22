@@ -6,6 +6,7 @@ import { PlayerColor } from '../../../../PlayerColor'
 import { ColonizationHelper } from '../helpers/ColonizationHelper'
 import { RuleId } from '../../../RuleId'
 import { BiotopeType } from '../../../../material/BiotopeType'
+import { EcosystemActionType } from '../../../../material/EcosystemActionType'
 
 export class ExpansionActionPlaceTerritoryTokenOnForestRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly colonizationHelper = new ColonizationHelper(this.game)
@@ -15,6 +16,6 @@ export class ExpansionActionPlaceTerritoryTokenOnForestRule extends PlayerTurnRu
   }
 
   public afterItemMove(move: ItemMove<PlayerColor, MaterialType, LocationType>, context?: PlayMoveContext): BiotopesMove[] {
-    return this.colonizationHelper.afterPlaceTerritoryTokenMove(move, context)
+    return this.colonizationHelper.afterPlaceTerritoryTokenMove(move, EcosystemActionType.Expansion, context)
   }
 }

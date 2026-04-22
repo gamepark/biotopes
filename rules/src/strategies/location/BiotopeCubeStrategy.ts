@@ -1,5 +1,4 @@
-import { LocationStrategy, Material } from '@gamepark/rules-api'
-import { MaterialItem } from '../../../../../rules-api'
+import { LocationStrategy, Material, MaterialItem } from '@gamepark/rules-api'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { PlayerColor } from '../../PlayerColor'

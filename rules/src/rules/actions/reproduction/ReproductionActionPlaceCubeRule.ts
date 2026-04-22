@@ -12,6 +12,7 @@ import { RuleId } from '../../RuleId'
 import { SpeciesCardEffect } from '../../../material/SpeciesCardEffect'
 import { BiotopesPendingEffect } from '../../../material/effects/PendingEffect'
 import { Memory } from '../../../Memory'
+import { PendingEffectType } from '../../../material/effects/PendingEffectType'
 
 export class ReproductionActionPlaceCubeRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
@@ -37,9 +38,13 @@ export class ReproductionActionPlaceCubeRule extends PlayerTurnRule<PlayerColor,
       )
       if (fecundSpeciesMaterial.exists) {
         this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) =>
-          [{ type: SpeciesCardEffect.FecundSpecies, numberOfCubesToDraw: fecundSpeciesMaterial.length } as BiotopesPendingEffect].concat(
-            currentPendingEffects ?? []
-          )
+          [
+            {
+              type: PendingEffectType.DrawCubes,
+              numberOfCubesToDraw: fecundSpeciesMaterial.length,
+              ruleWhenFinished: RuleId.ReproductionActionCreateCubes
+            } as BiotopesPendingEffect
+          ].concat(currentPendingEffects ?? [])
         )
         return [this.startRule(RuleId.DiscardCardToDrawCube)]
       }

@@ -10,8 +10,8 @@ import { speciesCardCharacteristics } from '../../../../material/SpeciesCardChar
 import { MaterialHelper } from '../../../helpers/MaterialHelper'
 import { BiotopesPendingEffect } from '../../../../material/effects/PendingEffect'
 import { Memory } from '../../../../Memory'
-import { SpeciesCardEffect } from '../../../../material/SpeciesCardEffect'
 import { PlayerHelper } from '../../../helpers/PlayerHelper'
+import { PendingEffectType } from '../../../../material/effects/PendingEffectType'
 
 export class DrawCubesHelper extends MaterialRulesPart<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
@@ -37,9 +37,9 @@ export class DrawCubesHelper extends MaterialRulesPart<PlayerColor, MaterialType
     const newPendingEffects = this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) => {
       if (currentPendingEffects !== undefined) {
         const currentEffect = currentPendingEffects[0]
-        if (currentEffect.type === SpeciesCardEffect.FecundSpecies) {
+        if (currentEffect.type === PendingEffectType.DrawCubes) {
           if (currentEffect.numberOfCubesToDraw === 1) {
-            const newActions = currentPendingEffects.filter((effect) => effect.type !== SpeciesCardEffect.FecundSpecies)
+            const newActions = currentPendingEffects.filter((effect) => effect !== currentEffect)
             return newActions.length > 0 ? newActions : undefined
           }
           currentEffect.numberOfCubesToDraw -= 1
@@ -50,8 +50,8 @@ export class DrawCubesHelper extends MaterialRulesPart<PlayerColor, MaterialType
     })
     if (newPendingEffects === undefined || newPendingEffects.length === 0) {
       return [
-        currentEffect.type === SpeciesCardEffect.FecundSpecies
-          ? this.startRule(RuleId.ReproductionActionCreateCubes)
+        currentEffect.type === PendingEffectType.DrawCubes && currentEffect.ruleWhenFinished !== undefined
+          ? this.startRule(currentEffect.ruleWhenFinished)
           : this.startPlayerTurn(RuleId.ChooseAction, this.playerHelper.nextPlayer)
       ]
     }
@@ -61,8 +61,10 @@ export class DrawCubesHelper extends MaterialRulesPart<PlayerColor, MaterialType
 
   private getRuleFromNewEffect(newPendingEffect: BiotopesPendingEffect) {
     switch (newPendingEffect.type) {
-      case SpeciesCardEffect.FecundSpecies:
+      case PendingEffectType.DrawCubes:
         return RuleId.DiscardCardToDrawCube
+      case PendingEffectType.DrawCards:
+        return RuleId.DrawCards
       default:
         return RuleId.ChooseAction
     }
