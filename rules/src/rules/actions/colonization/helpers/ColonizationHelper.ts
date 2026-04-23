@@ -94,24 +94,25 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
   public afterPlaceTerritoryTokenMove(
     move: ItemMove<PlayerColor, MaterialType, LocationType>,
     actionType: EcosystemActionType.Expansion | EcosystemActionType.Migration | EcosystemActionType.Competition,
+    biotopeType: BiotopeType,
     _context?: PlayMoveContext
   ): BiotopesMove[] {
     if (isBiotopesMoveItemType(MaterialType.TerritoryToken)(move) && move.location.type === LocationType.CentralLandscapeSpot) {
-      if (actionType === EcosystemActionType.Expansion) {
-        const cosmopolitanSpeciesMaterial = this.materialHelper.playerSpeciesCardTableau.id<KnownSpeciesCardId>(
-          (id) => speciesCardCharacteristics[id.front].effect === SpeciesCardEffect.CosmopolitanSpecies
+      const materialWithDrawCardEffect = this.materialHelper.playerSpeciesCardTableau.id<KnownSpeciesCardId>(
+        (id) =>
+          (actionType === EcosystemActionType.Expansion && speciesCardCharacteristics[id.front].effect === SpeciesCardEffect.CosmopolitanSpecies) ||
+          (biotopeType === BiotopeType.Forest && speciesCardCharacteristics[id.front].effect === SpeciesCardEffect.ForestSpecies)
+      )
+      if (materialWithDrawCardEffect.exists) {
+        this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) =>
+          [
+            {
+              type: PendingEffectType.DrawCards,
+              numberOfCardsToDraw: materialWithDrawCardEffect.getQuantity()
+            } as BiotopesPendingEffect
+          ].concat(currentPendingEffects ?? [])
         )
-        if (cosmopolitanSpeciesMaterial.exists) {
-          this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) =>
-            [
-              {
-                type: PendingEffectType.DrawCards,
-                numberOfCardsToDraw: cosmopolitanSpeciesMaterial.length
-              } as BiotopesPendingEffect
-            ].concat(currentPendingEffects ?? [])
-          )
-          return [this.startRule(RuleId.DrawCards)]
-        }
+        return [this.startRule(RuleId.DrawCards)]
       }
       return [this.startPlayerTurn(RuleId.ChooseAction, this.playerHelper.nextPlayer)]
     }

@@ -16,6 +16,6 @@ export class MigrationActionMoveTerritoryTokenOnMeadowRule extends PlayerTurnRul
   }
 
   public afterItemMove(_move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): BiotopesMove[] {
-    return this.colonizationHelper.afterPlaceTerritoryTokenMove(_move, EcosystemActionType.Migration, _context)
+    return this.colonizationHelper.afterPlaceTerritoryTokenMove(_move, EcosystemActionType.Migration, BiotopeType.Meadow, _context)
   }
 }
