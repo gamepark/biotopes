@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { MountainHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class WesternCapercaillieCharacteristics extends MountainHerbivoreCharacteristics {
   get cubeType(): CubeType {
@@ -7,7 +8,7 @@ export class WesternCapercaillieCharacteristics extends MountainHerbivoreCharact
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.MountainSpecies
   }
 
   get effectType(): unknown {

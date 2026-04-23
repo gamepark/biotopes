@@ -104,7 +104,8 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
           (actionType === EcosystemActionType.Expansion && cardEffect === SpeciesCardEffect.CosmopolitanSpecies) ||
           (actionType === EcosystemActionType.Migration && cardEffect === SpeciesCardEffect.PartialMigrator) ||
           (biotopeType === BiotopeType.Forest && cardEffect === SpeciesCardEffect.ForestSpecies) ||
-          (biotopeType === BiotopeType.Meadow && cardEffect === SpeciesCardEffect.GranivorousSpecies)
+          (biotopeType === BiotopeType.Meadow && cardEffect === SpeciesCardEffect.GranivorousSpecies) ||
+          (biotopeType === BiotopeType.Mountain && cardEffect === SpeciesCardEffect.MountainSpecies)
         )
       })
       if (materialWithDrawCardEffect.exists) {
