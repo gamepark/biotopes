@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { MountainHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class CitrilFinchCharacteristics extends MountainHerbivoreCharacteristics {
   get cubeType(): CubeType {
@@ -7,7 +8,7 @@ export class CitrilFinchCharacteristics extends MountainHerbivoreCharacteristics
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.PartialMigrator
   }
 
   get effectType(): unknown {
