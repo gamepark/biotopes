@@ -4,5 +4,6 @@ export enum SpeciesCardEffect {
   PollinatingSpecies,
   ForestSpecies,
   GranivorousSpecies,
-  PartialMigrator
+  PartialMigrator,
+  MountainSpecies
 }
