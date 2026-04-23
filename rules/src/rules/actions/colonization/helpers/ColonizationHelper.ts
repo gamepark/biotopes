@@ -98,11 +98,14 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
     _context?: PlayMoveContext
   ): BiotopesMove[] {
     if (isBiotopesMoveItemType(MaterialType.TerritoryToken)(move) && move.location.type === LocationType.CentralLandscapeSpot) {
-      const materialWithDrawCardEffect = this.materialHelper.playerSpeciesCardTableau.id<KnownSpeciesCardId>(
-        (id) =>
-          (actionType === EcosystemActionType.Expansion && speciesCardCharacteristics[id.front].effect === SpeciesCardEffect.CosmopolitanSpecies) ||
-          (biotopeType === BiotopeType.Forest && speciesCardCharacteristics[id.front].effect === SpeciesCardEffect.ForestSpecies)
-      )
+      const materialWithDrawCardEffect = this.materialHelper.playerSpeciesCardTableau.id<KnownSpeciesCardId>((id) => {
+        const cardEffect = speciesCardCharacteristics[id.front].effect
+        return (
+          (actionType === EcosystemActionType.Expansion && cardEffect === SpeciesCardEffect.CosmopolitanSpecies) ||
+          (biotopeType === BiotopeType.Forest && cardEffect === SpeciesCardEffect.ForestSpecies) ||
+          (biotopeType === BiotopeType.Meadow && cardEffect === SpeciesCardEffect.GranivorousSpecies)
+        )
+      })
       if (materialWithDrawCardEffect.exists) {
         this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) =>
           [

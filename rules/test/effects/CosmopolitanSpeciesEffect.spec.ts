@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { setupGameAndGetExpansionRule } from './utils/setupGameAndGetExpansionRule.util'
+import { setupGameAndGetExpansionRule } from './utils/setupGameAndGetColonizationRule.util'
 import { KnownSpeciesCardId, SpeciesCard, SpeciesDietType } from '../../src/material/SpeciesCard'
 import { BiotopeType } from '../../src/material/BiotopeType'
 import { BiotopesRules } from '../../src'

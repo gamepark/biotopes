@@ -2,5 +2,6 @@ export enum SpeciesCardEffect {
   FecundSpecies,
   CosmopolitanSpecies,
   PollinatingSpecies,
-  ForestSpecies
+  ForestSpecies,
+  GranivorousSpecies
 }
