@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { WetlandHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class CommonReedBuntingCharacteristics extends WetlandHerbivoreCharacteristics {
   get cubeType(): CubeType {
@@ -7,7 +8,7 @@ export class CommonReedBuntingCharacteristics extends WetlandHerbivoreCharacteri
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.PartialMigrator
   }
 
   get effectType(): unknown {

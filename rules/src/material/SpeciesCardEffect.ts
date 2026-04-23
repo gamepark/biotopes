@@ -3,5 +3,6 @@ export enum SpeciesCardEffect {
   CosmopolitanSpecies,
   PollinatingSpecies,
   ForestSpecies,
-  GranivorousSpecies
+  GranivorousSpecies,
+  PartialMigrator
 }

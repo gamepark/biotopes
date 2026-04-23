@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { MeadowHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class CommonLinnetCharacteristics extends MeadowHerbivoreCharacteristics {
   get cubeType(): CubeType {
@@ -7,7 +8,7 @@ export class CommonLinnetCharacteristics extends MeadowHerbivoreCharacteristics 
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.PartialMigrator
   }
 
   get effectType(): unknown {
