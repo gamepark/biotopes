@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { WetlandHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class NorthernPintailCharacteristics extends WetlandHerbivoreCharacteristics {
   get cubeType(): CubeType {
@@ -7,7 +8,7 @@ export class NorthernPintailCharacteristics extends WetlandHerbivoreCharacterist
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.AquaticSpecies
   }
 
   get effectType(): unknown {
