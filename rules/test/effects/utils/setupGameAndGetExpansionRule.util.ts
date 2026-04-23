@@ -7,17 +7,19 @@ import { LocationType } from '../../../src/material/LocationType'
 import { KnownSpeciesCardId, SpeciesCard } from '../../../src/material/SpeciesCard'
 import { BiotopeType } from '../../../src/material/BiotopeType'
 import { ExpansionActionChooseCubeRule } from '../../../src/rules/actions/colonization/expansion/ExpansionActionChooseCubeRule'
+import { EcosystemActionType } from '../../../src/material/EcosystemActionType'
+import { MigrationActionChooseCubeRule } from '../../../src/rules/actions/colonization/migration/MigrationActionChooseCubeRule'
 
-export const setupGameAndGetExpansionRule = (cardId: SpeciesCard, cubeBiotopeType: BiotopeType) => {
+export const setupGameAndGetColonizationRule = (
+  players: PlayerColor[],
+  cardsWithCube: { cardId: SpeciesCard; cubeBiotopeType: BiotopeType }[],
+  ruleTYpe: EcosystemActionType.Migration | EcosystemActionType.Expansion | EcosystemActionType.Competition
+) => {
   const setup = new BiotopesSetup()
   const game = setup.setup({
     advancedBiotopes: false,
-    players: [{ id: PlayerColor.Ibex }, { id: PlayerColor.Salamander }]
+    players: players.map((p) => ({ id: p }))
   })
-  game.rule = {
-    id: RuleId.ExpansionChooseCube,
-    player: PlayerColor.Ibex
-  }
   setup.material(MaterialType.LandscapeTile).deleteItemsAtOnce()
   setup.material(MaterialType.LandscapeTile).createItemsAtOnce([
     {
@@ -58,7 +60,7 @@ export const setupGameAndGetExpansionRule = (cardId: SpeciesCard, cubeBiotopeTyp
   ])
   setup.material(MaterialType.TerritoryToken).createItemsAtOnce([
     {
-      id: PlayerColor.Ibex,
+      id: players[0],
       location: {
         type: LocationType.CentralLandscapeSpot,
         x: -3,
@@ -66,7 +68,7 @@ export const setupGameAndGetExpansionRule = (cardId: SpeciesCard, cubeBiotopeTyp
       }
     },
     {
-      id: PlayerColor.Ibex,
+      id: players[0],
       location: {
         type: LocationType.CentralLandscapeSpot,
         x: -2,
@@ -74,7 +76,7 @@ export const setupGameAndGetExpansionRule = (cardId: SpeciesCard, cubeBiotopeTyp
       }
     },
     {
-      id: PlayerColor.Ibex,
+      id: players[0],
       location: {
         type: LocationType.CentralLandscapeSpot,
         x: -2,
@@ -82,7 +84,7 @@ export const setupGameAndGetExpansionRule = (cardId: SpeciesCard, cubeBiotopeTyp
       }
     },
     {
-      id: PlayerColor.Ibex,
+      id: players[0],
       location: {
         type: LocationType.CentralLandscapeSpot,
         x: 0,
@@ -90,7 +92,7 @@ export const setupGameAndGetExpansionRule = (cardId: SpeciesCard, cubeBiotopeTyp
       }
     },
     {
-      id: PlayerColor.Salamander,
+      id: players[1],
       location: {
         type: LocationType.CentralLandscapeSpot,
         x: -1,
@@ -98,7 +100,7 @@ export const setupGameAndGetExpansionRule = (cardId: SpeciesCard, cubeBiotopeTyp
       }
     },
     {
-      id: PlayerColor.Salamander,
+      id: players[1],
       location: {
         type: LocationType.CentralLandscapeSpot,
         x: 2,
@@ -106,7 +108,7 @@ export const setupGameAndGetExpansionRule = (cardId: SpeciesCard, cubeBiotopeTyp
       }
     },
     {
-      id: PlayerColor.Salamander,
+      id: players[1],
       location: {
         type: LocationType.CentralLandscapeSpot,
         x: 3,
@@ -114,7 +116,7 @@ export const setupGameAndGetExpansionRule = (cardId: SpeciesCard, cubeBiotopeTyp
       }
     },
     {
-      id: PlayerColor.Salamander,
+      id: players[1],
       location: {
         type: LocationType.CentralLandscapeSpot,
         x: 2,
@@ -122,21 +124,41 @@ export const setupGameAndGetExpansionRule = (cardId: SpeciesCard, cubeBiotopeTyp
       }
     }
   ])
-  const cardIndex = setup
-    .material(MaterialType.SpeciesCard)
-    .id<KnownSpeciesCardId>((id) => id.front === cardId)
-    .getIndex()
-  setup.material(MaterialType.SpeciesCard).index(cardIndex).moveItem({
-    type: LocationType.PlayerSpeciesCardTableauSpot,
-    player: PlayerColor.Ibex
+  const cardsWithIndexes = cardsWithCube.map((cardWithCube, index) => {
+    const cardIndex = setup
+      .material(MaterialType.SpeciesCard)
+      .id<KnownSpeciesCardId>((id) => id.front === cardWithCube.cardId)
+      .moveItem({
+        type: LocationType.PlayerSpeciesCardTableauSpot,
+        player: players[0]
+      }).itemIndex
+    setup.material(MaterialType.Cube).createItem({
+      id: cardWithCube.cubeBiotopeType,
+      location: {
+        type: LocationType.CubeSpotOnPlayerSpeciesCard,
+        player: players[0],
+        parent: cardIndex
+      }
+    })
+    return { ...cardWithCube, cardIndex: cardIndex, cubeIndex: index }
   })
-  setup.material(MaterialType.Cube).createItem({
-    id: cubeBiotopeType,
-    location: {
-      type: LocationType.CubeSpotOnPlayerSpeciesCard,
-      player: PlayerColor.Ibex,
-      parent: cardIndex
-    }
-  })
-  return { setup, expansionRule: new ExpansionActionChooseCubeRule(game) }
+  game.rule = {
+    id: ruleTYpe === EcosystemActionType.Expansion ? RuleId.ExpansionChooseCube : RuleId.MigrationActionChooseCube,
+    player: players[0]
+  }
+  return {
+    setup,
+    game,
+    colonizationRule: ruleTYpe === EcosystemActionType.Expansion ? new ExpansionActionChooseCubeRule(game) : new MigrationActionChooseCubeRule(game),
+    cardsWithIndexes
+  }
+}
+
+export const setupGameAndGetExpansionRule = (cardId: SpeciesCard, cubeBiotopeType: BiotopeType) => {
+  const setupMultiple = setupGameAndGetColonizationRule(
+    [PlayerColor.Ibex, PlayerColor.Salamander],
+    [{ cardId: cardId, cubeBiotopeType: cubeBiotopeType }],
+    EcosystemActionType.Expansion
+  )
+  return { setup: setupMultiple.setup, expansionRule: setupMultiple.colonizationRule } as { setup: BiotopesSetup; expansionRule: ExpansionActionChooseCubeRule }
 }
