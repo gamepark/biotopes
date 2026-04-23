@@ -6,7 +6,7 @@ import { LocationType } from '../../src/material/LocationType'
 import { BiotopeType } from '../../src/material/BiotopeType'
 import { ItemMoveType, MoveKind } from '@gamepark/rules-api'
 import { EcosystemActionType } from '../../src/material/EcosystemActionType'
-import { setupGameAndGetExpansionRule } from './utils/setupGameAndGetExpansionRule.util'
+import { setupGameAndGetExpansionRule } from './utils/setupGameAndGetColonizationRule.util'
 
 describe('Pollinating species tests', () => {
   test('Given no cubes on the expansion spot, cubes on a pollinating species card can move to both of the spots', () => {
