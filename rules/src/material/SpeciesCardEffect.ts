@@ -11,5 +11,6 @@ export enum SpeciesCardEffect {
   MeadowSpecies,
   RockSpecies,
   AmphibianSpecies,
-  WidespreadSpecies
+  WidespreadSpecies,
+  MigratingSpecies
 }
