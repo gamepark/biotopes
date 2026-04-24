@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { MeadowInsectivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class NatterjackToadCharacteristics extends MeadowInsectivoreCharacteristics {
   get cubeType(): CubeType {
@@ -11,7 +12,7 @@ export class NatterjackToadCharacteristics extends MeadowInsectivoreCharacterist
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.MeadowSpecies
   }
 
   get effectType(): unknown {
