@@ -110,6 +110,7 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
       const materialWithDrawCubesEffect = this.materialHelper.playerSpeciesCardTableau.id<KnownSpeciesCardId>((id) => {
         const cardEffect = speciesCardCharacteristics[id.front].effect
         return (
+          (actionType === EcosystemActionType.Expansion && cardEffect === SpeciesCardEffect.WidespreadSpecies) ||
           (biotopeType === BiotopeType.Mountain && cardEffect === SpeciesCardEffect.RockSpecies) ||
           (biotopeType === BiotopeType.Forest && cardEffect === SpeciesCardEffect.WoodlandSpecies) ||
           (biotopeType === BiotopeType.Meadow && cardEffect === SpeciesCardEffect.MeadowSpecies) ||
