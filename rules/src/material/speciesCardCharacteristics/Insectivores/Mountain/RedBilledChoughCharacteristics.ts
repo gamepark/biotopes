@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { MountainInsectivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class RedBilledChoughCharacteristics extends MountainInsectivoreCharacteristics {
   get cubeType(): CubeType {
@@ -11,7 +12,7 @@ export class RedBilledChoughCharacteristics extends MountainInsectivoreCharacter
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.RockSpecies
   }
 
   get effectType(): unknown {

@@ -1,5 +1,5 @@
 export enum SpeciesCardEffect {
-  FecundSpecies,
+  FecundSpecies = 1,
   CosmopolitanSpecies,
   PollinatingSpecies,
   ForestSpecies,
@@ -8,5 +8,6 @@ export enum SpeciesCardEffect {
   MountainSpecies,
   AquaticSpecies,
   WoodlandSpecies,
-  MeadowSpecies
+  MeadowSpecies,
+  RockSpecies
 }
