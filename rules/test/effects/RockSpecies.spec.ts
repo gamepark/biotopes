@@ -16,22 +16,22 @@ import { PendingEffectType } from '../../src/material/effects/PendingEffectType'
 import { speciesCardCharacteristics } from '../../src/material/SpeciesCardCharacteristics'
 import { ChooseActionRule } from '../../src/rules/ChooseActionRule'
 
-describe('Meadow species tests', () => {
-  test('After an expansion on a meadox if the player has a Meadow species, game should proceed to the DiscardCardToDrawCube rule for the current player and allow to draw 1 cube', () => {
+describe('Rock species tests', () => {
+  test('After an expansion on a mountain if the player has a Rock species, game should proceed to the DiscardCardToDrawCube rule for the current player and allow to draw 1 cube', () => {
     // Given
     const { setup, game } = setupGameAndGetColonizationRule(
       [PlayerColor.Ibex, PlayerColor.Fox],
-      [{ cardId: SpeciesCard.NatterjackToad, cubeBiotopeType: BiotopeType.Meadow }],
+      [{ cardId: SpeciesCard.RedbilledChough, cubeBiotopeType: BiotopeType.Mountain }],
       EcosystemActionType.Expansion
     )
     setup.material(MaterialType.Cube).createItem({
-      id: BiotopeType.Meadow,
+      id: BiotopeType.Mountain,
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
         player: PlayerColor.Ibex,
         parent: setup
           .material(MaterialType.BiotopesCard)
-          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Meadow)
+          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Mountain)
           .getIndex()
       }
     })
@@ -52,7 +52,7 @@ describe('Meadow species tests', () => {
       rules,
       rules.material(MaterialType.TerritoryToken).player(PlayerColor.Ibex).moveItem({
         type: LocationType.CentralLandscapeSpot,
-        x: -1,
+        x: -2,
         y: 1
       }),
       PlayerColor.Ibex
@@ -67,28 +67,28 @@ describe('Meadow species tests', () => {
       .and.has.deep.members([{ type: PendingEffectType.DrawCubes, numberOfCubesToDraw: 1 }])
   })
 
-  test('After an expansion on a meadox if the player has a Meadow species and player drew a cube, game should proceed to the ChooseAction rule for the next player', () => {
+  test('After an expansion on a mountain if the player has a Rock species and player drew a cube, game should proceed to the ChooseAction rule for the next player', () => {
     // Given
     const { setup, game, cardsWithIndexes } = setupGameAndGetColonizationRule(
       [PlayerColor.Ibex, PlayerColor.Fox],
-      [{ cardId: SpeciesCard.NatterjackToad, cubeBiotopeType: BiotopeType.Meadow }],
+      [{ cardId: SpeciesCard.RedbilledChough, cubeBiotopeType: BiotopeType.Mountain }],
       EcosystemActionType.Expansion
     )
     setup.material(MaterialType.Cube).createItem({
-      id: BiotopeType.Meadow,
+      id: BiotopeType.Mountain,
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
         player: PlayerColor.Ibex,
         parent: setup
           .material(MaterialType.BiotopesCard)
-          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Meadow)
+          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Mountain)
           .getIndex()
       }
     })
     setup
       .material(MaterialType.SpeciesCard)
       .location((l) => l.type === LocationType.SpeciesDecksSpot && l.y === SpeciesDietType.Herbivore)
-      .id<KnownSpeciesCardId>((id) => speciesCardCharacteristics[id.front].biotope === BiotopeType.Meadow)
+      .id<KnownSpeciesCardId>((id) => speciesCardCharacteristics[id.front].biotope === BiotopeType.Mountain)
       .maxBy((card) => card.location.x ?? 0)
       .moveItem({
         type: LocationType.SpeciesDecksSpot,
@@ -109,7 +109,7 @@ describe('Meadow species tests', () => {
       rules,
       rules.material(MaterialType.TerritoryToken).player(PlayerColor.Ibex).moveItem({
         type: LocationType.CentralLandscapeSpot,
-        x: -1,
+        x: -2,
         y: 1
       }),
       PlayerColor.Ibex
@@ -131,7 +131,7 @@ describe('Meadow species tests', () => {
     playAction(
       rules,
       rules.material(MaterialType.Cube).createItem({
-        id: BiotopeType.Meadow,
+        id: BiotopeType.Mountain,
         location: {
           type: LocationType.CubeSpotOnPlayerSpeciesCard,
           player: PlayerColor.Ibex,
@@ -148,13 +148,13 @@ describe('Meadow species tests', () => {
     expect(pendingEffects).to.be.undefined
   })
 
-  test('After a migration to a meadox if the player has a Meadow species, game should proceed to the DiscardCardToDrawCube rule for the current player and allow to draw 1 cube', () => {
+  test('After a migration to a mountain if the player has a Rock species, game should proceed to the DiscardCardToDrawCube rule for the current player and allow to draw 1 cube', () => {
     // Given
     const { game } = setupGameAndGetColonizationRule(
       [PlayerColor.Ibex, PlayerColor.Fox],
       [
-        { cardId: SpeciesCard.NatterjackToad, cubeBiotopeType: BiotopeType.Meadow },
-        { cardId: SpeciesCard.EuropeanBeeEater, cubeBiotopeType: BiotopeType.Meadow }
+        { cardId: SpeciesCard.RedbilledChough, cubeBiotopeType: BiotopeType.Mountain },
+        { cardId: SpeciesCard.EuropeanBeeEater, cubeBiotopeType: BiotopeType.Mountain }
       ],
       EcosystemActionType.Migration
     )
@@ -178,8 +178,8 @@ describe('Meadow species tests', () => {
         .location((l) => l.type === LocationType.CentralLandscapeSpot && l.x === -3 && l.y === -1)
         .moveItem({
           type: LocationType.CentralLandscapeSpot,
-          x: 0,
-          y: 2
+          x: -1,
+          y: 0
         }),
       PlayerColor.Ibex
     )
@@ -193,20 +193,20 @@ describe('Meadow species tests', () => {
       .and.has.deep.members([{ type: PendingEffectType.DrawCubes, numberOfCubesToDraw: 1 }])
   })
 
-  test('After a migration to a meadox if the player has a Meadow species and player drew a cube, game should proceed to the ChooseAction rule for the next player', () => {
+  test('After a migration to a mountain if the player has a Rock species and player drew a cube, game should proceed to the ChooseAction rule for the next player', () => {
     // Given
     const { setup, game, cardsWithIndexes } = setupGameAndGetColonizationRule(
       [PlayerColor.Ibex, PlayerColor.Fox],
       [
-        { cardId: SpeciesCard.NatterjackToad, cubeBiotopeType: BiotopeType.Meadow },
-        { cardId: SpeciesCard.EuropeanBeeEater, cubeBiotopeType: BiotopeType.Meadow }
+        { cardId: SpeciesCard.RedbilledChough, cubeBiotopeType: BiotopeType.Mountain },
+        { cardId: SpeciesCard.EuropeanBeeEater, cubeBiotopeType: BiotopeType.Mountain }
       ],
       EcosystemActionType.Migration
     )
     setup
       .material(MaterialType.SpeciesCard)
       .location((l) => l.type === LocationType.SpeciesDecksSpot && l.y === SpeciesDietType.Herbivore)
-      .id<KnownSpeciesCardId>((id) => speciesCardCharacteristics[id.front].biotope === BiotopeType.Meadow)
+      .id<KnownSpeciesCardId>((id) => speciesCardCharacteristics[id.front].biotope === BiotopeType.Mountain)
       .maxBy((card) => card.location.x ?? 0)
       .moveItem({
         type: LocationType.SpeciesDecksSpot,
@@ -230,8 +230,8 @@ describe('Meadow species tests', () => {
         .location((l) => l.type === LocationType.CentralLandscapeSpot && l.x === -3 && l.y === -1)
         .moveItem({
           type: LocationType.CentralLandscapeSpot,
-          x: 0,
-          y: 2
+          x: -1,
+          y: 0
         }),
       PlayerColor.Ibex
     )
@@ -252,7 +252,7 @@ describe('Meadow species tests', () => {
     playAction(
       rules,
       rules.material(MaterialType.Cube).createItem({
-        id: BiotopeType.Meadow,
+        id: BiotopeType.Mountain,
         location: {
           type: LocationType.CubeSpotOnPlayerSpeciesCard,
           player: PlayerColor.Ibex,
