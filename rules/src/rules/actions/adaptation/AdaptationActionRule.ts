@@ -8,12 +8,10 @@ import { KnownSpeciesCardId } from '../../../material/SpeciesCard'
 import { speciesCardCharacteristics } from '../../../material/SpeciesCardCharacteristics'
 import { PlayerColor } from '../../../PlayerColor'
 import { MaterialHelper } from '../../helpers/MaterialHelper'
-import { PlayerHelper } from '../../helpers/PlayerHelper'
 import { RuleId } from '../../RuleId'
 
 export class AdaptationActionRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
-  private readonly playerHelper = new PlayerHelper(this.game)
 
   public getPlayerMoves(): BiotopesMove[] {
     const cubeMaterial = this.materialHelper.cubeMaterial
@@ -55,7 +53,7 @@ export class AdaptationActionRule extends PlayerTurnRule<PlayerColor, MaterialTy
             parent: move.itemIndex
           }
         }),
-        this.startPlayerTurn(RuleId.ChooseAction, this.playerHelper.nextPlayer)
+        this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)
       ]
     }
     return super.afterItemMove(move, _context)

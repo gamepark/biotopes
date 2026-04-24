@@ -110,9 +110,9 @@ describe('Reproduction tests', () => {
 
     // Then
     expect(rules.rulesStep).to.be.instanceof(ChooseActionRule).that.has.property('player').which.equals(PlayerColor.Owl)
-    expect(action.consequences).to.have.length(3)
+    expect(action.consequences).to.have.length(5)
     expect(action.consequences[0]).to.satisfy((move: BiotopesMove) => isBiotopesStartRule(move) && move.id === RuleId.ReproductionActionCreateCubes)
-    expect(action.consequences[2]).to.satisfy(
+    expect(action.consequences[4]).to.satisfy(
       (move: BiotopesMove) => isBiotopesStartPlayerTurn(move) && move.id === RuleId.ChooseAction && move.player === PlayerColor.Owl
     )
     expect(action.consequences[1]).to.satisfy((move: BiotopesMove) => isBiotopesCreateItemTypeAtOnce(MaterialType.Cube)(move))
@@ -249,7 +249,7 @@ describe('Reproduction tests', () => {
       // Then
       expect(placeCubeAction.consequences).to.be.an('array').that.has.length(1)
       expect(discardCardAction.consequences).to.be.an('array').that.has.length(1)
-      expect(drawCubeAction.consequences).to.be.an('array').that.has.length(3)
+      expect(drawCubeAction.consequences).to.be.an('array').that.has.length(5)
       expect(drawCubeAction.consequences[0]).to.satisfy((move: BiotopesMove) => isBiotopesStartRule(move) && move.id === RuleId.ReproductionActionCreateCubes)
       expect(drawCubeAction.consequences[1]).to.satisfy((move: BiotopesMove) => isBiotopesCreateItemTypeAtOnce(MaterialType.Cube)(move))
       const createCubeMove = drawCubeAction.consequences[1] as CreateItemsAtOnce<PlayerColor, MaterialType, LocationType>
@@ -456,7 +456,7 @@ describe('Reproduction tests', () => {
       )
 
       // Then
-      expect(lastCreateCubeAction.consequences).to.be.an('array').that.has.length(3)
+      expect(lastCreateCubeAction.consequences).to.be.an('array').that.has.length(5)
       expect(lastCreateCubeAction.consequences[0]).to.satisfy(
         (move: BiotopesMove) => isBiotopesStartRule(move) && move.id === RuleId.ReproductionActionCreateCubes
       )

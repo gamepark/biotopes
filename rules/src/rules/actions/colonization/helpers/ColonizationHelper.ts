@@ -8,7 +8,6 @@ import { MaterialType } from '../../../../material/MaterialType'
 import { PlayerColor } from '../../../../PlayerColor'
 import { LandscapeHelper } from '../../../helpers/LandscapeHelper'
 import { MaterialHelper } from '../../../helpers/MaterialHelper'
-import { PlayerHelper } from '../../../helpers/PlayerHelper'
 import { RuleId } from '../../../RuleId'
 import { EcosystemActionType } from '../../../../material/EcosystemActionType'
 import { KnownSpeciesCardId } from '../../../../material/SpeciesCard'
@@ -21,7 +20,6 @@ import { PendingEffectType } from '../../../../material/effects/PendingEffectTyp
 export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly landscapeHelper = new LandscapeHelper(this.game)
   private readonly materialHelper = new MaterialHelper(this.game)
-  private readonly playerHelper = new PlayerHelper(this.game)
 
   public computeReachableBiotopeTypes(distance: number = 1): BiotopeType[] {
     return uniq(
@@ -109,6 +107,20 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
           (biotopeType === BiotopeType.Wetland && cardEffect === SpeciesCardEffect.AquaticSpecies)
         )
       })
+      const materialWithDrawCubesEffect = this.materialHelper.playerSpeciesCardTableau.id<KnownSpeciesCardId>((id) => {
+        const cardEffect = speciesCardCharacteristics[id.front].effect
+        return biotopeType === BiotopeType.Forest && cardEffect === SpeciesCardEffect.WoodlandSpecies
+      })
+      if (materialWithDrawCubesEffect.exists) {
+        this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) =>
+          [
+            {
+              type: PendingEffectType.DrawCubes,
+              numberOfCubesToDraw: materialWithDrawCubesEffect.getQuantity()
+            } as BiotopesPendingEffect
+          ].concat(currentPendingEffects ?? [])
+        )
+      }
       if (materialWithDrawCardEffect.exists) {
         this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) =>
           [
@@ -118,9 +130,14 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
             } as BiotopesPendingEffect
           ].concat(currentPendingEffects ?? [])
         )
+      }
+      if (materialWithDrawCardEffect.exists) {
         return [this.startRule(RuleId.DrawCards)]
       }
-      return [this.startPlayerTurn(RuleId.ChooseAction, this.playerHelper.nextPlayer)]
+      if (materialWithDrawCubesEffect.exists) {
+        return [this.startRule(RuleId.DiscardCardToDrawCube)]
+      }
+      return [this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)]
     }
     return []
   }
