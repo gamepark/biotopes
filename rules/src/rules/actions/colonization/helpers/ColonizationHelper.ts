@@ -107,6 +107,20 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
           (biotopeType === BiotopeType.Wetland && cardEffect === SpeciesCardEffect.AquaticSpecies)
         )
       })
+      const materialWithDrawCubesEffect = this.materialHelper.playerSpeciesCardTableau.id<KnownSpeciesCardId>((id) => {
+        const cardEffect = speciesCardCharacteristics[id.front].effect
+        return biotopeType === BiotopeType.Forest && cardEffect === SpeciesCardEffect.WoodlandSpecies
+      })
+      if (materialWithDrawCubesEffect.exists) {
+        this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) =>
+          [
+            {
+              type: PendingEffectType.DrawCubes,
+              numberOfCubesToDraw: materialWithDrawCubesEffect.getQuantity()
+            } as BiotopesPendingEffect
+          ].concat(currentPendingEffects ?? [])
+        )
+      }
       if (materialWithDrawCardEffect.exists) {
         this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) =>
           [
@@ -116,7 +130,12 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
             } as BiotopesPendingEffect
           ].concat(currentPendingEffects ?? [])
         )
+      }
+      if (materialWithDrawCardEffect.exists) {
         return [this.startRule(RuleId.DrawCards)]
+      }
+      if (materialWithDrawCubesEffect.exists) {
+        return [this.startRule(RuleId.DiscardCardToDrawCube)]
       }
       return [this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)]
     }
