@@ -112,7 +112,8 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
         return (
           (biotopeType === BiotopeType.Mountain && cardEffect === SpeciesCardEffect.RockSpecies) ||
           (biotopeType === BiotopeType.Forest && cardEffect === SpeciesCardEffect.WoodlandSpecies) ||
-          (biotopeType === BiotopeType.Meadow && cardEffect === SpeciesCardEffect.MeadowSpecies)
+          (biotopeType === BiotopeType.Meadow && cardEffect === SpeciesCardEffect.MeadowSpecies) ||
+          (biotopeType === BiotopeType.Wetland && cardEffect === SpeciesCardEffect.AmphibianSpecies)
         )
       })
       if (materialWithDrawCubesEffect.exists) {
