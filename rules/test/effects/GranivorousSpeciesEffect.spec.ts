@@ -135,11 +135,14 @@ describe('Granivorous species tests', () => {
     // When
     playAction(
       rules,
-      rules.material(MaterialType.TerritoryToken).player(PlayerColor.Owl).location(LocationType.TerritoryTokenSpotOnEcosystemBoard).moveItem({
-        type: LocationType.CentralLandscapeSpot,
-        x: 1,
-        y: 0
-      }),
+      rules
+        .material(MaterialType.TerritoryToken)
+        .location((l) => l.type === LocationType.CentralLandscapeSpot && l.x === 0 && l.y === 1)
+        .moveItem({
+          type: LocationType.CentralLandscapeSpot,
+          x: 2,
+          y: 0
+        }),
       PlayerColor.Owl
     )
 
@@ -167,11 +170,14 @@ describe('Granivorous species tests', () => {
     )
     playAction(
       rules,
-      rules.material(MaterialType.TerritoryToken).player(PlayerColor.Owl).location(LocationType.TerritoryTokenSpotOnEcosystemBoard).moveItem({
-        type: LocationType.CentralLandscapeSpot,
-        x: 1,
-        y: 0
-      }),
+      rules
+        .material(MaterialType.TerritoryToken)
+        .location((l) => l.type === LocationType.CentralLandscapeSpot && l.x === 0 && l.y === 1)
+        .moveItem({
+          type: LocationType.CentralLandscapeSpot,
+          x: 2,
+          y: 0
+        }),
       PlayerColor.Owl
     )
 
