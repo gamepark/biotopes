@@ -10,12 +10,10 @@ import { speciesCardCharacteristics } from '../../../../material/SpeciesCardChar
 import { MaterialHelper } from '../../../helpers/MaterialHelper'
 import { BiotopesPendingEffect } from '../../../../material/effects/PendingEffect'
 import { Memory } from '../../../../Memory'
-import { PlayerHelper } from '../../../helpers/PlayerHelper'
 import { PendingEffectType } from '../../../../material/effects/PendingEffectType'
 
 export class DrawCubesHelper extends MaterialRulesPart<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
-  private readonly playerHelper = new PlayerHelper(this.game)
 
   public getPlayerMoves(player: PlayerColor, biotopeType: BiotopeType): BiotopesMove[] {
     return this.materialHelper.playerSpeciesCardTableau
@@ -52,7 +50,7 @@ export class DrawCubesHelper extends MaterialRulesPart<PlayerColor, MaterialType
       return [
         currentEffect.type === PendingEffectType.DrawCubes && currentEffect.ruleWhenFinished !== undefined
           ? this.startRule(currentEffect.ruleWhenFinished)
-          : this.startPlayerTurn(RuleId.ChooseAction, this.playerHelper.nextPlayer)
+          : this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)
       ]
     }
     const nextRule = this.getRuleFromNewEffect(newPendingEffects[0])

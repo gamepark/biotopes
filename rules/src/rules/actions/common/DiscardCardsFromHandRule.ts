@@ -4,7 +4,6 @@ import { MaterialType } from '../../../material/MaterialType'
 import { LocationType } from '../../../material/LocationType'
 import { RuleId } from '../../RuleId'
 import { MaterialHelper } from '../../helpers/MaterialHelper'
-import { PlayerHelper } from '../../helpers/PlayerHelper'
 import { BiotopesMove, isBiotopesMoveItemType } from '../../../BiotopeTypes'
 import { BiotopesPendingEffect } from '../../../material/effects/PendingEffect'
 import { Memory } from '../../../Memory'
@@ -12,7 +11,6 @@ import { PendingEffectType } from '../../../material/effects/PendingEffectType'
 
 export class DiscardCardsFromHandRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   public readonly materialHelper = new MaterialHelper(this.game)
-  public readonly playerHelper = new PlayerHelper(this.game)
 
   public onRuleStart(
     _move: RuleMove<PlayerColor, RuleId>,
@@ -24,7 +22,7 @@ export class DiscardCardsFromHandRule extends PlayerTurnRule<PlayerColor, Materi
       if (newPendingActions.length === 0) {
         this.forget(Memory.PendingEffects)
       }
-      return [this.startPlayerTurn(RuleId.ChooseAction, this.playerHelper.nextPlayer)]
+      return [this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)]
     }
     return super.onRuleStart(_move, _previousRule, _context)
   }
@@ -41,7 +39,7 @@ export class DiscardCardsFromHandRule extends PlayerTurnRule<PlayerColor, Materi
         const newPendingActions = this.memorize<BiotopesPendingEffect[]>(Memory.PendingEffects, (currentPendingEffects) => currentPendingEffects.slice(1))
         if (newPendingActions.length === 0) {
           this.forget(Memory.PendingEffects)
-          return [this.startPlayerTurn(RuleId.ChooseAction, this.playerHelper.nextPlayer)]
+          return [this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)]
         }
         return this.getRuleMoveFromNextPendingAction(newPendingActions[0])
       }
@@ -54,7 +52,7 @@ export class DiscardCardsFromHandRule extends PlayerTurnRule<PlayerColor, Materi
       case PendingEffectType.DrawCubes:
         return [this.startRule(RuleId.DiscardCardToDrawCube)]
       default:
-        return [this.startPlayerTurn(RuleId.ChooseAction, this.playerHelper.nextPlayer)]
+        return [this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)]
     }
   }
 }

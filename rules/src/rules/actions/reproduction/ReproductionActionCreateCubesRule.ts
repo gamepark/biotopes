@@ -7,12 +7,10 @@ import { BiotopesMove } from '../../../BiotopeTypes'
 import { MaterialHelper } from '../../helpers/MaterialHelper'
 import { KnownSpeciesCardId } from '../../../material/SpeciesCard'
 import { speciesCardCharacteristics } from '../../../material/SpeciesCardCharacteristics'
-import { PlayerHelper } from '../../helpers/PlayerHelper'
 import { inRange } from 'es-toolkit/compat'
 
 export class ReproductionActionCreateCubesRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
-  private readonly playerHelper = new PlayerHelper(this.game)
 
   public onRuleStart(_move: RuleMove<PlayerColor, RuleId>, _previousRule?: RuleStep, _context?: PlayMoveContext): BiotopesMove[] {
     const cubeOnTableauMaterial = this.materialHelper.playerCubesOnSpeciesCards
@@ -31,7 +29,7 @@ export class ReproductionActionCreateCubesRule extends PlayerTurnRule<PlayerColo
       }
     })
     return [this.material(MaterialType.Cube).createItemsAtOnce(cubesToCreate) as BiotopesMove].concat(
-      this.startPlayerTurn(RuleId.ChooseAction, this.playerHelper.nextPlayer)
+      this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)
     )
   }
 }

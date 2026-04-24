@@ -247,9 +247,9 @@ describe('Evolution tests', () => {
     expect(pendingEffects).to.be.undefined
     expect(lastCardDrawnAction.consequences)
       .to.be.an('array')
-      .that.has.length(3)
+      .that.has.length(4)
       .and.includes.deep.members([{ kind: MoveKind.RulesMove, type: RuleMoveType.StartRule, id: RuleId.DiscardCardsFromHand }])
-    expect(lastCardDrawnAction.consequences[0]).to.satisfy(
+    expect(lastCardDrawnAction.consequences[2]).to.satisfy(
       (move: BiotopesMove) =>
         isBiotopesMoveItemTypeAtOnce(MaterialType.SpeciesCard)(move) && move.location.type === LocationType.SpeciesRiversGrid && move.indexes.length === 1
     )
@@ -368,12 +368,8 @@ describe('Evolution tests', () => {
         .and.to.have.deep.members([{ type: PendingEffectType.DrawCards, numberOfCardsToDraw: 0 }])
       expect(lastCardDrawnAction.consequences)
         .to.be.an('array')
-        .that.has.length(2)
+        .that.has.length(1)
         .and.includes.deep.members([{ kind: MoveKind.RulesMove, type: RuleMoveType.StartRule, id: RuleId.DiscardCardsFromHand }])
-      expect(lastCardDrawnAction.consequences[0]).to.satisfy(
-        (move: BiotopesMove) =>
-          isBiotopesMoveItemTypeAtOnce(MaterialType.SpeciesCard)(move) && move.location.type === LocationType.SpeciesRiversGrid && move.indexes.length === 2
-      )
     }
   )
 

@@ -42,6 +42,7 @@ import { DrawMeadowCubeRule } from './rules/actions/common/DrawMeadowCubeRule'
 import { DrawWetlandCubeRule } from './rules/actions/common/DrawWetlandCubeRule'
 import { DrawCardsRule } from './rules/actions/common/DrawCardsRule'
 import { DiscardCardsFromHandRule } from './rules/actions/common/DiscardCardsFromHandRule'
+import { EndOfActionReplenishRiversAndActivateNextPlayerRule } from './rules/actions/common/EndOfActionReplenishRiversAndActivateNextPlayerRule'
 
 /**
  * This class implements the rules of the board game.
@@ -115,7 +116,8 @@ export class BiotopesRules
     [RuleId.DrawMeadowCube]: DrawMeadowCubeRule,
     [RuleId.DrawWetlandCube]: DrawWetlandCubeRule,
     [RuleId.DrawCards]: DrawCardsRule,
-    [RuleId.DiscardCardsFromHand]: DiscardCardsFromHandRule
+    [RuleId.DiscardCardsFromHand]: DiscardCardsFromHandRule,
+    [RuleId.EndOfActionReplenishRiversAndActivateNextPlayer]: EndOfActionReplenishRiversAndActivateNextPlayerRule
   }
 
   giveTime(): number {

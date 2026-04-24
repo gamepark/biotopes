@@ -22,13 +22,11 @@ import { PlayerColor } from '../PlayerColor'
 import { ExpansionActionChooseCubeRule } from './actions/colonization/expansion/ExpansionActionChooseCubeRule'
 import { MigrationActionChooseCubeRule } from './actions/colonization/migration/MigrationActionChooseCubeRule'
 import { MaterialHelper } from './helpers/MaterialHelper'
-import { PlayerHelper } from './helpers/PlayerHelper'
 import { RuleId } from './RuleId'
 import { ReproductionActionPlaceCubeRule } from './actions/reproduction/ReproductionActionPlaceCubeRule'
 
 export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
-  private readonly playerHelper = new PlayerHelper(this.game)
 
   public getPlayerMoves(): BiotopesMove[] {
     return ecosystemActionType
@@ -55,7 +53,7 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
     }
     if (isPassCycleCustomMove(move)) {
       this.memorize<PlayerColor[] | undefined>(Memory.PassedPlayers, (oldValue) => oldValue?.concat(this.player) ?? [this.player])
-      return [this.startPlayerTurn(this.playerHelper.nextPlayer === this.player ? RuleId.EndOfCycle : RuleId.ChooseAction, this.nextPlayer)]
+      return [this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)]
     }
     return super.onCustomMove(move, context)
   }
