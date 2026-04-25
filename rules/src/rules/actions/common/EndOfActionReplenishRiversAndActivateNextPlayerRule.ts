@@ -8,6 +8,7 @@ import { KnownSpeciesCardId, SpeciesDietType } from '../../../material/SpeciesCa
 import { BiotopesMove } from '../../../BiotopeTypes'
 import { MaterialHelper } from '../../helpers/MaterialHelper'
 import { PlayerHelper } from '../../helpers/PlayerHelper'
+import { Memory } from '../../../Memory'
 
 export class EndOfActionReplenishRiversAndActivateNextPlayerRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
@@ -16,7 +17,12 @@ export class EndOfActionReplenishRiversAndActivateNextPlayerRule extends PlayerT
   public onRuleStart(_move: RuleMove<PlayerColor, RuleId>, _previousRule?: RuleStep, _context?: PlayMoveContext): BiotopesMove[] {
     const riverMaterial = this.materialHelper.speciesCardMaterial.location(LocationType.SpeciesRiversGrid)
     const ruleChangeConsequences = [
-      this.startPlayerTurn(this.playerHelper.nextPlayer === this.player ? RuleId.EndOfCycle : RuleId.ChooseAction, this.playerHelper.nextPlayer)
+      this.startPlayerTurn(
+        this.playerHelper.nextPlayer === this.player && this.remind<PlayerColor[]>(Memory.PassedPlayers).includes(this.player)
+          ? RuleId.EndOfCycle
+          : RuleId.ChooseAction,
+        this.playerHelper.nextPlayer
+      )
     ]
     if (riverMaterial.getQuantity() < 9) {
       const riverCounts = countBy(riverMaterial.getItems<KnownSpeciesCardId>(), (card) => card.location.y as SpeciesDietType)
