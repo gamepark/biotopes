@@ -15,6 +15,7 @@ import { RuleId } from '../../RuleId'
 import { BiotopesPendingEffect } from '../../../material/effects/PendingEffect'
 import { PendingEffectType } from '../../../material/effects/PendingEffectType'
 import { DrawCardsPendingEffect } from '../../../material/effects/DrawCardsPendingEffect'
+import { SpeciesCardEffect } from '../../../material/SpeciesCardEffect'
 
 export class EvolutionActionPlaceCubesAndDiscardCardsRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
@@ -32,12 +33,20 @@ export class EvolutionActionPlaceCubesAndDiscardCardsRule extends PlayerTurnRule
     const moves = freeCubeTypes
       .flatMap<BiotopesMove>((cubeType) => {
         if (cubeType === CubeType.Plant) {
-          return this.materialHelper.playerCubesOnBiotopeCards.moveItems({
+          const destination = {
             type: LocationType.CubeSpotOnEcosystemBoard,
             player: this.player,
             id: EcosystemActionType.Evolution,
             x: cubeType
-          })
+          }
+          return this.materialHelper.playerCubesOnBiotopeCards.moveItems(destination).concat(
+            this.materialHelper.playerCubesOnSpeciesCards
+              .parent((cardIndex) => {
+                const parentCard = this.materialHelper.playerSpeciesCardTableau.index(cardIndex).getItem<KnownSpeciesCardId>()!
+                return speciesCardCharacteristics[parentCard.id.front].effect === SpeciesCardEffect.PollinatingSpecies
+              })
+              .moveItems(destination)
+          )
         } else {
           const cardOfTypeIndexes = this.materialHelper.playerSpeciesCardTableau
             .id<KnownSpeciesCardId>((cardId) => speciesCardCharacteristics[cardId.front].cubeType === cubeType)
