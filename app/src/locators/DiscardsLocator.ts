@@ -7,7 +7,7 @@ import { Coordinates, Location } from '@gamepark/rules-api'
 import { decksLocator } from './DecksLocator.ts'
 
 class DiscardsLocator extends DeckLocator<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-  maxCount = 40
+  limit = undefined
   public getCoordinates(location: Location<PlayerColor, LocationType>): Partial<Coordinates> {
     const deckCoordinates = decksLocator.getCoordinates(location)
     return { x: deckCoordinates.x! - 8, y: deckCoordinates.y }
