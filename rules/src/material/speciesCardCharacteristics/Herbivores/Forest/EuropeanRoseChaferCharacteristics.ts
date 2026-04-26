@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { ForestHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class EuropeanRoseChaferCharacteristics extends ForestHerbivoreCharacteristics {
   get cubeType(): CubeType {
@@ -7,7 +8,7 @@ export class EuropeanRoseChaferCharacteristics extends ForestHerbivoreCharacteri
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.DetritivoreSpecies
   }
 
   get effectType(): unknown {

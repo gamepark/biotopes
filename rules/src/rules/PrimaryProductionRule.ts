@@ -9,6 +9,9 @@ import { PlayerColor } from '../PlayerColor'
 import { LandscapeHelper } from './helpers/LandscapeHelper'
 import { MaterialHelper } from './helpers/MaterialHelper'
 import { RuleId } from './RuleId'
+import { KnownSpeciesCardId } from '../material/SpeciesCard'
+import { speciesCardCharacteristics } from '../material/SpeciesCardCharacteristics'
+import { SpeciesCardEffect } from '../material/SpeciesCardEffect'
 
 export class PrimaryProductionRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
@@ -31,22 +34,38 @@ export class PrimaryProductionRule extends PlayerTurnRule<PlayerColor, MaterialT
           (type) => type
         )
         return this.materialHelper.cubeMaterial.createItemsAtOnce(
-          Object.entries(cubeCountByType).map(([biotopeType, cubeCount]) => {
-            const type = parseInt(biotopeType) as BiotopeType
-            const parentIndex = this.material(MaterialType.BiotopesCard)
-              .player(this.player)
-              .id<BiotopeCard>((id) => getBiotopeCardType(id) === type)
-              .getIndex()
-            return {
-              id: type,
-              quantity: cubeCount,
-              location: {
-                type: LocationType.CubeSpotOnPlayerBiotopesCard,
-                player: player,
-                parent: parentIndex
+          Object.entries(cubeCountByType)
+            .map(([biotopeType, cubeCount]) => {
+              const type = parseInt(biotopeType) as BiotopeType
+              const parentIndex = this.material(MaterialType.BiotopesCard)
+                .player(this.player)
+                .id<BiotopeCard>((id) => getBiotopeCardType(id) === type)
+                .getIndex()
+              return {
+                id: type,
+                quantity: cubeCount,
+                location: {
+                  type: LocationType.CubeSpotOnPlayerBiotopesCard,
+                  player: player,
+                  parent: parentIndex
+                }
               }
-            }
-          })
+            })
+            .concat(
+              this.materialHelper.speciesCardMaterial
+                .location(LocationType.PlayerSpeciesCardTableauSpot)
+                .player(player)
+                .id<KnownSpeciesCardId>((id) => speciesCardCharacteristics[id.front].effect === SpeciesCardEffect.DetritivoreSpecies)
+                .entries.map(([index, card]) => ({
+                  id: speciesCardCharacteristics[(card.id as KnownSpeciesCardId).front].biotope,
+                  location: {
+                    type: LocationType.CubeSpotOnPlayerSpeciesCard,
+                    player: player,
+                    parent: index
+                  },
+                  quantity: 1
+                }))
+            )
         )
       })
       .concat(this.startPlayerTurn(RuleId.ChooseAction, this.player))
