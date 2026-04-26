@@ -21,36 +21,23 @@ export type PassCycleCustomMove = CustomMove<typeof CustomMoveType.PassCycle, un
 
 export type EndEvolutionActionCustomMove = CustomMove<typeof CustomMoveType.EndEvolutionAction, undefined>
 
-export const isChooseActionCustomMove: <T extends EcosystemActionType>(move: BiotopesMove) => move is ChooseActionCustomMove<T> = <
-  T extends EcosystemActionType
->(
-  move: BiotopesMove
-) =>
-  isCustomMoveType<typeof CustomMoveType.ChooseAction, ChooseActionCustomMoveData<T>, PlayerColor, MaterialType, LocationType>(CustomMoveType.ChooseAction)(
-    move
-  )
+export const isChooseActionCustomMoveType: <T extends EcosystemActionType>(actionType: T) => (move: BiotopesMove) => move is ChooseActionCustomMove<T> =
+  <T extends EcosystemActionType>(actionType: T) =>
+  (move: BiotopesMove): move is ChooseActionCustomMove<T> =>
+    isCustomMoveType<typeof CustomMoveType.ChooseAction, ChooseActionCustomMoveData<T>, PlayerColor, MaterialType, LocationType>(CustomMoveType.ChooseAction)(
+      move
+    ) && move.data?.action === actionType
 
-export const isExpansionChooseActionCustomMove: (move: BiotopesMove) => move is ChooseActionCustomMove<typeof EcosystemActionType.Expansion> = (
-  move
-): move is ChooseActionCustomMove<typeof EcosystemActionType.Expansion> => isChooseActionCustomMove(move) && move.data?.action === EcosystemActionType.Expansion
+export const isExpansionChooseActionCustomMove = isChooseActionCustomMoveType(EcosystemActionType.Expansion)
 
-export const isAdaptationChooseActionCustomMove: (move: BiotopesMove) => move is ChooseActionCustomMove<typeof EcosystemActionType.Adaptation> = (
-  move
-): move is ChooseActionCustomMove<typeof EcosystemActionType.Adaptation> =>
-  isChooseActionCustomMove(move) && move.data?.action === EcosystemActionType.Adaptation
+export const isAdaptationChooseActionCustomMove = isChooseActionCustomMoveType(EcosystemActionType.Adaptation)
 
-export const isEvolutionChooseActionCustomMove: (move: BiotopesMove) => move is ChooseActionCustomMove<typeof EcosystemActionType.Evolution> = (
-  move
-): move is ChooseActionCustomMove<typeof EcosystemActionType.Evolution> => isChooseActionCustomMove(move) && move.data?.action === EcosystemActionType.Evolution
+export const isEvolutionChooseActionCustomMove = isChooseActionCustomMoveType(EcosystemActionType.Evolution)
 
-export const isMigrationChooseActionCustomMove: (move: BiotopesMove) => move is ChooseActionCustomMove<typeof EcosystemActionType.Migration> = (
-  move
-): move is ChooseActionCustomMove<typeof EcosystemActionType.Migration> => isChooseActionCustomMove(move) && move.data?.action === EcosystemActionType.Migration
+export const isMigrationChooseActionCustomMove = isChooseActionCustomMoveType(EcosystemActionType.Migration)
 
-export const isReproductionChooseActionCustomMove: (move: BiotopesMove) => move is ChooseActionCustomMove<typeof EcosystemActionType.Reproduction> = (
-  move
-): move is ChooseActionCustomMove<typeof EcosystemActionType.Reproduction> =>
-  isChooseActionCustomMove(move) && move.data?.action === EcosystemActionType.Reproduction
+export const isReproductionChooseActionCustomMove = isChooseActionCustomMoveType(EcosystemActionType.Reproduction)
+export const isTransferChooseActionCustomMove = isChooseActionCustomMoveType(EcosystemActionType.Transfert)
 
 export const isEndOfEvolutionActionCustomMove: (move: BiotopesMove) => move is EndEvolutionActionCustomMove = isCustomMoveType<
   typeof CustomMoveType.EndEvolutionAction,

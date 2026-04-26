@@ -26,5 +26,7 @@ export enum RuleId {
   DrawWetlandCube,
   DrawCards,
   DiscardCardsFromHand,
-  EndOfActionReplenishRiversAndActivateNextPlayer
+  EndOfActionReplenishRiversAndActivateNextPlayer,
+  TransferActionChooseCube,
+  TransferActionTransferCubes
 }
