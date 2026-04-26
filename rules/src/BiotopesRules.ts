@@ -43,6 +43,8 @@ import { DrawWetlandCubeRule } from './rules/actions/common/DrawWetlandCubeRule'
 import { DrawCardsRule } from './rules/actions/common/DrawCardsRule'
 import { DiscardCardsFromHandRule } from './rules/actions/common/DiscardCardsFromHandRule'
 import { EndOfActionReplenishRiversAndActivateNextPlayerRule } from './rules/actions/common/EndOfActionReplenishRiversAndActivateNextPlayerRule'
+import { TransferActionChooseCubeRule } from './rules/actions/transfer/TransferActionChooseCubeRule'
+import { TransferActionTransferCubesRule } from './rules/actions/transfer/TransferActionTransferCubesRule'
 
 /**
  * This class implements the rules of the board game.
@@ -117,7 +119,9 @@ export class BiotopesRules
     [RuleId.DrawWetlandCube]: DrawWetlandCubeRule,
     [RuleId.DrawCards]: DrawCardsRule,
     [RuleId.DiscardCardsFromHand]: DiscardCardsFromHandRule,
-    [RuleId.EndOfActionReplenishRiversAndActivateNextPlayer]: EndOfActionReplenishRiversAndActivateNextPlayerRule
+    [RuleId.EndOfActionReplenishRiversAndActivateNextPlayer]: EndOfActionReplenishRiversAndActivateNextPlayerRule,
+    [RuleId.TransferActionChooseCube]: TransferActionChooseCubeRule,
+    [RuleId.TransferActionTransferCubes]: TransferActionTransferCubesRule
   }
 
   giveTime(): number {

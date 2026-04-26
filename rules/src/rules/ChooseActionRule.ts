@@ -10,7 +10,8 @@ import {
   isExpansionChooseActionCustomMove,
   isMigrationChooseActionCustomMove,
   isPassCycleCustomMove,
-  isReproductionChooseActionCustomMove
+  isReproductionChooseActionCustomMove,
+  isTransferChooseActionCustomMove
 } from '../material/CustomMoveType'
 import { EcosystemActionType, ecosystemActionType } from '../material/EcosystemActionType'
 import { LocationType } from '../material/LocationType'
@@ -51,6 +52,9 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
     if (isReproductionChooseActionCustomMove(move)) {
       return [this.startRule(RuleId.ReproductionActionPlaceCube)]
     }
+    if (isTransferChooseActionCustomMove(move)) {
+      return [this.startRule(RuleId.TransferActionChooseCube)]
+    }
     if (isPassCycleCustomMove(move)) {
       this.memorize<PlayerColor[] | undefined>(Memory.PassedPlayers, (oldValue) => oldValue?.concat(this.player) ?? [this.player])
       return [this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)]
@@ -71,9 +75,13 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
         return new MigrationActionChooseCubeRule(this.game).getPlayerMoves().length > 0
       case EcosystemActionType.Reproduction:
         return (
-          new ReproductionActionPlaceCubeRule(this.game).getPlayerMoves().length > 0 &&
           !this.materialHelper.cubeMaterial.location(LocationType.CubeSpotOnEcosystemBoard).player(this.player).locationId(EcosystemActionType.Reproduction)
-            .exists
+            .exists && new ReproductionActionPlaceCubeRule(this.game).getPlayerMoves().length > 0
+        )
+      case EcosystemActionType.Transfert:
+        return (
+          (this.materialHelper.playerCubesOnBiotopeCards.exists || this.materialHelper.playerCubesOnSpeciesCards.exists) &&
+          !this.materialHelper.cubeMaterial.location(LocationType.CubeSpotOnEcosystemBoard).locationId(EcosystemActionType.Transfert).player(this.player).exists
         )
       default:
         return true
