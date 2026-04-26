@@ -24,7 +24,7 @@ export class ReproductionActionPlaceCubeRule extends PlayerTurnRule<PlayerColor,
         const cardCubeType = speciesCardCharacteristics[parentCard.id.front].cubeType
         return cardCubeType === CubeType.AmphibianReptile || cardCubeType === CubeType.Insect
       })
-      .moveItems({ type: LocationType.CubeSpotOnEcosystemBoard, id: EcosystemActionType.Reproduction })
+      .moveItems({ type: LocationType.CubeSpotOnEcosystemBoard, id: EcosystemActionType.Reproduction, player: this.player })
   }
 
   public afterItemMove(move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): BiotopesMove[] {
