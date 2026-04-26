@@ -82,13 +82,13 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
 
   private canAdaptCardFromHand() {
     const cubeCounts = countBy(
-      this.materialHelper.playerCubesOnSpeciesCards.getItems().map((cube) => {
+      this.materialHelper.playerCubesOnSpeciesCards.getItems().flatMap((cube) => {
         const parentCard = this.materialHelper.playerSpeciesCardTableau.index(cube.location.parent).getItem<KnownSpeciesCardId>()!
-        return speciesCardCharacteristics[parentCard.id.front].cubeType
+        return Array(cube.quantity ?? 1).fill(speciesCardCharacteristics[parentCard.id.front].cubeType)
       }),
       (cubeType) => cubeType
     )
-    cubeCounts[CubeType.Plant] = this.materialHelper.playerCubesOnBiotopeCards.length
+    cubeCounts[CubeType.Plant] = this.materialHelper.playerCubesOnBiotopeCards.getQuantity()
     return this.materialHelper.playerSpeciesCardHand.getItems<KnownSpeciesCardId>().some((card) => {
       const characteristics = speciesCardCharacteristics[card.id.front]
       return Object.entries(characteristics.diet).every(([cubeTypeString, cubeCount]) => {
