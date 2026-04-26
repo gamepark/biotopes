@@ -1,5 +1,5 @@
-import { CardDescription } from '@gamepark/react-game'
-import { SpeciesCard, SpeciesCardId, SpeciesCardType } from '@gamepark/biotopes/material/SpeciesCard.ts'
+import { CardDescription, ItemContext, ItemMenuButton } from '@gamepark/react-game'
+import { KnownSpeciesCardId, SpeciesCard, SpeciesCardId, SpeciesCardType } from '@gamepark/biotopes/material/SpeciesCard.ts'
 import AlpineIbex from '../images/Cards/en/SpeciesCards/Herbivores/Mountain/Mountain-AlpineIbex.jpg'
 import Apollo from '../images/Cards/en/SpeciesCards/Herbivores/Mountain/Mountain-Apollo.jpg'
 import CitrilFinch from '../images/Cards/en/SpeciesCards/Herbivores/Mountain/Mountain-CitrilFinch.jpg'
@@ -103,8 +103,14 @@ import CarnivoreWetland from '../images/Cards/en/SpeciesCards/Carnivores/Wetland
 import { LocationType } from '@gamepark/biotopes/material/LocationType'
 import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
 import { PlayerColor } from '@gamepark/biotopes/PlayerColor'
+import { RuleId } from '@gamepark/biotopes/rules/RuleId.ts'
+import { MaterialItem, MaterialMove } from '@gamepark/rules-api'
+import React from 'react'
+import { isBiotopesCreateItemType } from '@gamepark/biotopes/BiotopeTypes.ts'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHandPointer } from '@fortawesome/free-regular-svg-icons'
 
-class SpecieCardDescription extends CardDescription<PlayerColor, MaterialType, LocationType, SpeciesCardId> {
+class SpecieCardDescription extends CardDescription<PlayerColor, MaterialType, LocationType, SpeciesCardId, RuleId, PlayerColor> {
   height = 4.4
   width = 6.7
   images = {
@@ -210,6 +216,49 @@ class SpecieCardDescription extends CardDescription<PlayerColor, MaterialType, L
     [SpeciesCardType.CarnivoreForest]: CarnivoreForest,
     [SpeciesCardType.CarnivoreMeadow]: CarnivoreMeadow,
     [SpeciesCardType.CarnivoreWetland]: CarnivoreWetland
+  }
+
+  public getItemMenu(
+    item: MaterialItem<PlayerColor, LocationType, SpeciesCardId>,
+    context: ItemContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>,
+    _legalMoves: MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[]
+  ): React.ReactNode {
+    if (context.player !== undefined && (context.rules.game.view === undefined || context.rules.game.view === context.player)) {
+      if (
+        context.rules.game.rule !== undefined &&
+        [RuleId.DrawMountainCube, RuleId.DrawForestCube, RuleId.DrawMeadowCube, RuleId.DrawWetlandCube].includes(context.rules.game.rule.id)
+      ) {
+        if (item.location.type === LocationType.PlayerSpeciesCardTableauSpot) {
+          const card = item as MaterialItem<PlayerColor, LocationType, KnownSpeciesCardId>
+          const cardIndex = context.rules
+            .material(MaterialType.SpeciesCard)
+            .location(LocationType.PlayerSpeciesCardTableauSpot)
+            .player(context.player)
+            .id<KnownSpeciesCardId>((id) => id.front !== undefined && id.front === card.id.front)
+            .getIndex()
+          const move = _legalMoves.filter(isBiotopesCreateItemType(MaterialType.Cube)).find((m) => m.item.location.parent === cardIndex)
+          if (context.index === cardIndex && context.index === move?.item.location.parent) {
+            return (
+              <ItemMenuButton move={move}>
+                <FontAwesomeIcon icon={faHandPointer} />
+              </ItemMenuButton>
+            )
+          }
+        }
+      }
+    }
+    return super.getItemMenu(item, context, _legalMoves)
+  }
+
+  public isMenuAlwaysVisible(
+    _item: MaterialItem<PlayerColor, LocationType, SpeciesCardId>,
+    _context: ItemContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
+  ): boolean {
+    return (
+      (_context.rules.game.rule !== undefined &&
+        [RuleId.DrawMountainCube, RuleId.DrawForestCube, RuleId.DrawMeadowCube, RuleId.DrawWetlandCube].includes(_context.rules.game.rule.id)) ||
+      super.isMenuAlwaysVisible(_item, _context)
+    )
   }
 }
 
