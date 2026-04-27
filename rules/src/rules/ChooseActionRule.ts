@@ -25,6 +25,7 @@ import { MigrationActionChooseCubeRule } from './actions/colonization/migration/
 import { MaterialHelper } from './helpers/MaterialHelper'
 import { RuleId } from './RuleId'
 import { ReproductionActionPlaceCubeRule } from './actions/reproduction/ReproductionActionPlaceCubeRule'
+import { SpeciesCardEffect } from '../material/SpeciesCardEffect'
 
 export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
@@ -65,7 +66,7 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
   private canPerformAction(type: EcosystemActionType) {
     switch (type) {
       case EcosystemActionType.Expansion:
-        return new ExpansionActionChooseCubeRule(this.game).getPlayerMoves().length > 0
+        return this.materialHelper.availablePlayerTerritoryToken.exists && new ExpansionActionChooseCubeRule(this.game).getPlayerMoves().length > 0
       case EcosystemActionType.Adaptation:
         return this.canAdaptCardFromHand()
       case EcosystemActionType.Evolution:
@@ -96,7 +97,14 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
       }),
       (cubeType) => cubeType
     )
-    cubeCounts[CubeType.Plant] = this.materialHelper.playerCubesOnBiotopeCards.getQuantity()
+    cubeCounts[CubeType.Plant] =
+      this.materialHelper.playerCubesOnBiotopeCards.getQuantity() +
+      this.materialHelper.playerCubesOnSpeciesCards
+        .parent((cardIndex) => {
+          const card = this.materialHelper.playerSpeciesCardTableau.index(cardIndex).getItem<KnownSpeciesCardId>()!
+          return speciesCardCharacteristics[card.id.front].effect === SpeciesCardEffect.PollinatingSpecies
+        })
+        .getQuantity()
     return this.materialHelper.playerSpeciesCardHand.getItems<KnownSpeciesCardId>().some((card) => {
       const characteristics = speciesCardCharacteristics[card.id.front]
       return Object.entries(characteristics.diet).every(([cubeTypeString, cubeCount]) => {
