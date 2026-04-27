@@ -56,6 +56,7 @@ export class PrimaryProductionRule extends PlayerTurnRule<PlayerColor, MaterialT
                 .location(LocationType.PlayerSpeciesCardTableauSpot)
                 .player(player)
                 .id<KnownSpeciesCardId>((id) => speciesCardCharacteristics[id.front].effect === SpeciesCardEffect.DetritivoreSpecies)
+                .index((cardIndex) => this.materialHelper.playerCubesOnSpeciesCards.parent(cardIndex).getQuantity() < 4)
                 .entries.map(([index, card]) => ({
                   id: speciesCardCharacteristics[(card.id as KnownSpeciesCardId).front].biotope,
                   location: {
