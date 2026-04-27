@@ -28,8 +28,9 @@ describe('Granivorous species tests', () => {
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
         player: PlayerColor.Owl,
+        id: BiotopeType.Meadow,
         parent: setup
-          .material(MaterialType.BiotopesCard)
+          .material(MaterialType.BiotopeBoard)
           .player(PlayerColor.Owl)
           .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Meadow)
           .getIndex()
@@ -74,11 +75,8 @@ describe('Granivorous species tests', () => {
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
         player: PlayerColor.Owl,
-        parent: setup
-          .material(MaterialType.BiotopesCard)
-          .player(PlayerColor.Owl)
-          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Meadow)
-          .getIndex()
+        id: BiotopeType.Meadow,
+        parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Owl).getIndex()
       }
     })
     const rules = new BiotopesRules(game)

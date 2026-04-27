@@ -15,7 +15,10 @@ export class DrawMeadowCubeRule extends PlayerTurnRule<PlayerColor, MaterialType
   }
 
   public afterItemMove(move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): BiotopesMove[] {
-    if (isBiotopesCreateItemType(MaterialType.Cube)(move) && move.item.location.type === LocationType.CubeSpotOnPlayerSpeciesCard) {
+    if (
+      isBiotopesCreateItemType(MaterialType.Cube)(move) &&
+      (move.item.location.type === LocationType.CubeSpotOnPlayerSpeciesCard || move.item.location.type === LocationType.CubeOnBiotopeBoardSpot)
+    ) {
       return this.drawCubesHelper.getCubeCreatedConsequences()
     }
     return super.afterItemMove(move, _context)

@@ -16,10 +16,28 @@ import { DrawForestCubeRule } from '../../src/rules/actions/common/DrawForestCub
 import { BiotopesPendingEffect } from '../../src/material/effects/PendingEffect'
 import { Memory } from '../../src/Memory'
 import { PendingEffectType } from '../../src/material/effects/PendingEffectType'
+import { BiotopeBoard } from '../../src/material/BiotopeBoard'
 
 const setupGame = (cardWithCubes: { card: SpeciesCard; cubes: BiotopeType[] }[]) => {
   const setup = new BiotopesSetup()
-  const game = setup.setup({ advancedBiotopes: false, players: [{ id: PlayerColor.Fox }, { id: PlayerColor.Owl }] })
+  const game = setup.setup({ players: [{ id: PlayerColor.Fox }, { id: PlayerColor.Owl }] })
+  setup.material(MaterialType.BiotopeBoard).deleteItemsAtOnce()
+  setup.material(MaterialType.BiotopeBoard).createItemsAtOnce([
+    {
+      id: BiotopeBoard.MountainPasture,
+      location: {
+        type: LocationType.BiotopeBoardSpot,
+        player: PlayerColor.Fox
+      }
+    },
+    {
+      id: BiotopeBoard.MountainPasture,
+      location: {
+        type: LocationType.CubeOnBiotopeBoardSpot,
+        player: PlayerColor.Owl
+      }
+    }
+  ])
   const cardsWithCubesAndIndex = cardWithCubes.map((cardWithCubes) => ({
     ...cardWithCubes,
     index: setup

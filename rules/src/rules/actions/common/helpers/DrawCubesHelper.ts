@@ -1,4 +1,4 @@
-import { MaterialItem, MaterialRulesPart } from '@gamepark/rules-api'
+import { MaterialRulesPart } from '@gamepark/rules-api'
 import { PlayerColor } from '../../../../PlayerColor'
 import { MaterialType } from '../../../../material/MaterialType'
 import { LocationType } from '../../../../material/LocationType'
@@ -18,13 +18,25 @@ export class DrawCubesHelper extends MaterialRulesPart<PlayerColor, MaterialType
   public getPlayerMoves(player: PlayerColor, biotopeType: BiotopeType): BiotopesMove[] {
     return this.materialHelper.playerSpeciesCardTableau
       .id<KnownSpeciesCardId>((id) => speciesCardCharacteristics[id.front].biotope === biotopeType)
-      .entries.map<BiotopesMove>(([cardIndex, card]) =>
+      .getIndexes()
+      .map<BiotopesMove>((cardIndex) =>
         this.materialHelper.cubeMaterial.createItem({
-          id: speciesCardCharacteristics[(card as MaterialItem<PlayerColor, LocationType, KnownSpeciesCardId>).id.front].biotope,
+          id: biotopeType,
           location: {
             type: LocationType.CubeSpotOnPlayerSpeciesCard,
             player: player,
             parent: cardIndex
+          }
+        })
+      )
+      .concat(
+        this.materialHelper.cubeMaterial.createItem({
+          id: biotopeType,
+          location: {
+            type: LocationType.CubeOnBiotopeBoardSpot,
+            player: player,
+            parent: this.material(MaterialType.BiotopeBoard).player(player).getIndex(),
+            id: biotopeType
           }
         })
       )

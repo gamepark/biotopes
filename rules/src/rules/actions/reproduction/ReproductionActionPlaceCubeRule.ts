@@ -13,6 +13,9 @@ import { SpeciesCardEffect } from '../../../material/SpeciesCardEffect'
 import { BiotopesPendingEffect } from '../../../material/effects/PendingEffect'
 import { Memory } from '../../../Memory'
 import { PendingEffectType } from '../../../material/effects/PendingEffectType'
+import { BiotopeBoard } from '../../../material/BiotopeBoard'
+
+const boardIdsWithFecundSpeciesEffect = [BiotopeBoard.WoodedCountryside, BiotopeBoard.Marsh, BiotopeBoard.AlpineGrass, BiotopeBoard.AlluvialForest]
 
 export class ReproductionActionPlaceCubeRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
@@ -36,12 +39,14 @@ export class ReproductionActionPlaceCubeRule extends PlayerTurnRule<PlayerColor,
       const fecundSpeciesMaterial = this.materialHelper.playerSpeciesCardTableau.id<KnownSpeciesCardId>(
         (cardId) => speciesCardCharacteristics[cardId.front].effect === SpeciesCardEffect.FecundSpecies
       )
-      if (fecundSpeciesMaterial.exists) {
+      const playerBoardId = this.material(MaterialType.BiotopeBoard).player(this.player).getItem<BiotopeBoard>()!.id
+      const numberOfCubesFromBoard = boardIdsWithFecundSpeciesEffect.includes(playerBoardId) ? 1 : 0
+      if (fecundSpeciesMaterial.exists || numberOfCubesFromBoard === 1) {
         this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) =>
           [
             {
               type: PendingEffectType.DrawCubes,
-              numberOfCubesToDraw: fecundSpeciesMaterial.length,
+              numberOfCubesToDraw: fecundSpeciesMaterial.getQuantity() + numberOfCubesFromBoard,
               ruleWhenFinished: RuleId.ReproductionActionCreateCubes
             } as BiotopesPendingEffect
           ].concat(currentPendingEffects ?? [])

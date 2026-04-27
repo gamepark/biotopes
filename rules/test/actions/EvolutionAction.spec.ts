@@ -5,7 +5,6 @@ import { RuleId } from '../../src/rules/RuleId'
 import { MaterialType } from '../../src/material/MaterialType'
 import { BiotopeType } from '../../src/material/BiotopeType'
 import { LocationType } from '../../src/material/LocationType'
-import { BiotopeCard, getBiotopeCardType } from '../../src/material/BiotopeCard'
 import { applyAutomaticMoves, MaterialMoveBuilder, MoveKind, playAction, RuleMoveType } from '@gamepark/rules-api'
 import { EcosystemActionType } from '../../src/material/EcosystemActionType'
 import { CubeType } from '../../src/material/CubeType'
@@ -19,24 +18,22 @@ import { GameSetupRiverRule } from '../../src/rules/GameSetupRiverRule'
 import { ChooseActionRule } from '../../src/rules/ChooseActionRule'
 import { BiotopesMove, isBiotopesMoveItemTypeAtOnce } from '../../src/BiotopeTypes'
 import { DiscardCardsFromHandRule } from '../../src/rules/actions/common/DiscardCardsFromHandRule'
+import { GameSetupHandMulliganRule } from '../../src/rules/GameSetupHandMulliganRule'
 import customMove = MaterialMoveBuilder.customMove
 
 describe('Evolution tests', () => {
   test('When placing one cube and validating action, game should proceed to DrawCards rule with 1 card to draw', () => {
     // Given
     const setup = new BiotopesSetup()
-    const game = setup.setup({ advancedBiotopes: false, players: [{ id: PlayerColor.Woodpecker }, { id: PlayerColor.Owl }] })
+    const game = setup.setup({ players: [{ id: PlayerColor.Woodpecker }, { id: PlayerColor.Owl }] })
     setup.material(MaterialType.Cube).createItemsAtOnce([
       {
         id: BiotopeType.Forest,
         location: {
           type: LocationType.CubeSpotOnPlayerBiotopesCard,
           player: PlayerColor.Woodpecker,
-          parent: setup
-            .material(MaterialType.BiotopesCard)
-            .player(PlayerColor.Woodpecker)
-            .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Forest)
-            .getIndex()
+          id: BiotopeType.Forest,
+          parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Woodpecker).getIndex()
         }
       }
     ])
@@ -45,6 +42,15 @@ describe('Evolution tests', () => {
       player: PlayerColor.Woodpecker
     }
     const rules = new BiotopesRules(game)
+    applyAutomaticMoves(
+      rules,
+      new GameSetupHandMulliganRule(game).onRuleStart({
+        kind: MoveKind.RulesMove,
+        type: RuleMoveType.StartPlayerTurn,
+        id: RuleId.GameSetupHandMulligan,
+        player: PlayerColor.Woodpecker
+      })
+    )
 
     // When
     playAction(
@@ -69,18 +75,15 @@ describe('Evolution tests', () => {
   test('When placing one cube, discarding one card and validating action, game should proceed to DrawCards rule with 2 cards to draw', () => {
     // Given
     const setup = new BiotopesSetup()
-    const game = setup.setup({ advancedBiotopes: false, players: [{ id: PlayerColor.Woodpecker }, { id: PlayerColor.Owl }] })
+    const game = setup.setup({ players: [{ id: PlayerColor.Woodpecker }, { id: PlayerColor.Owl }] })
     setup.material(MaterialType.Cube).createItemsAtOnce([
       {
         id: BiotopeType.Forest,
         location: {
           type: LocationType.CubeSpotOnPlayerBiotopesCard,
           player: PlayerColor.Woodpecker,
-          parent: setup
-            .material(MaterialType.BiotopesCard)
-            .player(PlayerColor.Woodpecker)
-            .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Forest)
-            .getIndex()
+          id: BiotopeType.Forest,
+          parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Woodpecker).getIndex()
         }
       }
     ])
@@ -89,6 +92,15 @@ describe('Evolution tests', () => {
       player: PlayerColor.Woodpecker
     }
     const rules = new BiotopesRules(game)
+    applyAutomaticMoves(
+      rules,
+      new GameSetupHandMulliganRule(game).onRuleStart({
+        kind: MoveKind.RulesMove,
+        type: RuleMoveType.StartPlayerTurn,
+        id: RuleId.GameSetupHandMulligan,
+        player: PlayerColor.Woodpecker
+      })
+    )
 
     // When
     playAction(
@@ -101,7 +113,7 @@ describe('Evolution tests', () => {
     )
     playAction(
       rules,
-      rules.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardHandSpot).player(PlayerColor.Woodpecker).moveItem<KnownSpeciesCardId>({
+      rules.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardHandSpot).player(PlayerColor.Woodpecker).deck().dealOne({
         type: LocationType.SpeciesDiscardsSpot,
         y: SpeciesDietType.Herbivore
       }),
@@ -120,9 +132,18 @@ describe('Evolution tests', () => {
 
   test('After placing cube and discarding cards, when player draws the first card, game should reduce the number of cards to draw', () => {
     const setup = new BiotopesSetup()
-    const game = setup.setup({ advancedBiotopes: false, players: [{ id: PlayerColor.Woodpecker }, { id: PlayerColor.Owl }] })
+    const game = setup.setup({ players: [{ id: PlayerColor.Woodpecker }, { id: PlayerColor.Owl }] })
     const riverSetupRule = new GameSetupRiverRule(game)
     const rules = new BiotopesRules(game)
+    applyAutomaticMoves(
+      rules,
+      new GameSetupHandMulliganRule(game).onRuleStart({
+        kind: MoveKind.RulesMove,
+        type: RuleMoveType.StartPlayerTurn,
+        id: RuleId.GameSetupHandMulligan,
+        player: PlayerColor.Woodpecker
+      })
+    )
     applyAutomaticMoves(rules, riverSetupRule.onRuleStart().slice(0, -1)) // Don't apply primary production
     setup.material(MaterialType.Cube).createItemsAtOnce([
       {
@@ -130,11 +151,8 @@ describe('Evolution tests', () => {
         location: {
           type: LocationType.CubeSpotOnPlayerBiotopesCard,
           player: PlayerColor.Woodpecker,
-          parent: setup
-            .material(MaterialType.BiotopesCard)
-            .player(PlayerColor.Woodpecker)
-            .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Forest)
-            .getIndex()
+          id: BiotopeType.Forest,
+          parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Woodpecker).getIndex()
         }
       }
     ])
@@ -152,7 +170,7 @@ describe('Evolution tests', () => {
     )
     playAction(
       rules,
-      rules.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardHandSpot).player(PlayerColor.Woodpecker).moveItem<KnownSpeciesCardId>({
+      rules.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardHandSpot).player(PlayerColor.Woodpecker).deck().dealOne({
         type: LocationType.SpeciesDiscardsSpot,
         y: SpeciesDietType.Herbivore
       }),
@@ -181,9 +199,18 @@ describe('Evolution tests', () => {
 
   test('After placing cube and discarding one card, when player draws 2 cards, game should proceed to the ChooseAction rule for the next player', () => {
     const setup = new BiotopesSetup()
-    const game = setup.setup({ advancedBiotopes: false, players: [{ id: PlayerColor.Woodpecker }, { id: PlayerColor.Owl }] })
+    const game = setup.setup({ players: [{ id: PlayerColor.Woodpecker }, { id: PlayerColor.Owl }] })
     const riverSetupRule = new GameSetupRiverRule(game)
     const rules = new BiotopesRules(game)
+    applyAutomaticMoves(
+      rules,
+      new GameSetupHandMulliganRule(game).onRuleStart({
+        kind: MoveKind.RulesMove,
+        type: RuleMoveType.StartPlayerTurn,
+        id: RuleId.GameSetupHandMulligan,
+        player: PlayerColor.Woodpecker
+      })
+    )
     applyAutomaticMoves(rules, riverSetupRule.onRuleStart().slice(0, -1)) // Don't apply primary production, only rivers setup
     setup.material(MaterialType.Cube).createItemsAtOnce([
       {
@@ -191,11 +218,8 @@ describe('Evolution tests', () => {
         location: {
           type: LocationType.CubeSpotOnPlayerBiotopesCard,
           player: PlayerColor.Woodpecker,
-          parent: setup
-            .material(MaterialType.BiotopesCard)
-            .player(PlayerColor.Woodpecker)
-            .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Forest)
-            .getIndex()
+          id: BiotopeType.Forest,
+          parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Woodpecker).getIndex()
         }
       }
     ])
@@ -213,7 +237,7 @@ describe('Evolution tests', () => {
     )
     playAction(
       rules,
-      rules.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardHandSpot).player(PlayerColor.Woodpecker).moveItem<KnownSpeciesCardId>({
+      rules.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardHandSpot).player(PlayerColor.Woodpecker).deck().dealOne({
         type: LocationType.SpeciesDiscardsSpot,
         y: SpeciesDietType.Herbivore
       }),
@@ -260,7 +284,7 @@ describe('Evolution tests', () => {
       'should proceed to the DiscardCardsFromHand rule for the current player',
     () => {
       const setup = new BiotopesSetup()
-      const game = setup.setup({ advancedBiotopes: false, players: [{ id: PlayerColor.Woodpecker }, { id: PlayerColor.Owl }] })
+      const game = setup.setup({ players: [{ id: PlayerColor.Woodpecker }, { id: PlayerColor.Owl }] })
       const [insectCardIndex, insectCard] = setup.material(MaterialType.SpeciesCard).id<KnownSpeciesCardId>((id) => id.front === SpeciesCard.MammothWasp)
         .entries[0]
       if (insectCard.location.type === LocationType.PlayerSpeciesCardHandSpot && insectCard.location.player === PlayerColor.Woodpecker) {
@@ -279,6 +303,15 @@ describe('Evolution tests', () => {
       })
       const riverSetupRule = new GameSetupRiverRule(game)
       const rules = new BiotopesRules(game)
+      applyAutomaticMoves(
+        rules,
+        new GameSetupHandMulliganRule(game).onRuleStart({
+          kind: MoveKind.RulesMove,
+          type: RuleMoveType.StartPlayerTurn,
+          id: RuleId.GameSetupHandMulligan,
+          player: PlayerColor.Woodpecker
+        })
+      )
       applyAutomaticMoves(rules, riverSetupRule.onRuleStart().slice(0, -1)) // Don't apply primary production, only rivers setup
       setup.material(MaterialType.Cube).createItemsAtOnce([
         {
@@ -286,11 +319,8 @@ describe('Evolution tests', () => {
           location: {
             type: LocationType.CubeSpotOnPlayerBiotopesCard,
             player: PlayerColor.Woodpecker,
-            parent: setup
-              .material(MaterialType.BiotopesCard)
-              .player(PlayerColor.Woodpecker)
-              .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Forest)
-              .getIndex()
+            id: BiotopeType.Forest,
+            parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Woodpecker).getIndex()
           }
         },
         {
@@ -324,7 +354,7 @@ describe('Evolution tests', () => {
       )
       playAction(
         rules,
-        rules.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardHandSpot).player(PlayerColor.Woodpecker).moveItem<KnownSpeciesCardId>({
+        rules.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardHandSpot).player(PlayerColor.Woodpecker).deck().dealOne({
           type: LocationType.SpeciesDiscardsSpot,
           y: SpeciesDietType.Herbivore
         }),
@@ -378,7 +408,7 @@ describe('Evolution tests', () => {
       'should proceed to the ChooseActon rule for the next player',
     () => {
       const setup = new BiotopesSetup()
-      const game = setup.setup({ advancedBiotopes: false, players: [{ id: PlayerColor.Woodpecker }, { id: PlayerColor.Owl }] })
+      const game = setup.setup({ players: [{ id: PlayerColor.Woodpecker }, { id: PlayerColor.Owl }] })
       const [insectCardIndex, insectCard] = setup.material(MaterialType.SpeciesCard).id<KnownSpeciesCardId>((id) => id.front === SpeciesCard.MammothWasp)
         .entries[0]
       if (insectCard.location.type === LocationType.PlayerSpeciesCardHandSpot && insectCard.location.player === PlayerColor.Woodpecker) {
@@ -397,6 +427,15 @@ describe('Evolution tests', () => {
       })
       const riverSetupRule = new GameSetupRiverRule(game)
       const rules = new BiotopesRules(game)
+      applyAutomaticMoves(
+        rules,
+        new GameSetupHandMulliganRule(game).onRuleStart({
+          kind: MoveKind.RulesMove,
+          type: RuleMoveType.StartPlayerTurn,
+          id: RuleId.GameSetupHandMulligan,
+          player: PlayerColor.Woodpecker
+        })
+      )
       applyAutomaticMoves(rules, riverSetupRule.onRuleStart().slice(0, -1)) // Don't apply primary production, only rivers setup
       setup.material(MaterialType.Cube).createItemsAtOnce([
         {
@@ -404,11 +443,8 @@ describe('Evolution tests', () => {
           location: {
             type: LocationType.CubeSpotOnPlayerBiotopesCard,
             player: PlayerColor.Woodpecker,
-            parent: setup
-              .material(MaterialType.BiotopesCard)
-              .player(PlayerColor.Woodpecker)
-              .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Forest)
-              .getIndex()
+            id: BiotopeType.Forest,
+            parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Woodpecker).getIndex()
           }
         },
         {
@@ -442,7 +478,7 @@ describe('Evolution tests', () => {
       )
       playAction(
         rules,
-        rules.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardHandSpot).player(PlayerColor.Woodpecker).moveItem<KnownSpeciesCardId>({
+        rules.material(MaterialType.SpeciesCard).location(LocationType.PlayerSpeciesCardHandSpot).player(PlayerColor.Woodpecker).deck().dealOne({
           type: LocationType.SpeciesDiscardsSpot,
           y: SpeciesDietType.Herbivore
         }),

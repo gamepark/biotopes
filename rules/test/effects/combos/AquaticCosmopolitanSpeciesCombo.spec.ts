@@ -28,10 +28,11 @@ describe('Cosmopolitan and Aquatic combo tests', () => {
       id: BiotopeType.Wetland,
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
-        player: PlayerColor.Fox,
+        player: PlayerColor.Owl,
+        id: BiotopeType.Wetland,
         parent: setup
-          .material(MaterialType.BiotopesCard)
-          .player(PlayerColor.Fox)
+          .material(MaterialType.BiotopeBoard)
+          .player(PlayerColor.Owl)
           .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Wetland)
           .getIndex()
       }

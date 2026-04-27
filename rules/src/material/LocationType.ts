@@ -15,7 +15,9 @@ export enum LocationType {
   SpeciesDiscardsSpot,
   CentralLandscapeSpot,
   PlayerSpeciesCardHandSpot,
-  AdvancedBiotopesSelectionSpot,
   CubeStockpileSpot,
-  RecycledCubesSpot
+  RecycledCubesSpot,
+  BiotopeBoardSelectionSpot,
+  BiotopeBoardSpot,
+  CubeOnBiotopeBoardSpot
 }

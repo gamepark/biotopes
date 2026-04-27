@@ -59,7 +59,7 @@ export class ExpansionActionChooseCubeRule extends PlayerTurnRule<PlayerColor, M
       x: 0
     }
     if (!this.materialHelper.cubeMaterial.location((l) => isEqual(l, plantDestination)).exists) {
-      const biotopeCubeMoves: BiotopesMove[] = this.materialHelper.playerCubesOnBiotopeCards
+      const biotopeCubeMoves: BiotopesMove[] = this.materialHelper.playerCubesOnBiotopeBoard
         .id<BiotopeType>((id) => reachableBiotopeTypes.includes(id))
         .moveItems(plantDestination)
       const pollinatingSpeciesCubesMoves: BiotopesMove[] = this.materialHelper.playerCubesOnSpeciesCards

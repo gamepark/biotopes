@@ -18,8 +18,8 @@ export class GameSetupPlaceTerritoryTokenRule extends PlayerTurnRule<PlayerColor
       .filter(({ x, y }) => this.landscapeHelper.getAdjacentValues({ x, y }).length < 6)
       .filter(({ x, y }) => !alreadyTakenCoords.some((coords) => coords.x === x && coords.y === y))
     const availablePlayerTerritoryTokens = playerTerritoryTokens.location(LocationType.TerritoryTokenSpotOnEcosystemBoard)
-    return validDestinations.map<BiotopesMove>(({ x, y }) =>
-      availablePlayerTerritoryTokens.moveItem({
+    return validDestinations.flatMap<BiotopesMove>(({ x, y }) =>
+      availablePlayerTerritoryTokens.moveItems({
         type: LocationType.CentralLandscapeSpot,
         x: x,
         y: y

@@ -18,7 +18,7 @@ export class TransferActionChooseCubeRule extends PlayerTurnRule<PlayerColor, Ma
         player: this.player
       })
       .concat(
-        this.materialHelper.playerCubesOnBiotopeCards.moveItems({
+        this.materialHelper.playerCubesOnBiotopeBoard.moveItems({
           type: LocationType.CubeSpotOnEcosystemBoard,
           id: EcosystemActionType.Transfert,
           player: this.player

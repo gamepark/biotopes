@@ -81,7 +81,7 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
         )
       case EcosystemActionType.Transfert:
         return (
-          (this.materialHelper.playerCubesOnBiotopeCards.exists || this.materialHelper.playerCubesOnSpeciesCards.exists) &&
+          (this.materialHelper.playerCubesOnBiotopeBoard.exists || this.materialHelper.playerCubesOnSpeciesCards.exists) &&
           !this.materialHelper.cubeMaterial.location(LocationType.CubeSpotOnEcosystemBoard).locationId(EcosystemActionType.Transfert).player(this.player).exists
         )
       default:
@@ -98,7 +98,7 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
       (cubeType) => cubeType
     )
     cubeCounts[CubeType.Plant] =
-      this.materialHelper.playerCubesOnBiotopeCards.getQuantity() +
+      this.materialHelper.playerCubesOnBiotopeBoard.getQuantity() +
       this.materialHelper.playerCubesOnSpeciesCards
         .parent((cardIndex) => {
           const card = this.materialHelper.playerSpeciesCardTableau.index(cardIndex).getItem<KnownSpeciesCardId>()!

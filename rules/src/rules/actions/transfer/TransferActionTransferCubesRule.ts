@@ -19,7 +19,7 @@ export class TransferActionTransferCubesRule extends PlayerTurnRule<PlayerColor,
   public onRuleStart(_move: RuleMove<PlayerColor, RuleId>, _previousRule?: RuleStep, _context?: PlayMoveContext): BiotopesMove[] {
     const playerCubes = this.materialHelper.playerCubesOnSpeciesCards
     const transferCubeMoves = biotopeType.flatMap<BiotopesMove>((type) => {
-      const cubeOfTypeMaterial = this.materialHelper.playerCubesOnBiotopeCards.id<BiotopeType>(type)
+      const cubeOfTypeMaterial = this.materialHelper.playerCubesOnBiotopeBoard.id<BiotopeType>(type)
       const destinationIndexes = this.materialHelper.playerSpeciesCardTableau
         .locationId(type)
         .index((cardIndex) => playerCubes.parent(cardIndex).getQuantity() < 4)
