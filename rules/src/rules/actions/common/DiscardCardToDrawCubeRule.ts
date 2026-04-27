@@ -5,7 +5,7 @@ import { LocationType } from '../../../material/LocationType'
 import { RuleId } from '../../RuleId'
 import { MaterialHelper } from '../../helpers/MaterialHelper'
 import { BiotopesMove, isBiotopesMoveItemType } from '../../../BiotopeTypes'
-import { KnownSpeciesCardId } from '../../../material/SpeciesCard'
+import { KnownSpeciesCardId, SpeciesDietType } from '../../../material/SpeciesCard'
 import { speciesCardCharacteristics } from '../../../material/SpeciesCardCharacteristics'
 import { BiotopeType } from '../../../material/BiotopeType'
 
@@ -22,7 +22,19 @@ export class DiscardCardToDrawCubeRule extends PlayerTurnRule<PlayerColor, Mater
   public afterItemMove(move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): BiotopesMove[] {
     if (isBiotopesMoveItemType(MaterialType.SpeciesCard)(move) && move.location.type === LocationType.SpeciesDiscardsSpot) {
       const card = this.materialHelper.speciesCardMaterial.index(move.itemIndex).getItem<KnownSpeciesCardId>()!
-      const nextRule = this.getNextRuleFromBiotope(speciesCardCharacteristics[card.id.front].biotope)
+      const characteristics = speciesCardCharacteristics[card.id.front]
+      const cardDietType = characteristics.dietType
+      const deck =
+        cardDietType === SpeciesDietType.Herbivore
+          ? this.materialHelper.herbivoresDeckMaterial
+          : cardDietType === SpeciesDietType.Insectivore
+            ? this.materialHelper.insectivoresDeckMaterial
+            : this.materialHelper.carnivoreDeckMaterial
+      const nextRule = this.getNextRuleFromBiotope(characteristics.biotope)
+      if (!deck.exists) {
+        const discard = this.materialHelper.speciesCardMaterial.location(LocationType.SpeciesDiscardsSpot).location(({ y }) => y === cardDietType)
+        return [discard.moveItemsAtOnce({ type: LocationType.SpeciesDecksSpot, y: cardDietType }), discard.shuffle(), this.startRule(nextRule)]
+      }
       return [this.startRule(nextRule)]
     }
     return super.afterItemMove(move, _context)
