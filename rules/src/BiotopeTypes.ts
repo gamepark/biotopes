@@ -10,7 +10,10 @@ import {
   isCreateItemTypeAtOnce,
   isStartRule,
   isCreateItem,
-  isCreateItemType
+  isCreateItemType,
+  isShuffle,
+  isShuffleItemType,
+  isShuffleRandomized
 } from '@gamepark/rules-api'
 import { PlayerColor } from './PlayerColor'
 import { MaterialType } from './material/MaterialType'
@@ -36,6 +39,12 @@ export const isBiotopesCreateItemTypeAtOnce = isCreateItemTypeAtOnce
 export const isBiotopesCreateItem = isCreateItem<PlayerColor, MaterialType, LocationType>
 
 export const isBiotopesCreateItemType = isCreateItemType<MaterialType>
+
+export const isBiotopesShuffle = isShuffle<PlayerColor, MaterialType, LocationType>
+
+export const isBiotopesShuffleItemType = isShuffleItemType<MaterialType>
+
+export const isBiotopesShuffleRandomized = isShuffleRandomized<PlayerColor, MaterialType, LocationType>
 
 export const isBiotopesStartPlayerTurn = isStartPlayerTurn<PlayerColor, MaterialType, LocationType, RuleId>
 
