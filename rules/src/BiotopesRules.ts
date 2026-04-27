@@ -30,7 +30,6 @@ import { GameSetupPlaceTerritoryTokenRule } from './rules/GameSetupPlaceTerritor
 import { GameSetupRiverRule } from './rules/GameSetupRiverRule'
 import { PrimaryProductionRule } from './rules/PrimaryProductionRule'
 import { RuleId } from './rules/RuleId'
-import { BiotopeCubeStrategy } from './strategies/location/BiotopeCubeStrategy'
 import { SpeciesRiverStrategy } from './strategies/location/SpeciesRiverStrategy'
 import { SpeciesStrategy } from './strategies/location/SpeciesStrategy'
 import { ReproductionActionPlaceCubeRule } from './rules/actions/reproduction/ReproductionActionPlaceCubeRule'
@@ -79,8 +78,7 @@ export class BiotopesRules
     },
     [MaterialType.Cube]: {
       [LocationType.CubeSpotOnEcosystemBoard]: new PositiveSequenceStrategy(),
-      [LocationType.RecycledCubesSpot]: new PositiveSequenceStrategy(),
-      [LocationType.CubeSpotOnPlayerBiotopesCard]: new BiotopeCubeStrategy()
+      [LocationType.RecycledCubesSpot]: new PositiveSequenceStrategy()
     }
   }
 
