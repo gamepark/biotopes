@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { MeadowHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class EuropeanRabbitCharacteristics extends MeadowHerbivoreCharacteristics {
   get cubeType(): CubeType {
@@ -7,7 +8,7 @@ export class EuropeanRabbitCharacteristics extends MeadowHerbivoreCharacteristic
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.RSelectedSpecies
   }
 
   get effectType(): unknown {

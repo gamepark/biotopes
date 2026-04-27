@@ -8,6 +8,8 @@ import { BiotopesMove, isBiotopesMoveItemType } from '../../../BiotopeTypes'
 import { BiotopesPendingEffect } from '../../../material/effects/PendingEffect'
 import { Memory } from '../../../Memory'
 import { PendingEffectType } from '../../../material/effects/PendingEffectType'
+import { KnownSpeciesCardId } from '../../../material/SpeciesCard'
+import { speciesCardCharacteristics } from '../../../material/SpeciesCardCharacteristics'
 
 export class DiscardCardsFromHandRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   public readonly materialHelper = new MaterialHelper(this.game)
@@ -28,9 +30,10 @@ export class DiscardCardsFromHandRule extends PlayerTurnRule<PlayerColor, Materi
   }
 
   public getPlayerMoves(): BiotopesMove[] {
-    return this.materialHelper.playerSpeciesCardHand.moveItems({
-      type: LocationType.SpeciesDiscardsSpot
-    })
+    return this.materialHelper.playerSpeciesCardHand.moveItems<KnownSpeciesCardId>((item) => ({
+      type: LocationType.SpeciesDiscardsSpot,
+      y: speciesCardCharacteristics[item.id.front].dietType
+    }))
   }
 
   public afterItemMove(_move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): BiotopesMove[] {
