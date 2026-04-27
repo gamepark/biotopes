@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { MeadowInsectivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class SpanishPsammodromusCharacteristics extends MeadowInsectivoreCharacteristics {
   get cubeType(): CubeType {
@@ -11,7 +12,7 @@ export class SpanishPsammodromusCharacteristics extends MeadowInsectivoreCharact
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.RSelectedSpecies
   }
 
   get effectType(): unknown {
