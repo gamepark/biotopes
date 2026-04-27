@@ -2,10 +2,8 @@ import { LocationType } from '@gamepark/biotopes/material/LocationType'
 import { MaterialType } from '@gamepark/biotopes/material/MaterialType'
 import { PlayerColor } from '@gamepark/biotopes/PlayerColor'
 import { Locator } from '@gamepark/react-game'
-import { advancedBiotopesSelectionLocator } from './AdvancedBiotopesSelectionLocator'
 import { centralLandscapeLocator } from './CentralLandscapeLocator'
 import { cubeOnEcosystemBoardLocator } from './CubeOnEcosystemBoardLocator'
-import { cubeOnPlayerBiotopeCardLocator } from './CubeOnPlayerBiotopeCardLocator'
 import { cubeOnPlayerSpecieCardLocator } from './CubeOnPlayerSpecieCardLocator'
 import { cubeStockpileLocator } from './CubeStockpileLocator'
 import { cycleTokenLocator } from './CycleTokenLocator'
@@ -21,14 +19,15 @@ import { playerSpeciesCardHandLocator } from './PlayerSpeciesCardHandLocator'
 import { recycledCubeLocator } from './RecycledCubeLocator'
 import { riversLocator } from './RiversLocator.ts'
 import { territoryTokenOnEcosystemBoardLocator } from './TerritoryTokenOnEcosystemBoardLocator'
+import { biotopeBoardSelectionLocator } from './BiotopeBoardSelectionLocator.ts'
+import { playerBiotopeBoardLocator } from './PlayerBiotopeBoardLocator.ts'
+import { cubeOnBiotopeBoardLocator } from './CubeOnBiotopeBoardLocator.ts'
 
 export const Locators: Partial<Record<LocationType, Locator<PlayerColor, MaterialType, LocationType>>> = {
-  [LocationType.AdvancedBiotopesSelectionSpot]: advancedBiotopesSelectionLocator,
   [LocationType.CentralLandscapeSpot]: centralLandscapeLocator,
   [LocationType.CycleTokenSpotOnEnvironmentalConditionsBoard]: cycleTokenLocator,
   [LocationType.CubeStockpileSpot]: cubeStockpileLocator,
   [LocationType.CubeSpotOnEcosystemBoard]: cubeOnEcosystemBoardLocator,
-  [LocationType.CubeSpotOnPlayerBiotopesCard]: cubeOnPlayerBiotopeCardLocator,
   [LocationType.CubeSpotOnPlayerSpeciesCard]: cubeOnPlayerSpecieCardLocator,
   [LocationType.EcosystemBoardSpot]: ecosystemBoardLocator,
   [LocationType.EnvironmentalConditionsBoardSpot]: environmentalConditionsBoardLocator,
@@ -41,5 +40,8 @@ export const Locators: Partial<Record<LocationType, Locator<PlayerColor, Materia
   [LocationType.PlayerSpeciesCardTableauSpot]: playerSpecieCardsTableauLocator,
   [LocationType.PlayerSpeciesCardHandSpot]: playerSpeciesCardHandLocator,
   [LocationType.TerritoryTokenSpotOnEcosystemBoard]: territoryTokenOnEcosystemBoardLocator,
-  [LocationType.RecycledCubesSpot]: recycledCubeLocator
+  [LocationType.RecycledCubesSpot]: recycledCubeLocator,
+  [LocationType.BiotopeBoardSelectionSpot]: biotopeBoardSelectionLocator,
+  [LocationType.BiotopeBoardSpot]: playerBiotopeBoardLocator,
+  [LocationType.CubeOnBiotopeBoardSpot]: cubeOnBiotopeBoardLocator
 }

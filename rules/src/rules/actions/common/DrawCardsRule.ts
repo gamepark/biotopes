@@ -8,8 +8,7 @@ import { BiotopesMove, isBiotopesMoveItemType } from '../../../BiotopeTypes'
 import { BiotopesPendingEffect } from '../../../material/effects/PendingEffect'
 import { Memory } from '../../../Memory'
 import { DrawCardsPendingEffect } from '../../../material/effects/DrawCardsPendingEffect'
-import { KnownSpeciesCardId, SpeciesDietType } from '../../../material/SpeciesCard'
-import { speciesCardCharacteristics } from '../../../material/SpeciesCardCharacteristics'
+import { getDietTypeFromCardId, SpeciesCardId, SpeciesDietType } from '../../../material/SpeciesCard'
 
 export class DrawCardsRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
@@ -34,8 +33,8 @@ export class DrawCardsRule extends PlayerTurnRule<PlayerColor, MaterialType, Loc
         return currentPendingEffects
       })[0] as DrawCardsPendingEffect
       const refillDeckMoves: BiotopesMove[] = []
-      const card = this.materialHelper.speciesCardMaterial.index(move.itemIndex).getItem<KnownSpeciesCardId>()!
-      const cardDietType = speciesCardCharacteristics[card.id.front].dietType
+      const card = this.materialHelper.speciesCardMaterial.index(move.itemIndex).getItem<SpeciesCardId>()!
+      const cardDietType = getDietTypeFromCardId(card.id)
       const deck =
         cardDietType === SpeciesDietType.Herbivore
           ? this.materialHelper.herbivoresDeckMaterial

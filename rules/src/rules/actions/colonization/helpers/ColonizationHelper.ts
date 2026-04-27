@@ -16,10 +16,13 @@ import { SpeciesCardEffect } from '../../../../material/SpeciesCardEffect'
 import { BiotopesPendingEffect } from '../../../../material/effects/PendingEffect'
 import { Memory } from '../../../../Memory'
 import { PendingEffectType } from '../../../../material/effects/PendingEffectType'
+import { BiotopeBoard } from '../../../../material/BiotopeBoard'
+import { PlayerHelper } from '../../../helpers/PlayerHelper'
 
 export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly landscapeHelper = new LandscapeHelper(this.game)
   private readonly materialHelper = new MaterialHelper(this.game)
+  private readonly playerHelper = new PlayerHelper(this.game)
 
   public computeReachableBiotopeTypes(distance: number = 1): BiotopeType[] {
     return uniq(
@@ -61,8 +64,8 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
   }
 
   public getPlaceTerritoryTokenMoves(destinationBiotope: BiotopeType): BiotopesMove[] {
-    return this.computeReachableHexesOfType(destinationBiotope).map(({ x, y }) =>
-      this.materialHelper.availablePlayerTerritoryToken.moveItem({
+    return this.computeReachableHexesOfType(destinationBiotope).flatMap(({ x, y }) =>
+      this.materialHelper.availablePlayerTerritoryToken.moveItems({
         type: LocationType.CentralLandscapeSpot,
         x: x,
         y: y
@@ -71,7 +74,7 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
   }
 
   public getMigrationMoveTerritoryTokenMoves(destinationBiotope: BiotopeType) {
-    return this.materialHelper.playerTerritoryTokenOnCentralLandscape.getItems().flatMap((token, index) => {
+    return this.materialHelper.playerTerritoryTokenOnCentralLandscape.entries.flatMap(([index, token]) => {
       const centralLandscapeTokenMaterial = this.materialHelper.centralLandscapeTerritoryTokenMaterial
       const otherTokenCoordinates = centralLandscapeTokenMaterial.getItems().map((token) => ({ x: token.location.x!, y: token.location.y! }))
       return this.computeReachableHexesOfTypeFromCoords(
@@ -118,30 +121,32 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
           (biotopeType === BiotopeType.Wetland && cardEffect === SpeciesCardEffect.AmphibianSpecies)
         )
       })
-      if (materialWithDrawCubesEffect.exists) {
-        this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) =>
-          [
-            {
-              type: PendingEffectType.DrawCubes,
-              numberOfCubesToDraw: materialWithDrawCubesEffect.getQuantity()
-            } as BiotopesPendingEffect
-          ].concat(currentPendingEffects ?? [])
-        )
-      }
-      if (materialWithDrawCardEffect.exists) {
-        this.memorize<BiotopesPendingEffect[] | undefined>(Memory.PendingEffects, (currentPendingEffects) =>
-          [
-            {
-              type: PendingEffectType.DrawCards,
-              numberOfCardsToDraw: materialWithDrawCardEffect.getQuantity()
-            } as BiotopesPendingEffect
-          ].concat(currentPendingEffects ?? [])
-        )
+      const biotopeBoardId = this.material(MaterialType.BiotopeBoard).player(this.playerHelper.player).getItem<BiotopeBoard>()!.id
+      const numberOfCubesFromBoard =
+        (biotopeBoardId === BiotopeBoard.MountainPeatland && biotopeType === BiotopeType.Mountain) ||
+        (biotopeBoardId === BiotopeBoard.ConiferForest && biotopeType === BiotopeType.Forest) ||
+        (biotopeBoardId === BiotopeBoard.WoodedCountryside && biotopeType === BiotopeType.Meadow) ||
+        (biotopeBoardId === BiotopeBoard.Marsh && biotopeType === BiotopeType.Wetland)
+          ? 1
+          : 0
+      if ((materialWithDrawCubesEffect.exists || numberOfCubesFromBoard === 1) && materialWithDrawCardEffect.exists) {
+        this.memorize<BiotopesPendingEffect[]>(Memory.PendingEffects, [
+          { type: PendingEffectType.DrawCards, numberOfCardsToDraw: materialWithDrawCardEffect.getQuantity() },
+          { type: PendingEffectType.DrawCubes, numberOfCubesToDraw: materialWithDrawCubesEffect.getQuantity() + numberOfCubesFromBoard }
+        ])
+      } else if (materialWithDrawCubesEffect.exists || numberOfCubesFromBoard === 1) {
+        this.memorize<BiotopesPendingEffect[]>(Memory.PendingEffects, [
+          { type: PendingEffectType.DrawCubes, numberOfCubesToDraw: materialWithDrawCubesEffect.getQuantity() + numberOfCubesFromBoard }
+        ])
+      } else if (materialWithDrawCardEffect.exists) {
+        this.memorize<BiotopesPendingEffect[]>(Memory.PendingEffects, [
+          { type: PendingEffectType.DrawCards, numberOfCardsToDraw: materialWithDrawCardEffect.getQuantity() }
+        ])
       }
       if (materialWithDrawCardEffect.exists) {
         return [this.startRule(RuleId.DrawCards)]
       }
-      if (materialWithDrawCubesEffect.exists) {
+      if (materialWithDrawCubesEffect.exists || numberOfCubesFromBoard === 1) {
         return [this.startRule(RuleId.DiscardCardToDrawCube)]
       }
       return [this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)]

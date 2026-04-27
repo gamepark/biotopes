@@ -12,7 +12,6 @@ import { DrawCardsRule } from '../../../src/rules/actions/common/DrawCardsRule'
 import { BiotopesPendingEffect } from '../../../src/material/effects/PendingEffect'
 import { Memory } from '../../../src/Memory'
 import { PendingEffectType } from '../../../src/material/effects/PendingEffectType'
-import { BiotopeCard, getBiotopeCardType } from '../../../src/material/BiotopeCard'
 
 describe('Cosmopolitan and Aquatic species combo tests', () => {
   test('Given an expansion on a wetland for a player having a partial migrator and an aquatic species, game should proceed to the DrawCard rule for the current player and allow to draw 1 card', () => {
@@ -28,12 +27,9 @@ describe('Cosmopolitan and Aquatic species combo tests', () => {
       id: BiotopeType.Wetland,
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
-        player: PlayerColor.Owl,
-        parent: setup
-          .material(MaterialType.BiotopesCard)
-          .player(PlayerColor.Owl)
-          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Wetland)
-          .getIndex()
+        player: PlayerColor.Woodpecker,
+        id: BiotopeType.Wetland,
+        parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Woodpecker).getIndex()
       }
     })
     const rules = new BiotopesRules(game)

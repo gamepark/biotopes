@@ -13,7 +13,6 @@ import { BiotopesPendingEffect } from '../../src/material/effects/PendingEffect'
 import { Memory } from '../../src/Memory'
 import { PendingEffectType } from '../../src/material/effects/PendingEffectType'
 import { ChooseActionRule } from '../../src/rules/ChooseActionRule'
-import { BiotopeCard, getBiotopeCardType } from '../../src/material/BiotopeCard'
 
 describe('Aquatic species tests', () => {
   test("After an expansion on a wetlan with a Aquatic species present in the payer's tableau, game should proceed to the DrawCard rule for the current player", () => {
@@ -28,11 +27,8 @@ describe('Aquatic species tests', () => {
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
         player: PlayerColor.Salamander,
-        parent: setup
-          .material(MaterialType.BiotopesCard)
-          .player(PlayerColor.Salamander)
-          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Wetland)
-          .getIndex()
+        id: BiotopeType.Wetland,
+        parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Salamander).getIndex()
       }
     })
     const rules = new BiotopesRules(game)
@@ -78,11 +74,8 @@ describe('Aquatic species tests', () => {
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
         player: PlayerColor.Salamander,
-        parent: setup
-          .material(MaterialType.BiotopesCard)
-          .player(PlayerColor.Salamander)
-          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Wetland)
-          .getIndex()
+        id: BiotopeType.Wetland,
+        parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Salamander).getIndex()
       }
     })
     const rules = new BiotopesRules(game)

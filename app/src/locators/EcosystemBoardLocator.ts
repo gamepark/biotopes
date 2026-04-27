@@ -6,7 +6,7 @@ import { PlayerColor } from '@gamepark/biotopes/PlayerColor'
 import { RuleId } from '@gamepark/biotopes/rules/RuleId.ts'
 
 class EcosystemBoardLocator extends Locator<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-  coordinates = { x: -45, y: 12.5 }
+  coordinates = { x: -45, y: 12.5, z: 0.1 }
 
   public hide(item: MaterialItem<PlayerColor, LocationType>, context: ItemContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>): boolean {
     return item.id !== (context.rules.game.view ?? context.player ?? context.rules.game.players[0])

@@ -12,7 +12,6 @@ import { Memory } from '../../src/Memory'
 import { PendingEffectType } from '../../src/material/effects/PendingEffectType'
 import { EcosystemActionType } from '../../src/material/EcosystemActionType'
 import { ChooseActionRule } from '../../src/rules/ChooseActionRule'
-import { BiotopeCard, getBiotopeCardType } from '../../src/material/BiotopeCard'
 import { DiscardCardToDrawCubeRule } from '../../src/rules/actions/common/DiscardCardToDrawCubeRule'
 import { speciesCardCharacteristics } from '../../src/material/SpeciesCardCharacteristics'
 
@@ -29,11 +28,8 @@ describe('Widespread species tests', () => {
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
         player: PlayerColor.Ibex,
-        parent: setup
-          .material(MaterialType.BiotopesCard)
-          .player(PlayerColor.Ibex)
-          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Wetland)
-          .getIndex()
+        id: BiotopeType.Wetland,
+        parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Ibex).getIndex()
       }
     })
     const rules = new BiotopesRules(game)
@@ -78,11 +74,7 @@ describe('Widespread species tests', () => {
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
         player: PlayerColor.Ibex,
-        parent: setup
-          .material(MaterialType.BiotopesCard)
-          .player(PlayerColor.Ibex)
-          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Wetland)
-          .getIndex()
+        parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Ibex).getIndex()
       }
     })
     setup

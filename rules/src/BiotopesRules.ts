@@ -44,6 +44,7 @@ import { DiscardCardsFromHandRule } from './rules/actions/common/DiscardCardsFro
 import { EndOfActionReplenishRiversAndActivateNextPlayerRule } from './rules/actions/common/EndOfActionReplenishRiversAndActivateNextPlayerRule'
 import { TransferActionChooseCubeRule } from './rules/actions/transfer/TransferActionChooseCubeRule'
 import { TransferActionTransferCubesRule } from './rules/actions/transfer/TransferActionTransferCubesRule'
+import { GameSetupSelectBiotopeBoardRule } from './rules/GameSetupSelectBiotopeBoardRule'
 
 /**
  * This class implements the rules of the board game.
@@ -59,8 +60,8 @@ export class BiotopesRules
     >
 {
   locationsStrategies = {
-    [MaterialType.BiotopesCard]: {
-      [LocationType.AdvancedBiotopesSelectionSpot]: new FillGapStrategy()
+    [MaterialType.BiotopeBoard]: {
+      [LocationType.BiotopeBoardSelectionSpot]: new FillGapStrategy()
     },
     [MaterialType.EnvironmentalConditionToken]: {
       [LocationType.EnvironmentalConditionTokenSpotOnEnvironmentalConditionsBoard]: new PositiveSequenceStrategy()
@@ -68,7 +69,6 @@ export class BiotopesRules
     [MaterialType.SpeciesCard]: {
       [LocationType.PlayerSpeciesCardTableauSpot]: new PositiveSequenceStrategy(),
       [LocationType.PlayerSpeciesCardHandSpot]: new PositiveSequenceStrategy(),
-      // TODO : A new strategy will be needed when we will remove an item from the river
       [LocationType.SpeciesDecksSpot]: new SpeciesStrategy(PositiveSequenceStrategy),
       [LocationType.SpeciesRiversGrid]: new SpeciesStrategy(SpeciesRiverStrategy),
       [LocationType.SpeciesDiscardsSpot]: new SpeciesStrategy(PositiveSequenceStrategy)
@@ -119,7 +119,8 @@ export class BiotopesRules
     [RuleId.DiscardCardsFromHand]: DiscardCardsFromHandRule,
     [RuleId.EndOfActionReplenishRiversAndActivateNextPlayer]: EndOfActionReplenishRiversAndActivateNextPlayerRule,
     [RuleId.TransferActionChooseCube]: TransferActionChooseCubeRule,
-    [RuleId.TransferActionTransferCubes]: TransferActionTransferCubesRule
+    [RuleId.TransferActionTransferCubes]: TransferActionTransferCubesRule,
+    [RuleId.GameSetupBiotopeBoardSelection]: GameSetupSelectBiotopeBoardRule
   }
 
   giveTime(): number {

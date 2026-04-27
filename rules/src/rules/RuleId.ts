@@ -28,5 +28,6 @@ export enum RuleId {
   DiscardCardsFromHand,
   EndOfActionReplenishRiversAndActivateNextPlayer,
   TransferActionChooseCube,
-  TransferActionTransferCubes
+  TransferActionTransferCubes,
+  GameSetupBiotopeBoardSelection
 }

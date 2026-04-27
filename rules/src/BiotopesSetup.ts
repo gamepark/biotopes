@@ -2,18 +2,15 @@ import { MaterialGameSetup, XYCoordinates } from '@gamepark/rules-api'
 import { randomInt, sample, sampleSize } from 'es-toolkit'
 import { BiotopesOptions } from './BiotopesOptions'
 import { BiotopesRules } from './BiotopesRules'
-import { EnvironmentalConditionsBoardSide } from './EnvironmentalConditionsBoardSide'
-import { advancedCardsByBiotope, basicBiotopeCards, getBiotopeCardType } from './material/BiotopeCard'
-import { biotopeType } from './material/BiotopeType'
 import { biotopeEnvironmentalConditionTokens, speciesTypeEnvironmentalConditionTokens } from './material/EnvironmentalConditionToken'
 import { LandscapeTile, landscapeTiles } from './material/LandscapeTile'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
-import { SpeciesCardId, speciesCards, SpeciesCardType, SpeciesDietType, speciesDietTypes } from './material/SpeciesCard'
+import { speciesCards, speciesDietTypes } from './material/SpeciesCard'
 import { speciesCardCharacteristics } from './material/SpeciesCardCharacteristics'
-import { Memory } from './Memory'
 import { PlayerColor } from './PlayerColor'
 import { RuleId } from './rules/RuleId'
+import { biotopeBoards } from './material/BiotopeBoard'
 
 const landscapeSetupCoordinate: Record<number, (XYCoordinates & { rotation?: number } & { id?: LandscapeTile })[]> = {
   2: [
@@ -39,19 +36,19 @@ const landscapeSetupCoordinate: Record<number, (XYCoordinates & { rotation?: num
     { x: -3, y: 3 },
     { x: 0, y: 2 },
     { x: 3, y: 1 }
-  ],
-  5: [
-    { x: 0, y: -3 },
-    { x: 3, y: -4 },
-    { x: -2, y: 0 },
-    { x: 1, y: -1 },
-    { x: 4, y: -2 },
-    { x: -4, y: 3 },
-    { x: -1, y: 2 },
-    { x: 2, y: 1 },
-    { x: -3, y: 5 },
-    { x: 0, y: 4 }
   ]
+  // 5: [
+  //   { x: 0, y: -3 },
+  //   { x: 3, y: -4 },
+  //   { x: -2, y: 0 },
+  //   { x: 1, y: -1 },
+  //   { x: 4, y: -2 },
+  //   { x: -4, y: 3 },
+  //   { x: -1, y: 2 },
+  //   { x: 2, y: 1 },
+  //   { x: -3, y: 5 },
+  //   { x: 0, y: 4 }
+  // ]
 }
 
 /**
@@ -60,17 +57,15 @@ const landscapeSetupCoordinate: Record<number, (XYCoordinates & { rotation?: num
 export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, LocationType, BiotopesOptions, RuleId, PlayerColor> {
   Rules = BiotopesRules
 
-  setupMaterial(options: Partial<BiotopesOptions>) {
-    this.memorize<EnvironmentalConditionsBoardSide>(Memory.AntSide, EnvironmentalConditionsBoardSide.Butterfly)
+  setupMaterial(_options: Partial<BiotopesOptions>) {
     this.setupLandscape()
     this.setupTokens()
-    this.setupBiotopeCards(options.advancedBiotopes ?? false)
+    this.setupBiotopeBoard()
     this.setupDecks()
-    this.setupHands()
   }
 
   start() {
-    this.startPlayerTurn(RuleId.GameSetupHandMulligan, this.players[0])
+    this.startPlayerTurn(RuleId.GameSetupBiotopeBoardSelection, this.players[0])
   }
 
   setupLandscape() {
@@ -115,26 +110,19 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
     )
   }
 
-  setupBiotopeCards(advancedBiotopes: boolean) {
-    if (advancedBiotopes) {
-      this.material(MaterialType.BiotopesCard).createItems(
-        biotopeType.flatMap((biotope) =>
-          advancedCardsByBiotope[biotope].map((card) => ({
-            id: card,
-            location: { type: LocationType.AdvancedBiotopesSelectionSpot, id: biotope }
-          }))
-        )
-      )
-    } else {
-      this.material(MaterialType.BiotopesCard).createItems(
-        this.rules.players.flatMap((player) =>
-          basicBiotopeCards.map((card) => ({
-            id: card,
-            location: { type: LocationType.PlayerBiotopesCardSpot, player: player, id: getBiotopeCardType(card) }
-          }))
-        )
-      )
-    }
+  setupBiotopeBoard() {
+    const boards = sampleSize(biotopeBoards, 2 * this.players.length)
+    this.material(MaterialType.BiotopeBoard).createItemsAtOnce(
+      this.players.flatMap((p, index) => {
+        return boards.slice(2 * index, 2 * index + 2).map((board) => ({
+          id: board,
+          location: {
+            type: LocationType.BiotopeBoardSelectionSpot,
+            player: p
+          }
+        }))
+      })
+    )
   }
 
   setupDecks() {
@@ -150,32 +138,5 @@ export class BiotopesSetup extends MaterialGameSetup<PlayerColor, MaterialType, 
         .location((l) => l.y === deck)
         .shuffle()
     )
-  }
-
-  private setupHands() {
-    const herbivoresDeckMaterial = this.material(MaterialType.SpeciesCard)
-      .location(LocationType.SpeciesDecksSpot)
-      .location((l) => l.y === SpeciesDietType.Herbivore)
-      .deck()
-    const mountainHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreMountain)
-    const forestHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreForest)
-    const meadowHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreMeadow)
-    const wetlandsHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreWetland)
-    this.players.forEach((player, index) => {
-      herbivoresDeckMaterial
-        .index([
-          mountainHerbivores.entries[index][0],
-          forestHerbivores.entries[index][0],
-          meadowHerbivores.entries[index][0],
-          wetlandsHerbivores.entries[index][0]
-        ])
-        .dealAtOnce(
-          {
-            type: LocationType.PlayerSpeciesCardHandSpot,
-            player: player
-          },
-          4
-        )
-    })
   }
 }

@@ -6,7 +6,6 @@ import { BiotopeType } from '../../src/material/BiotopeType'
 import { MaterialType } from '../../src/material/MaterialType'
 import { EcosystemActionType } from '../../src/material/EcosystemActionType'
 import { LocationType } from '../../src/material/LocationType'
-import { BiotopeCard, getBiotopeCardType } from '../../src/material/BiotopeCard'
 import { BiotopesRules } from '../../src'
 import { playAction } from '@gamepark/rules-api'
 import { DiscardCardToDrawCubeRule } from '../../src/rules/actions/common/DiscardCardToDrawCubeRule'
@@ -29,10 +28,8 @@ describe('Meadow species tests', () => {
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
         player: PlayerColor.Ibex,
-        parent: setup
-          .material(MaterialType.BiotopesCard)
-          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Meadow)
-          .getIndex()
+        id: BiotopeType.Meadow,
+        parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Ibex).getIndex()
       }
     })
     const rules = new BiotopesRules(game)
@@ -79,10 +76,7 @@ describe('Meadow species tests', () => {
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
         player: PlayerColor.Ibex,
-        parent: setup
-          .material(MaterialType.BiotopesCard)
-          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Meadow)
-          .getIndex()
+        parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Ibex).getIndex()
       }
     })
     setup

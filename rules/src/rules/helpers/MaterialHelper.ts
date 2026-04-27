@@ -17,8 +17,8 @@ export class MaterialHelper extends MaterialRulesPart<PlayerColor, MaterialType,
     return this.cubeMaterial.player(this.playerHelper.player).location(LocationType.CubeSpotOnPlayerSpeciesCard)
   }
 
-  public get playerCubesOnBiotopeCards() {
-    return this.cubeMaterial.player(this.playerHelper.player).location(LocationType.CubeSpotOnPlayerBiotopesCard)
+  public get playerCubesOnBiotopeBoard() {
+    return this.cubeMaterial.player(this.playerHelper.player).location(LocationType.CubeOnBiotopeBoardSpot)
   }
 
   public get speciesCardMaterial() {

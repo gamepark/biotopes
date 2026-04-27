@@ -12,7 +12,6 @@ import { DrawCardsRule } from '../../../src/rules/actions/common/DrawCardsRule'
 import { BiotopesPendingEffect } from '../../../src/material/effects/PendingEffect'
 import { Memory } from '../../../src/Memory'
 import { PendingEffectType } from '../../../src/material/effects/PendingEffectType'
-import { BiotopeCard, getBiotopeCardType } from '../../../src/material/BiotopeCard'
 
 describe('Cosmopolitan and Granivorous species combo tests', () => {
   test('Given an expansion on a meadow for a player having a cosmopolitan species and a granivorous species, game should proceed to the DrawCard rule for the current player and allow to draw 2 cards', () => {
@@ -28,12 +27,9 @@ describe('Cosmopolitan and Granivorous species combo tests', () => {
       id: BiotopeType.Meadow,
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
-        player: PlayerColor.Owl,
-        parent: setup
-          .material(MaterialType.BiotopesCard)
-          .player(PlayerColor.Owl)
-          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Meadow)
-          .getIndex()
+        player: PlayerColor.Salamander,
+        id: BiotopeType.Meadow,
+        parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Salamander).getIndex()
       }
     })
     const rules = new BiotopesRules(game)

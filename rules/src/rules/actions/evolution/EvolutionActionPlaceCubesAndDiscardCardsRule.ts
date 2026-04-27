@@ -39,7 +39,7 @@ export class EvolutionActionPlaceCubesAndDiscardCardsRule extends PlayerTurnRule
             id: EcosystemActionType.Evolution,
             x: cubeType
           }
-          return this.materialHelper.playerCubesOnBiotopeCards.moveItems(destination).concat(
+          return this.materialHelper.playerCubesOnBiotopeBoard.moveItems(destination).concat(
             this.materialHelper.playerCubesOnSpeciesCards
               .parent((cardIndex) => {
                 const parentCard = this.materialHelper.playerSpeciesCardTableau.index(cardIndex).getItem<KnownSpeciesCardId>()!

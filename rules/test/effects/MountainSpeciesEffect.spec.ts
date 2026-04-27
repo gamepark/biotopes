@@ -13,7 +13,6 @@ import { BiotopesPendingEffect } from '../../src/material/effects/PendingEffect'
 import { Memory } from '../../src/Memory'
 import { PendingEffectType } from '../../src/material/effects/PendingEffectType'
 import { ChooseActionRule } from '../../src/rules/ChooseActionRule'
-import { BiotopeCard, getBiotopeCardType } from '../../src/material/BiotopeCard'
 
 describe('Mountain species tests', () => {
   test("After an expansion on a mountain with a Mountain species present in the payer's tableau, game should proceed to the DrawCard rule for the current player", () => {
@@ -28,11 +27,8 @@ describe('Mountain species tests', () => {
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
         player: PlayerColor.Owl,
-        parent: setup
-          .material(MaterialType.BiotopesCard)
-          .player(PlayerColor.Owl)
-          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Mountain)
-          .getIndex()
+        id: BiotopeType.Mountain,
+        parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Owl).getIndex()
       }
     })
     const rules = new BiotopesRules(game)
@@ -78,11 +74,8 @@ describe('Mountain species tests', () => {
       location: {
         type: LocationType.CubeSpotOnPlayerBiotopesCard,
         player: PlayerColor.Owl,
-        parent: setup
-          .material(MaterialType.BiotopesCard)
-          .player(PlayerColor.Owl)
-          .id<BiotopeCard>((id) => getBiotopeCardType(id) === BiotopeType.Mountain)
-          .getIndex()
+        id: BiotopeType.Mountain,
+        parent: setup.material(MaterialType.BiotopeBoard).player(PlayerColor.Owl).getIndex()
       }
     })
     const rules = new BiotopesRules(game)

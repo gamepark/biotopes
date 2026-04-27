@@ -1,5 +1,5 @@
-import { PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
-import { BiotopesItemMove, BiotopesMove, isBiotopesMoveItemTypeAtOnce } from '../BiotopeTypes'
+import { MaterialMove, PlayerTurnRule, PlayMoveContext, RuleMove, RuleStep } from '@gamepark/rules-api'
+import { BiotopesItemMove, BiotopesMove, isBiotopesMoveItemTypeAtOnce, isBiotopesStartPlayerTurn } from '../BiotopeTypes'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { SpeciesCardId, SpeciesCardType, SpeciesDietType } from '../material/SpeciesCard'
@@ -11,6 +11,40 @@ import { RuleId } from './RuleId'
 export class GameSetupHandMulliganRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
   private readonly playerHelper = new PlayerHelper(this.game)
+
+  public onRuleStart(
+    move: RuleMove<PlayerColor, RuleId>,
+    _previousRule?: RuleStep,
+    _context?: PlayMoveContext
+  ): MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[] {
+    if (isBiotopesStartPlayerTurn(move) && move.player === this.game.players[0]) {
+      const herbivoresDeckMaterial = this.material(MaterialType.SpeciesCard)
+        .location(LocationType.SpeciesDecksSpot)
+        .location((l) => l.y === SpeciesDietType.Herbivore)
+        .deck()
+      const mountainHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreMountain)
+      const forestHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreForest)
+      const meadowHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreMeadow)
+      const wetlandsHerbivores = herbivoresDeckMaterial.id<SpeciesCardId>((id) => id.back === SpeciesCardType.HerbivoreWetland)
+      return this.game.players.map((player, index) =>
+        herbivoresDeckMaterial
+          .index([
+            mountainHerbivores.entries[index][0],
+            forestHerbivores.entries[index][0],
+            meadowHerbivores.entries[index][0],
+            wetlandsHerbivores.entries[index][0]
+          ])
+          .dealAtOnce(
+            {
+              type: LocationType.PlayerSpeciesCardHandSpot,
+              player: player
+            },
+            4
+          )
+      )
+    }
+    return super.onRuleStart(move, _previousRule, _context)
+  }
 
   public getPlayerMoves(): BiotopesMove[] {
     const nextRule = this.playerHelper.isLastPlayer ? RuleId.GameSetupPlaceTerritoryTokens : RuleId.GameSetupHandMulligan

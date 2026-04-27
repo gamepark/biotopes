@@ -9,6 +9,7 @@ import { BiotopeType } from '../../../src/material/BiotopeType'
 import { ExpansionActionChooseCubeRule } from '../../../src/rules/actions/colonization/expansion/ExpansionActionChooseCubeRule'
 import { EcosystemActionType } from '../../../src/material/EcosystemActionType'
 import { MigrationActionChooseCubeRule } from '../../../src/rules/actions/colonization/migration/MigrationActionChooseCubeRule'
+import { BiotopeBoard } from '../../../src/material/BiotopeBoard'
 
 export const setupGameAndGetColonizationRule = (
   players: PlayerColor[],
@@ -17,10 +18,26 @@ export const setupGameAndGetColonizationRule = (
 ) => {
   const setup = new BiotopesSetup()
   const game = setup.setup({
-    advancedBiotopes: false,
     players: players.map((p) => ({ id: p }))
   })
+  setup.material(MaterialType.BiotopeBoard).deleteItemsAtOnce()
   setup.material(MaterialType.LandscapeTile).deleteItemsAtOnce()
+  setup.material(MaterialType.BiotopeBoard).createItemsAtOnce([
+    {
+      id: BiotopeBoard.MountainPasture,
+      location: {
+        type: LocationType.BiotopeBoardSpot,
+        player: players[0]
+      }
+    },
+    {
+      id: BiotopeBoard.MountainPasture,
+      location: {
+        type: LocationType.BiotopeBoardSpot,
+        player: players[1]
+      }
+    }
+  ])
   setup.material(MaterialType.LandscapeTile).createItemsAtOnce([
     {
       id: LandscapeTile.A4,
