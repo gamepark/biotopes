@@ -37,7 +37,10 @@ export const isEvolutionChooseActionCustomMove = isChooseActionCustomMoveType(Ec
 export const isMigrationChooseActionCustomMove = isChooseActionCustomMoveType(EcosystemActionType.Migration)
 
 export const isReproductionChooseActionCustomMove = isChooseActionCustomMoveType(EcosystemActionType.Reproduction)
+
 export const isTransferChooseActionCustomMove = isChooseActionCustomMoveType(EcosystemActionType.Transfert)
+
+export const isCompetitionChooseActionCustomMove = isChooseActionCustomMoveType(EcosystemActionType.Competition)
 
 export const isEndOfEvolutionActionCustomMove: (move: BiotopesMove) => move is EndEvolutionActionCustomMove = isCustomMoveType<
   typeof CustomMoveType.EndEvolutionAction,

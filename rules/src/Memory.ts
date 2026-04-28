@@ -3,5 +3,6 @@ export enum Memory {
   PassedPlayers,
   NumberOfDiscardedCardForEvolution,
   NumberOfCardsToPickForEvolution,
-  PendingEffects
+  PendingEffects,
+  CompetitionOwnDestination
 }
