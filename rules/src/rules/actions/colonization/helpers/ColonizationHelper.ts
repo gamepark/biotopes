@@ -1,4 +1,4 @@
-import { getHexagonsAtDistance, ItemMove, MaterialRulesPart, PlayMoveContext, XYCoordinates } from '@gamepark/rules-api'
+import { getAdjacentHexagons, getHexagonsAtDistance, ItemMove, MaterialRulesPart, PlayMoveContext, XYCoordinates } from '@gamepark/rules-api'
 import { isEqual, uniq } from 'es-toolkit'
 import { range } from 'es-toolkit/compat'
 import { BiotopesMove, isBiotopesMoveItemType } from '../../../../BiotopeTypes'
@@ -61,6 +61,43 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
     return this.computeReachableHexesFromCoords(coords, otherTokenCoordinates, distance).filter(
       (coords) => this.landscapeHelper.landscape.getValue(coords) === biotopeType
     )
+  }
+
+  public computeOpponentsTerritoryTokensAvailableForCompetitionMaterial() {
+    const ownTokenCoordinates = this.materialHelper.playerTerritoryTokenOnCentralLandscape
+      .getItems()
+      .map((token) => ({ x: token.location.x!, y: token.location.y }))
+    const otherTokenCoordinates = this.materialHelper.otherPlayersTerritoryTokensOnCentralLandscape
+      .getItems()
+      .map((token) => ({ x: token.location.x!, y: token.location.y! }))
+    return this.materialHelper.otherPlayersTerritoryTokensOnCentralLandscape.filter((token) => {
+      const tokenCoordinates = { x: token.location.x!, y: token.location.y! }
+      const adjacentCoordinates = getAdjacentHexagons(tokenCoordinates).filter((coords) => this.landscapeHelper.landscape.getValue(coords) !== undefined)
+      return (
+        adjacentCoordinates.some((coords) => ownTokenCoordinates.find((c) => isEqual(c, coords)) !== undefined) &&
+        adjacentCoordinates.some(
+          (coords) => ownTokenCoordinates.find((c) => isEqual(c, coords)) === undefined && otherTokenCoordinates.find((c) => isEqual(c, coords)) === undefined
+        )
+      )
+    })
+  }
+
+  public computeCompetitionOpponentTokenOnBiotopeMoves(biotopeType: BiotopeType): BiotopesMove[] {
+    const tokenCoordinates = this.materialHelper.centralLandscapeTerritoryTokenMaterial
+      .getItems()
+      .map((token) => ({ x: token.location.x!, y: token.location.y! }))
+    return this.computeOpponentsTerritoryTokensAvailableForCompetitionMaterial()
+      .filter((token) => this.landscapeHelper.landscape.getValue({ x: token.location.x!, y: token.location.y! }) === biotopeType)
+      .entries.flatMap(([index, token]) => {
+        const validDestinations = this.computeReachableHexesFromCoords({ x: token.location.x!, y: token.location.y! }, tokenCoordinates)
+        return validDestinations.map(({ x, y }) =>
+          this.materialHelper.centralLandscapeTerritoryTokenMaterial.index(index).moveItem({
+            type: LocationType.CentralLandscapeSpot,
+            x: x,
+            y: y
+          })
+        )
+      })
   }
 
   public getPlaceTerritoryTokenMoves(destinationBiotope: BiotopeType): BiotopesMove[] {

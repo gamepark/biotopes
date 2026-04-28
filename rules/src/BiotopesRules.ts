@@ -45,6 +45,12 @@ import { EndOfActionReplenishRiversAndActivateNextPlayerRule } from './rules/act
 import { TransferActionChooseCubeRule } from './rules/actions/transfer/TransferActionChooseCubeRule'
 import { TransferActionTransferCubesRule } from './rules/actions/transfer/TransferActionTransferCubesRule'
 import { GameSetupSelectBiotopeBoardRule } from './rules/GameSetupSelectBiotopeBoardRule'
+import { CompetitionActionChooseCubeRule } from './rules/actions/colonization/competition/CompetitionActionChooseCubeRule'
+import { CompetitionActionMoveForestOpponentToken } from './rules/actions/colonization/competition/CompetitionActionMoveForestOpponentToken'
+import { CompetitionActionMoveOwnToken } from './rules/actions/colonization/competition/CompetitionActionMoveOwnToken'
+import { CompetitionActionMoveMountainOpponentToken } from './rules/actions/colonization/competition/CompetitionActionMoveMountainOpponentToken'
+import { CompetitionActionMoveMeadowOpponentToken } from './rules/actions/colonization/competition/CompetitionActionMoveMeadowOpponentToken'
+import { CompetitionActionMoveWetlandOpponentToken } from './rules/actions/colonization/competition/CompetitionActionMoveWetlandOpponentToken'
 
 /**
  * This class implements the rules of the board game.
@@ -77,7 +83,7 @@ export class BiotopesRules
       [LocationType.TerritoryTokenSpotOnEcosystemBoard]: new FillGapStrategy()
     },
     [MaterialType.Cube]: {
-      [LocationType.CubeSpotOnEcosystemBoard]: new PositiveSequenceStrategy(),
+      [LocationType.CubeSpotOnEcosystemBoard]: new FillGapStrategy(),
       [LocationType.RecycledCubesSpot]: new PositiveSequenceStrategy()
     }
   }
@@ -120,7 +126,13 @@ export class BiotopesRules
     [RuleId.EndOfActionReplenishRiversAndActivateNextPlayer]: EndOfActionReplenishRiversAndActivateNextPlayerRule,
     [RuleId.TransferActionChooseCube]: TransferActionChooseCubeRule,
     [RuleId.TransferActionTransferCubes]: TransferActionTransferCubesRule,
-    [RuleId.GameSetupBiotopeBoardSelection]: GameSetupSelectBiotopeBoardRule
+    [RuleId.GameSetupBiotopeBoardSelection]: GameSetupSelectBiotopeBoardRule,
+    [RuleId.CompetitionActionChooseCube]: CompetitionActionChooseCubeRule,
+    [RuleId.CompetitionActionMoveMountainOpponentToken]: CompetitionActionMoveMountainOpponentToken,
+    [RuleId.CompetitionActionMoveForestOpponentToken]: CompetitionActionMoveForestOpponentToken,
+    [RuleId.CompetitionActionMoveMeadowOpponentToken]: CompetitionActionMoveMeadowOpponentToken,
+    [RuleId.CompetitionActionMoveWetlandOpponentToken]: CompetitionActionMoveWetlandOpponentToken,
+    [RuleId.CompetitionActionMoveOwnToken]: CompetitionActionMoveOwnToken
   }
 
   giveTime(): number {

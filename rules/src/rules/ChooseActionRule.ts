@@ -6,6 +6,7 @@ import {
   ChooseActionCustomMoveData,
   CustomMoveType,
   isAdaptationChooseActionCustomMove,
+  isCompetitionChooseActionCustomMove,
   isEvolutionChooseActionCustomMove,
   isExpansionChooseActionCustomMove,
   isMigrationChooseActionCustomMove,
@@ -55,6 +56,9 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
     }
     if (isTransferChooseActionCustomMove(move)) {
       return [this.startRule(RuleId.TransferActionChooseCube)]
+    }
+    if (isCompetitionChooseActionCustomMove(move)) {
+      return [this.startRule(RuleId.CompetitionActionChooseCube)]
     }
     if (isPassCycleCustomMove(move)) {
       this.memorize<PlayerColor[] | undefined>(Memory.PassedPlayers, (oldValue) => oldValue?.concat(this.player) ?? [this.player])

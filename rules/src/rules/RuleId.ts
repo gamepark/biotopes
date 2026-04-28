@@ -29,5 +29,11 @@ export enum RuleId {
   EndOfActionReplenishRiversAndActivateNextPlayer,
   TransferActionChooseCube,
   TransferActionTransferCubes,
-  GameSetupBiotopeBoardSelection
+  GameSetupBiotopeBoardSelection,
+  CompetitionActionChooseCube,
+  CompetitionActionMoveMountainOpponentToken,
+  CompetitionActionMoveForestOpponentToken,
+  CompetitionActionMoveMeadowOpponentToken,
+  CompetitionActionMoveWetlandOpponentToken,
+  CompetitionActionMoveOwnToken
 }
