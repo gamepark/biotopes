@@ -8,7 +8,7 @@ export class AlpineIbexCharacteristics extends MountainHerbivoreCharacteristics 
   }
 
   get effect(): unknown {
-    return SpeciesCardEffect.TerritorialSpecies
+    return SpeciesCardEffect.AdaptativeIntelligence
   }
 
   get effectType(): unknown {

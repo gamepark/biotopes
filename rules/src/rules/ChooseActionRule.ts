@@ -1,6 +1,6 @@
-import { CustomMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
+import { CustomMove, ItemMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
 import { countBy } from 'es-toolkit'
-import { BiotopesMove } from '../BiotopeTypes'
+import { BiotopesMove, isBiotopesMoveItemType } from '../BiotopeTypes'
 import { CubeType } from '../material/CubeType'
 import {
   ChooseActionCustomMoveData,
@@ -27,6 +27,9 @@ import { MaterialHelper } from './helpers/MaterialHelper'
 import { RuleId } from './RuleId'
 import { ReproductionActionPlaceCubeRule } from './actions/reproduction/ReproductionActionPlaceCubeRule'
 import { SpeciesCardEffect } from '../material/SpeciesCardEffect'
+import { BiotopeType } from '../material/BiotopeType'
+import { BiotopesPendingEffect } from '../material/effects/PendingEffect'
+import { PendingEffectType } from '../material/effects/PendingEffectType'
 
 export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
   private readonly materialHelper = new MaterialHelper(this.game)
@@ -35,7 +38,21 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
     return ecosystemActionType
       .filter((type) => this.canPerformAction(type))
       .map<BiotopesMove>((type) => this.customMove<CustomMoveType, ChooseActionCustomMoveData<typeof type>>(CustomMoveType.ChooseAction, { action: type }))
+      .concat(this.getAdaptativeIntelligenceCubeMoves())
       .concat(this.customMove<CustomMoveType, undefined>(CustomMoveType.PassCycle))
+  }
+
+  public beforeItemMove(move: ItemMove<PlayerColor, MaterialType, LocationType>, _context?: PlayMoveContext): BiotopesMove[] {
+    if (isBiotopesMoveItemType(MaterialType.Cube)(move) && move.location.type === LocationType.CubeStockpileSpot) {
+      const parentCardIndex = this.materialHelper.cubeMaterial.index(move.itemIndex).getItem()!.location.parent!
+      const parentCard = this.materialHelper.playerSpeciesCardTableau.index(parentCardIndex).getItem<KnownSpeciesCardId>()!
+      const cardEffect = speciesCardCharacteristics[parentCard.id.front].effect
+      if (cardEffect === SpeciesCardEffect.AdaptativeIntelligence) {
+        this.memorize<BiotopesPendingEffect[]>(Memory.PendingEffects, [{ type: PendingEffectType.DrawCards, numberOfCardsToDraw: 2 }])
+        return [this.materialHelper.cubeMaterial.index(move.itemIndex).deleteItem(), this.startRule(RuleId.DrawCards)]
+      }
+    }
+    return super.afterItemMove(move, _context)
   }
 
   public onCustomMove(move: CustomMove, context?: PlayMoveContext): BiotopesMove[] {
@@ -116,5 +133,17 @@ export class ChooseActionRule extends PlayerTurnRule<PlayerColor, MaterialType, 
         return cubeCount <= cubeCounts[cubeType]
       })
     })
+  }
+
+  private getAdaptativeIntelligenceCubeMoves(): BiotopesMove[] {
+    return this.materialHelper.playerCubesOnSpeciesCards
+      .parent((cardIndex) => {
+        const parentCard = this.materialHelper.playerSpeciesCardTableau.index(cardIndex).getItem<KnownSpeciesCardId>()!
+        return speciesCardCharacteristics[parentCard.id.front].effect === SpeciesCardEffect.AdaptativeIntelligence
+      })
+      .moveItems<BiotopeType>((cube) => ({
+        type: LocationType.CubeStockpileSpot,
+        id: cube.id
+      }))
   }
 }

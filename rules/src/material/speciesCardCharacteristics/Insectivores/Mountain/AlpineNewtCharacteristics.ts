@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { MountainInsectivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class AlpineNewtCharacteristics extends MountainInsectivoreCharacteristics {
   get cubeType(): CubeType {
@@ -11,7 +12,7 @@ export class AlpineNewtCharacteristics extends MountainInsectivoreCharacteristic
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.AdaptativeIntelligence
   }
 
   get effectType(): unknown {
