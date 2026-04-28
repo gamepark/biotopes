@@ -1,4 +1,4 @@
-import { ItemContext, MaterialContext, PileLocator } from '@gamepark/react-game'
+import { DropAreaDescription, ItemContext, MaterialContext, PileLocator } from '@gamepark/react-game'
 import { PlayerColor } from '@gamepark/biotopes/PlayerColor.ts'
 import { MaterialType } from '@gamepark/biotopes/material/MaterialType.ts'
 import { LocationType } from '@gamepark/biotopes/material/LocationType.ts'
@@ -17,6 +17,7 @@ class CubeOnBiotopeBoardLocator extends PileLocator<PlayerColor, MaterialType, L
   parentItemType = MaterialType.BiotopeBoard
   minimumDistance = 0.75
   radius = { x: 0.75, y: 1 }
+  locationDescription = new CubeOnBiotopeBoardDropAreaDescription()
 
   getPositionOnParent(
     location: Location<PlayerColor, LocationType, BiotopeType>,
@@ -31,6 +32,12 @@ class CubeOnBiotopeBoardLocator extends PileLocator<PlayerColor, MaterialType, L
   public hide(item: MaterialItem<PlayerColor, LocationType>, context: ItemContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>): boolean {
     return item.location.player !== (context.rules.game.view ?? context.player ?? context.rules.players[0])
   }
+}
+
+class CubeOnBiotopeBoardDropAreaDescription extends DropAreaDescription<PlayerColor, MaterialType, LocationType, BiotopeType, RuleId, PlayerColor> {
+  width = 3
+  height = 2
+  borderRadius = 2
 }
 
 export const cubeOnBiotopeBoardLocator = new CubeOnBiotopeBoardLocator()
