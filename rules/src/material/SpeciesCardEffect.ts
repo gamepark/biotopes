@@ -14,5 +14,6 @@ export enum SpeciesCardEffect {
   WidespreadSpecies,
   MigratingSpecies,
   DetritivoreSpecies,
-  RSelectedSpecies
+  RSelectedSpecies,
+  TerritorialSpecies
 }
