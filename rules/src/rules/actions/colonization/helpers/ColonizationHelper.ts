@@ -153,6 +153,7 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
         return (
           (actionType === EcosystemActionType.Expansion && cardEffect === SpeciesCardEffect.WidespreadSpecies) ||
           (actionType === EcosystemActionType.Migration && cardEffect === SpeciesCardEffect.MigratingSpecies) ||
+          (actionType === EcosystemActionType.Competition && cardEffect === SpeciesCardEffect.Patroller) ||
           (biotopeType === BiotopeType.Mountain && cardEffect === SpeciesCardEffect.RockSpecies) ||
           (biotopeType === BiotopeType.Forest && cardEffect === SpeciesCardEffect.WoodlandSpecies) ||
           (biotopeType === BiotopeType.Meadow && cardEffect === SpeciesCardEffect.MeadowSpecies) ||

@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { WetlandInsectivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class EmperorDragonflyCharacteristics extends WetlandInsectivoreCharacteristics {
   get cubeType(): CubeType {
@@ -11,7 +12,7 @@ export class EmperorDragonflyCharacteristics extends WetlandInsectivoreCharacter
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.Patroller
   }
 
   get effectType(): unknown {
