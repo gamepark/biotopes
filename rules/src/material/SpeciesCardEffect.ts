@@ -15,5 +15,6 @@ export enum SpeciesCardEffect {
   MigratingSpecies,
   DetritivoreSpecies,
   RSelectedSpecies,
-  TerritorialSpecies
+  TerritorialSpecies,
+  Patroller
 }
