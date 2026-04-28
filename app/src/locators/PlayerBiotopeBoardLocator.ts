@@ -7,7 +7,7 @@ import { ecosystemBoardLocator } from './EcosystemBoardLocator.ts'
 import { MaterialItem } from '@gamepark/rules-api'
 
 class PlayerBiotopeBoardLocator extends Locator<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor> {
-  coordinates = { x: ecosystemBoardLocator.coordinates.x + 9.625, y: ecosystemBoardLocator.coordinates.y - 0.45 }
+  coordinates = { x: ecosystemBoardLocator.coordinates.x + 9.625, y: ecosystemBoardLocator.coordinates.y - 0.46 }
 
   public hide(item: MaterialItem<PlayerColor, LocationType>, context: ItemContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>): boolean {
     return item.location.player !== (context.rules.game.view ?? context.player ?? context.rules.game.players[0])
