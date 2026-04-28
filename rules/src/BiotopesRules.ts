@@ -51,6 +51,7 @@ import { CompetitionActionMoveOwnToken } from './rules/actions/colonization/comp
 import { CompetitionActionMoveMountainOpponentToken } from './rules/actions/colonization/competition/CompetitionActionMoveMountainOpponentToken'
 import { CompetitionActionMoveMeadowOpponentToken } from './rules/actions/colonization/competition/CompetitionActionMoveMeadowOpponentToken'
 import { CompetitionActionMoveWetlandOpponentToken } from './rules/actions/colonization/competition/CompetitionActionMoveWetlandOpponentToken'
+import { MoveCubeRule } from './rules/actions/common/MoveCubeRule'
 
 /**
  * This class implements the rules of the board game.
@@ -132,7 +133,8 @@ export class BiotopesRules
     [RuleId.CompetitionActionMoveForestOpponentToken]: CompetitionActionMoveForestOpponentToken,
     [RuleId.CompetitionActionMoveMeadowOpponentToken]: CompetitionActionMoveMeadowOpponentToken,
     [RuleId.CompetitionActionMoveWetlandOpponentToken]: CompetitionActionMoveWetlandOpponentToken,
-    [RuleId.CompetitionActionMoveOwnToken]: CompetitionActionMoveOwnToken
+    [RuleId.CompetitionActionMoveOwnToken]: CompetitionActionMoveOwnToken,
+    [RuleId.MoveCube]: MoveCubeRule
   }
 
   giveTime(): number {

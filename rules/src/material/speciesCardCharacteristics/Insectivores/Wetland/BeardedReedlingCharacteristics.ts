@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { WetlandInsectivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class BeardedReedlingCharacteristics extends WetlandInsectivoreCharacteristics {
   get cubeType(): CubeType {
@@ -11,7 +12,7 @@ export class BeardedReedlingCharacteristics extends WetlandInsectivoreCharacteri
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.DiscreetSpecies
   }
 
   get effectType(): unknown {

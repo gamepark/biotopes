@@ -4,5 +4,7 @@ export enum Memory {
   NumberOfDiscardedCardForEvolution,
   NumberOfCardsToPickForEvolution,
   PendingEffects,
-  CompetitionOwnDestination
+  CompetitionOwnDestination,
+  CubesToMoveNumber,
+  AlreadyMovedCubeIndex
 }

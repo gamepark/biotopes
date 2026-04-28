@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { ForestCarnivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class EuropeanPineMartenCharacteristics extends ForestCarnivoreCharacteristics {
   get cubeType(): CubeType {
@@ -11,7 +12,7 @@ export class EuropeanPineMartenCharacteristics extends ForestCarnivoreCharacteri
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.DiscreetSpecies
   }
 
   get effectType(): unknown {

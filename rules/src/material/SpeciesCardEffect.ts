@@ -17,5 +17,6 @@ export enum SpeciesCardEffect {
   RSelectedSpecies,
   TerritorialSpecies,
   Patroller,
-  AdaptativeIntelligence
+  AdaptativeIntelligence,
+  DiscreetSpecies
 }

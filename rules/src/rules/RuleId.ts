@@ -35,5 +35,6 @@ export enum RuleId {
   CompetitionActionMoveForestOpponentToken,
   CompetitionActionMoveMeadowOpponentToken,
   CompetitionActionMoveWetlandOpponentToken,
-  CompetitionActionMoveOwnToken
+  CompetitionActionMoveOwnToken,
+  MoveCube
 }
