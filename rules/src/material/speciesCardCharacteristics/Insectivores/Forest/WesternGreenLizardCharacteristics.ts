@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { ForestInsectivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class WesternGreenLizardCharacteristics extends ForestInsectivoreCharacteristics {
   get cubeType(): CubeType {
@@ -11,7 +12,7 @@ export class WesternGreenLizardCharacteristics extends ForestInsectivoreCharacte
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.AdaptativeIntelligence
   }
 
   get effectType(): unknown {

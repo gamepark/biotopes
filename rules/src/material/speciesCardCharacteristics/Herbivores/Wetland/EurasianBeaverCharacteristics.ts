@@ -1,5 +1,6 @@
 import { CubeType } from '../../../CubeType'
 import { WetlandHerbivoreCharacteristics } from '../../SpeciesCharacteristics'
+import { SpeciesCardEffect } from '../../../SpeciesCardEffect'
 
 export class EurasianBeaverCharacteristics extends WetlandHerbivoreCharacteristics {
   get cubeType(): CubeType {
@@ -7,7 +8,7 @@ export class EurasianBeaverCharacteristics extends WetlandHerbivoreCharacteristi
   }
 
   get effect(): unknown {
-    return undefined
+    return SpeciesCardEffect.AdaptativeIntelligence
   }
 
   get effectType(): unknown {
