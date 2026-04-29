@@ -1,4 +1,5 @@
 import { getEnumValues } from '@gamepark/rules-api'
+import { BiotopeType } from './BiotopeType'
 
 export enum SpeciesDietType {
   Herbivore = 1,
@@ -133,3 +134,5 @@ export const carnivoreCard = speciesCards.slice(64, 90)
 export const speciesDietTypes = getEnumValues(SpeciesDietType)
 
 export const getDietTypeFromCardId: (id: SpeciesCardId) => SpeciesDietType = (id) => Math.floor(id.back / 10) as SpeciesDietType
+
+export const getBiotopeTypeFromCardId: (id: SpeciesCardId) => BiotopeType = (id) => (id.back % 10) as BiotopeType

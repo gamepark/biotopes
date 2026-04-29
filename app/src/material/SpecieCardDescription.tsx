@@ -224,10 +224,7 @@ class SpecieCardDescription extends CardDescription<PlayerColor, MaterialType, L
     _legalMoves: MaterialMove<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>[]
   ): React.ReactNode {
     if (context.player !== undefined && (context.rules.game.view === undefined || context.rules.game.view === context.player)) {
-      if (
-        context.rules.game.rule !== undefined &&
-        [RuleId.DrawMountainCube, RuleId.DrawForestCube, RuleId.DrawMeadowCube, RuleId.DrawWetlandCube].includes(context.rules.game.rule.id)
-      ) {
+      if (context.rules.game.rule !== undefined && context.rules.game.rule.id === RuleId.DrawCubes) {
         if (item.location.type === LocationType.PlayerSpeciesCardTableauSpot) {
           const card = item as MaterialItem<PlayerColor, LocationType, KnownSpeciesCardId>
           const cardIndex = context.rules
@@ -254,11 +251,7 @@ class SpecieCardDescription extends CardDescription<PlayerColor, MaterialType, L
     _item: MaterialItem<PlayerColor, LocationType, SpeciesCardId>,
     _context: ItemContext<PlayerColor, MaterialType, LocationType, RuleId, PlayerColor>
   ): boolean {
-    return (
-      (_context.rules.game.rule !== undefined &&
-        [RuleId.DrawMountainCube, RuleId.DrawForestCube, RuleId.DrawMeadowCube, RuleId.DrawWetlandCube].includes(_context.rules.game.rule.id)) ||
-      super.isMenuAlwaysVisible(_item, _context)
-    )
+    return (_context.rules.game.rule !== undefined && _context.rules.game.rule.id === RuleId.DrawCubes) || super.isMenuAlwaysVisible(_item, _context)
   }
 }
 

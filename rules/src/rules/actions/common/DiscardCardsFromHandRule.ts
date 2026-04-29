@@ -53,7 +53,7 @@ export class DiscardCardsFromHandRule extends PlayerTurnRule<PlayerColor, Materi
   private getRuleMoveFromNextPendingAction(newPendingAction: BiotopesPendingEffect) {
     switch (newPendingAction.type) {
       case PendingEffectType.DrawCubes:
-        return [this.startRule(RuleId.DiscardCardToDrawCube)]
+        return [this.startRule(RuleId.DrawCubes)]
       default:
         return [this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)]
     }

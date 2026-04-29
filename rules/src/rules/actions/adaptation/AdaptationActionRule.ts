@@ -59,7 +59,7 @@ export class AdaptationActionRule extends PlayerTurnRule<PlayerColor, MaterialTy
         (biotopeBoardId === BiotopeBoard.AlluvialForest && cardBiotope === BiotopeType.Wetland)
       ) {
         this.memorize<BiotopesPendingEffect[]>(Memory.PendingEffects, [{ type: PendingEffectType.DrawCubes, numberOfCubesToDraw: 1 }])
-        return adaptationConsequences.concat(this.startRule(RuleId.DiscardCardToDrawCube))
+        return adaptationConsequences.concat(this.startRule(RuleId.DrawCubes))
       }
       return adaptationConsequences.concat(this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer))
     }

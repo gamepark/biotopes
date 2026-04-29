@@ -8,15 +8,15 @@ import { EcosystemActionType } from '../../src/material/EcosystemActionType'
 import { LocationType } from '../../src/material/LocationType'
 import { BiotopesRules } from '../../src'
 import { playAction } from '@gamepark/rules-api'
-import { DiscardCardToDrawCubeRule } from '../../src/rules/actions/common/DiscardCardToDrawCubeRule'
 import { BiotopesPendingEffect } from '../../src/material/effects/PendingEffect'
 import { Memory } from '../../src/Memory'
 import { PendingEffectType } from '../../src/material/effects/PendingEffectType'
 import { speciesCardCharacteristics } from '../../src/material/SpeciesCardCharacteristics'
 import { ChooseActionRule } from '../../src/rules/ChooseActionRule'
+import { DrawCubesRule } from '../../src/rules/actions/common/DrawCubesRule'
 
 describe('Meadow species tests', () => {
-  test('After an expansion on a meadox if the player has a Meadow species, game should proceed to the DiscardCardToDrawCube rule for the current player and allow to draw 1 cube', () => {
+  test('After an expansion on a meadow if the player has a Meadow species, game should proceed to the DrawCubes rule for the current player and allow to draw 1 cube', () => {
     // Given
     const { setup, game } = setupGameAndGetColonizationRule(
       [PlayerColor.Ibex, PlayerColor.Fox],
@@ -56,7 +56,7 @@ describe('Meadow species tests', () => {
     )
 
     // Then
-    expect(rules.rulesStep).to.be.instanceof(DiscardCardToDrawCubeRule).and.to.have.property('player').which.eqls(PlayerColor.Ibex)
+    expect(rules.rulesStep).to.be.instanceof(DrawCubesRule).and.to.have.property('player').which.eqls(PlayerColor.Ibex)
     const pendingEffects = rules.remind<BiotopesPendingEffect[]>(Memory.PendingEffects)
     expect(pendingEffects)
       .to.be.an('array')
@@ -64,7 +64,7 @@ describe('Meadow species tests', () => {
       .and.has.deep.members([{ type: PendingEffectType.DrawCubes, numberOfCubesToDraw: 1 }])
   })
 
-  test('After an expansion on a meadox if the player has a Meadow species and player drew a cube, game should proceed to the ChooseAction rule for the next player', () => {
+  test('After an expansion on a meadow if the player has a Meadow species and player drew a cube, game should proceed to the ChooseAction rule for the next player', () => {
     // Given
     const { setup, game, cardsWithIndexes } = setupGameAndGetColonizationRule(
       [PlayerColor.Ibex, PlayerColor.Fox],
@@ -108,29 +108,14 @@ describe('Meadow species tests', () => {
       }),
       PlayerColor.Ibex
     )
-    playAction(
-      rules,
-      rules
-        .material(MaterialType.SpeciesCard)
-        .location((l) => l.type === LocationType.SpeciesDecksSpot && l.y === SpeciesDietType.Herbivore)
-        .deck()
-        .dealOne({
-          type: LocationType.SpeciesDiscardsSpot,
-          y: SpeciesDietType.Herbivore
-        }),
-      PlayerColor.Ibex
-    )
 
     // When
     playAction(
       rules,
-      rules.material(MaterialType.Cube).createItem({
-        id: BiotopeType.Meadow,
-        location: {
-          type: LocationType.CubeSpotOnPlayerSpeciesCard,
-          player: PlayerColor.Ibex,
-          parent: cardsWithIndexes[0].cardIndex
-        }
+      rules.material(MaterialType.Cube).location(LocationType.CubeStockpileSpot).id(BiotopeType.Meadow).moveItem({
+        type: LocationType.CubeSpotOnPlayerSpeciesCard,
+        player: PlayerColor.Ibex,
+        parent: cardsWithIndexes[0].cardIndex
       }),
       PlayerColor.Ibex
     )
@@ -142,7 +127,7 @@ describe('Meadow species tests', () => {
     expect(pendingEffects).to.be.undefined
   })
 
-  test('After a migration to a meadox if the player has a Meadow species, game should proceed to the DiscardCardToDrawCube rule for the current player and allow to draw 1 cube', () => {
+  test('After a migration to a meadow if the player has a Meadow species, game should proceed to the DrawCubes rule for the current player and allow to draw 1 cube', () => {
     // Given
     const { game } = setupGameAndGetColonizationRule(
       [PlayerColor.Ibex, PlayerColor.Fox],
@@ -179,7 +164,7 @@ describe('Meadow species tests', () => {
     )
 
     // Then
-    expect(rules.rulesStep).to.be.instanceof(DiscardCardToDrawCubeRule).and.to.have.property('player').which.eqls(PlayerColor.Ibex)
+    expect(rules.rulesStep).to.be.instanceof(DrawCubesRule).and.to.have.property('player').which.eqls(PlayerColor.Ibex)
     const pendingEffects = rules.remind<BiotopesPendingEffect[]>(Memory.PendingEffects)
     expect(pendingEffects)
       .to.be.an('array')
@@ -187,7 +172,7 @@ describe('Meadow species tests', () => {
       .and.has.deep.members([{ type: PendingEffectType.DrawCubes, numberOfCubesToDraw: 1 }])
   })
 
-  test('After a migration to a meadox if the player has a Meadow species and player drew a cube, game should proceed to the ChooseAction rule for the next player', () => {
+  test('After a migration to a meadow if the player has a Meadow species and player drew a cube, game should proceed to the ChooseAction rule for the next player', () => {
     // Given
     const { setup, game, cardsWithIndexes } = setupGameAndGetColonizationRule(
       [PlayerColor.Ibex, PlayerColor.Fox],
@@ -229,29 +214,14 @@ describe('Meadow species tests', () => {
         }),
       PlayerColor.Ibex
     )
-    playAction(
-      rules,
-      rules
-        .material(MaterialType.SpeciesCard)
-        .location((l) => l.type === LocationType.SpeciesDecksSpot && l.y === SpeciesDietType.Herbivore)
-        .deck()
-        .dealOne({
-          type: LocationType.SpeciesDiscardsSpot,
-          y: SpeciesDietType.Herbivore
-        }),
-      PlayerColor.Ibex
-    )
 
     // When
     playAction(
       rules,
-      rules.material(MaterialType.Cube).createItem({
-        id: BiotopeType.Meadow,
-        location: {
-          type: LocationType.CubeSpotOnPlayerSpeciesCard,
-          player: PlayerColor.Ibex,
-          parent: cardsWithIndexes[0].cardIndex
-        }
+      rules.material(MaterialType.Cube).location(LocationType.CubeStockpileSpot).id(BiotopeType.Meadow).moveItem({
+        type: LocationType.CubeSpotOnPlayerSpeciesCard,
+        player: PlayerColor.Ibex,
+        parent: cardsWithIndexes[0].cardIndex
       }),
       PlayerColor.Ibex
     )

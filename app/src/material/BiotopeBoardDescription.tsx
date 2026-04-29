@@ -18,8 +18,6 @@ import { isBiotopesCreateItemType } from '@gamepark/biotopes/BiotopeTypes.ts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHandPointer } from '@fortawesome/free-regular-svg-icons'
 
-const DRAW_CUBES_RULES = [RuleId.DrawMountainCube, RuleId.DrawForestCube, RuleId.DrawMeadowCube, RuleId.DrawWetlandCube]
-
 class BiotopeBoardDescription extends BoardDescription<PlayerColor, MaterialType, LocationType, BiotopeBoard, RuleId, PlayerColor> {
   height = 20
   width = 7.3
@@ -43,7 +41,7 @@ class BiotopeBoardDescription extends BoardDescription<PlayerColor, MaterialType
     if (
       _context.player !== undefined &&
       (_context.rules.game.view === undefined || _context.rules.game.view === _context.player) &&
-      DRAW_CUBES_RULES.includes(_context.rules.game.rule?.id ?? RuleId.EndOfActionReplenishRiversAndActivateNextPlayer) &&
+      _context.rules.game.rule?.id === RuleId.DrawCubes &&
       _item.location.player === _context.player
     ) {
       const moveToBoard = _legalMoves
@@ -69,7 +67,7 @@ class BiotopeBoardDescription extends BoardDescription<PlayerColor, MaterialType
     return (
       (_context.player !== undefined &&
         (_context.rules.game.view === undefined || _context.rules.game.view === _context.player) &&
-        DRAW_CUBES_RULES.includes(_context.rules.game.rule?.id ?? RuleId.EndOfActionReplenishRiversAndActivateNextPlayer) &&
+        _context.rules.game.rule?.id === RuleId.DrawCubes &&
         _item.location.player === _context.player) ||
       super.isMenuAlwaysVisible(_item, _context)
     )
