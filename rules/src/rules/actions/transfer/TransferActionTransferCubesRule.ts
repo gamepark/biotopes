@@ -43,10 +43,10 @@ export class TransferActionTransferCubesRule extends PlayerTurnRule<PlayerColor,
     const areThereRSelectedSpecies = rSelectedSpecies.exists
     if (areThereRSelectedSpecies) {
       this.memorize<BiotopesPendingEffect[]>(Memory.PendingEffects, [
-        { type: PendingEffectType.DrawCubes, numberOfCubesToDraw: rSelectedSpecies.getQuantity() }
+        { type: PendingEffectType.DrawCubes, numberOfCubesToDraw: Math.min(rSelectedSpecies.getQuantity(), 3) }
       ])
     }
-    const nextRuleMove = this.startRule(areThereRSelectedSpecies ? RuleId.DiscardCardToDrawCube : RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)
+    const nextRuleMove = this.startRule(areThereRSelectedSpecies ? RuleId.DrawCubes : RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)
     return transferCubeMoves.concat(nextRuleMove)
   }
 }

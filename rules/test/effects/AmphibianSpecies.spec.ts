@@ -8,15 +8,15 @@ import { EcosystemActionType } from '../../src/material/EcosystemActionType'
 import { LocationType } from '../../src/material/LocationType'
 import { BiotopesRules } from '../../src'
 import { playAction } from '@gamepark/rules-api'
-import { DiscardCardToDrawCubeRule } from '../../src/rules/actions/common/DiscardCardToDrawCubeRule'
 import { BiotopesPendingEffect } from '../../src/material/effects/PendingEffect'
 import { Memory } from '../../src/Memory'
 import { PendingEffectType } from '../../src/material/effects/PendingEffectType'
 import { speciesCardCharacteristics } from '../../src/material/SpeciesCardCharacteristics'
 import { ChooseActionRule } from '../../src/rules/ChooseActionRule'
+import { DrawCubesRule } from '../../src/rules/actions/common/DrawCubesRule'
 
 describe('Amphibian species tests', () => {
-  test('After an expansion on a wetland if the player has a Amphibian species, game should proceed to the DiscardCardToDrawCube rule for the current player and allow to draw 1 cube', () => {
+  test('After an expansion on a wetland if the player has a Amphibian species, game should proceed to the DrawCubes rule for the current player and allow to draw 1 cube', () => {
     // Given
     const { setup, game } = setupGameAndGetColonizationRule(
       [PlayerColor.Ibex, PlayerColor.Fox],
@@ -55,7 +55,7 @@ describe('Amphibian species tests', () => {
     )
 
     // Then
-    expect(rules.rulesStep).to.be.instanceof(DiscardCardToDrawCubeRule).and.to.have.property('player').which.eqls(PlayerColor.Ibex)
+    expect(rules.rulesStep).to.be.instanceof(DrawCubesRule).and.to.have.property('player').which.eqls(PlayerColor.Ibex)
     const pendingEffects = rules.remind<BiotopesPendingEffect[]>(Memory.PendingEffects)
     expect(pendingEffects)
       .to.be.an('array')
@@ -107,42 +107,27 @@ describe('Amphibian species tests', () => {
       }),
       PlayerColor.Ibex
     )
-    playAction(
-      rules,
-      rules
-        .material(MaterialType.SpeciesCard)
-        .location((l) => l.type === LocationType.SpeciesDecksSpot && l.y === SpeciesDietType.Herbivore)
-        .deck()
-        .dealOne({
-          type: LocationType.SpeciesDiscardsSpot,
-          y: SpeciesDietType.Herbivore
-        }),
-      PlayerColor.Ibex
-    )
 
     // When
     const action = playAction(
       rules,
-      rules.material(MaterialType.Cube).createItem({
-        id: BiotopeType.Wetland,
-        location: {
-          type: LocationType.CubeSpotOnPlayerSpeciesCard,
-          player: PlayerColor.Ibex,
-          parent: cardsWithIndexes[0].cardIndex
-        }
+      rules.material(MaterialType.Cube).location(LocationType.CubeStockpileSpot).id(BiotopeType.Wetland).moveItem({
+        type: LocationType.CubeSpotOnPlayerSpeciesCard,
+        player: PlayerColor.Ibex,
+        parent: cardsWithIndexes[0].cardIndex
       }),
       PlayerColor.Ibex
     )
 
     // Then
-    expect(action.consequences).to.be.an('array').of.length(3)
+    expect(action.consequences).to.be.an('array').of.length(4)
     expect(rules.rulesStep).to.be.instanceof(ChooseActionRule).and.to.have.property('player').which.eqls(PlayerColor.Fox)
     const pendingEffects = rules.remind<BiotopesPendingEffect[]>(Memory.PendingEffects)
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     expect(pendingEffects).to.be.undefined
   })
 
-  test('After a migration to a wetland if the player has a Amphibian species, game should proceed to the DiscardCardToDrawCube rule for the current player and allow to draw 1 cube', () => {
+  test('After a migration to a wetland if the player has a Amphibian species, game should proceed to the DrawCubes rules for the current player and allow to draw 1 cube', () => {
     // Given
     const { game } = setupGameAndGetColonizationRule(
       [PlayerColor.Ibex, PlayerColor.Fox],
@@ -179,7 +164,7 @@ describe('Amphibian species tests', () => {
     )
 
     // Then
-    expect(rules.rulesStep).to.be.instanceof(DiscardCardToDrawCubeRule).and.to.have.property('player').which.eqls(PlayerColor.Ibex)
+    expect(rules.rulesStep).to.be.instanceof(DrawCubesRule).and.to.have.property('player').which.eqls(PlayerColor.Ibex)
     const pendingEffects = rules.remind<BiotopesPendingEffect[]>(Memory.PendingEffects)
     expect(pendingEffects)
       .to.be.an('array')
@@ -229,35 +214,20 @@ describe('Amphibian species tests', () => {
         }),
       PlayerColor.Ibex
     )
-    playAction(
-      rules,
-      rules
-        .material(MaterialType.SpeciesCard)
-        .location((l) => l.type === LocationType.SpeciesDecksSpot && l.y === SpeciesDietType.Herbivore)
-        .deck()
-        .dealOne({
-          type: LocationType.SpeciesDiscardsSpot,
-          y: SpeciesDietType.Herbivore
-        }),
-      PlayerColor.Ibex
-    )
 
     // When
     const action = playAction(
       rules,
-      rules.material(MaterialType.Cube).createItem({
-        id: BiotopeType.Wetland,
-        location: {
-          type: LocationType.CubeSpotOnPlayerSpeciesCard,
-          player: PlayerColor.Ibex,
-          parent: cardsWithIndexes[0].cardIndex
-        }
+      rules.material(MaterialType.Cube).location(LocationType.CubeStockpileSpot).id(BiotopeType.Wetland).moveItem({
+        type: LocationType.CubeSpotOnPlayerSpeciesCard,
+        player: PlayerColor.Ibex,
+        parent: cardsWithIndexes[0].cardIndex
       }),
       PlayerColor.Ibex
     )
 
     // Then
-    expect(action.consequences).to.be.an('array').of.length(3)
+    expect(action.consequences).to.be.an('array').of.length(4)
     expect(rules.rulesStep).to.be.instanceof(ChooseActionRule).and.to.have.property('player').which.eqls(PlayerColor.Fox)
     const pendingEffects = rules.remind<BiotopesPendingEffect[]>(Memory.PendingEffects)
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions

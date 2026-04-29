@@ -186,7 +186,7 @@ export class ColonizationHelper extends MaterialRulesPart<PlayerColor, MaterialT
         return [this.startRule(RuleId.DrawCards)]
       }
       if (materialWithDrawCubesEffect.exists || numberOfCubesFromBoard === 1) {
-        return [this.startRule(RuleId.DiscardCardToDrawCube)]
+        return [this.startRule(RuleId.DrawCubes)]
       }
       return [this.startRule(RuleId.EndOfActionReplenishRiversAndActivateNextPlayer)]
     }

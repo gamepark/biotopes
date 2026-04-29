@@ -11,12 +11,11 @@ import { EcosystemActionType } from '../../src/material/EcosystemActionType'
 import { BiotopesMove, isBiotopesCreateItemTypeAtOnce, isBiotopesStartPlayerTurn, isBiotopesStartRule } from '../../src/BiotopeTypes'
 import { ChooseActionRule } from '../../src/rules/ChooseActionRule'
 import { speciesCardCharacteristics } from '../../src/material/SpeciesCardCharacteristics'
-import { DiscardCardToDrawCubeRule } from '../../src/rules/actions/common/DiscardCardToDrawCubeRule'
-import { DrawForestCubeRule } from '../../src/rules/actions/common/DrawForestCubeRule'
 import { BiotopesPendingEffect } from '../../src/material/effects/PendingEffect'
 import { Memory } from '../../src/Memory'
 import { PendingEffectType } from '../../src/material/effects/PendingEffectType'
 import { BiotopeBoard } from '../../src/material/BiotopeBoard'
+import { DrawCubesRule } from '../../src/rules/actions/common/DrawCubesRule'
 
 const setupGame = (cardWithCubes: { card: SpeciesCard; cubes: BiotopeType[] }[]) => {
   const setup = new BiotopesSetup()
@@ -71,7 +70,7 @@ const setupGame = (cardWithCubes: { card: SpeciesCard; cubes: BiotopeType[] }[])
   return { cardsWithCubesAndIndex, game, setup }
 }
 
-const setupGaeWithDeckCardOnTopOfType = (cardsWithCubes: { card: SpeciesCard; cubes: BiotopeType[] }[], deck: SpeciesDietType, biotopeType: BiotopeType) => {
+const setupGameWithDeckCardOnTopOfType = (cardsWithCubes: { card: SpeciesCard; cubes: BiotopeType[] }[], deck: SpeciesDietType, biotopeType: BiotopeType) => {
   return setupGameWithDeckCardsOnTopOfType(cardsWithCubes, [{ deck: deck, biotopeTypes: [biotopeType] }])
 }
 
@@ -155,7 +154,7 @@ describe('Reproduction tests', () => {
   })
 
   describe('One fecund species card tests', () => {
-    test('Given a fecund species is present, the game should proceed to the DiscardCardToDrawCube rule', () => {
+    test('Given a fecund species is present, the game should proceed to the DrawCubes rule', () => {
       //  Given
       const cardsWithCubes = [
         { card: SpeciesCard.WildBoar, cubes: [BiotopeType.Forest, BiotopeType.Forest] },
@@ -164,7 +163,7 @@ describe('Reproduction tests', () => {
         { card: SpeciesCard.AlpineMarmot, cubes: [BiotopeType.Mountain, BiotopeType.Mountain] },
         { card: SpeciesCard.EuropeanCrestedTit, cubes: [BiotopeType.Forest, BiotopeType.Forest, BiotopeType.Forest, BiotopeType.Forest] }
       ]
-      const { game, cardsWithCubesAndIndex } = setupGaeWithDeckCardOnTopOfType(cardsWithCubes, SpeciesDietType.Herbivore, BiotopeType.Forest)
+      const { game, cardsWithCubesAndIndex } = setupGameWithDeckCardOnTopOfType(cardsWithCubes, SpeciesDietType.Herbivore, BiotopeType.Forest)
       const rules = new BiotopesRules(game)
 
       // When
@@ -178,46 +177,9 @@ describe('Reproduction tests', () => {
       )
 
       // Then
-      expect(placeCubeAction.consequences).to.be.an('array').that.has.length(1)
-      expect(rules.rulesStep).to.be.instanceof(DiscardCardToDrawCubeRule).that.has.property('player').which.equals(PlayerColor.Fox)
-    })
-
-    test('Given one fecund species is present, and a forest card is discarded, the game should proceed to the DrawForestCube rule', () => {
-      //  Given
-      const cardsWithCubes = [
-        { card: SpeciesCard.WildBoar, cubes: [BiotopeType.Forest, BiotopeType.Forest] },
-        { card: SpeciesCard.MuteSwan, cubes: [BiotopeType.Wetland, BiotopeType.Wetland, BiotopeType.Wetland] },
-        { card: SpeciesCard.EuropeanHedgehog, cubes: [BiotopeType.Meadow] },
-        { card: SpeciesCard.AlpineMarmot, cubes: [BiotopeType.Mountain, BiotopeType.Mountain] },
-        { card: SpeciesCard.EuropeanCrestedTit, cubes: [BiotopeType.Forest, BiotopeType.Forest, BiotopeType.Forest, BiotopeType.Forest] }
-      ]
-      const { game, cardsWithCubesAndIndex } = setupGaeWithDeckCardOnTopOfType(cardsWithCubes, SpeciesDietType.Herbivore, BiotopeType.Forest)
-      const rules = new BiotopesRules(game)
-      const placeCubeAction = playAction(
-        rules,
-        rules
-          .material(MaterialType.Cube)
-          .parent(cardsWithCubesAndIndex[0].index)
-          .moveItem({ type: LocationType.CubeSpotOnEcosystemBoard, id: EcosystemActionType.Reproduction, player: PlayerColor.Fox }),
-        PlayerColor.Fox
-      )
-
-      // When
-      const discardCardAction = playAction(
-        rules,
-        rules
-          .material(MaterialType.SpeciesCard)
-          .location(LocationType.SpeciesDecksSpot)
-          .location((l) => l.y === SpeciesDietType.Herbivore)
-          .deck()
-          .dealOne({ type: LocationType.SpeciesDiscardsSpot, y: SpeciesDietType.Herbivore }),
-        PlayerColor.Fox
-      )
-
-      // Then
-      expect(placeCubeAction.consequences).to.be.an('array').that.has.length(1)
-      expect(discardCardAction.consequences).to.be.an('array').that.has.length(1)
-      expect(rules.rulesStep).to.be.instanceof(DrawForestCubeRule).that.has.property('player').which.equals(PlayerColor.Fox)
+      expect(placeCubeAction.consequences).to.be.an('array').that.has.length(2)
+      expect(rules.rulesStep).to.be.instanceof(DrawCubesRule).that.has.property('player').which.equals(PlayerColor.Fox)
+      expect(rules.material(MaterialType.Cube).location(LocationType.CubeStockpileSpot).id(BiotopeType.Forest).length).to.eqls(1)
     })
 
     test('Given one fecund species is present, and a forest card is discarded and a cube is placed on Wild board, the game should create relevant cubes and proceed to the ChooseActionRule for next player', () => {
@@ -229,7 +191,7 @@ describe('Reproduction tests', () => {
         { card: SpeciesCard.AlpineMarmot, cubes: [BiotopeType.Mountain, BiotopeType.Mountain] },
         { card: SpeciesCard.EuropeanCrestedTit, cubes: [BiotopeType.Forest, BiotopeType.Forest, BiotopeType.Forest, BiotopeType.Forest] }
       ]
-      const { game, cardsWithCubesAndIndex } = setupGaeWithDeckCardOnTopOfType(cardsWithCubes, SpeciesDietType.Herbivore, BiotopeType.Forest)
+      const { game, cardsWithCubesAndIndex } = setupGameWithDeckCardOnTopOfType(cardsWithCubes, SpeciesDietType.Herbivore, BiotopeType.Forest)
       const rules = new BiotopesRules(game)
       const placeCubeAction = playAction(
         rules,
@@ -239,38 +201,24 @@ describe('Reproduction tests', () => {
           .moveItem({ type: LocationType.CubeSpotOnEcosystemBoard, id: EcosystemActionType.Reproduction, player: PlayerColor.Fox }),
         PlayerColor.Fox
       )
-      const discardCardAction = playAction(
-        rules,
-        rules
-          .material(MaterialType.SpeciesCard)
-          .location(LocationType.SpeciesDecksSpot)
-          .location((l) => l.y === SpeciesDietType.Herbivore)
-          .deck()
-          .dealOne({ type: LocationType.SpeciesDiscardsSpot, y: SpeciesDietType.Herbivore }),
-        PlayerColor.Fox
-      )
 
       // When
       const drawCubeAction = playAction(
         rules,
-        rules.material(MaterialType.Cube).createItem({
-          id: BiotopeType.Forest,
-          location: {
-            type: LocationType.CubeSpotOnPlayerSpeciesCard,
-            player: PlayerColor.Fox,
-            parent: cardsWithCubesAndIndex[0].index
-          }
+        rules.material(MaterialType.Cube).location(LocationType.CubeStockpileSpot).id(BiotopeType.Forest).moveItem({
+          type: LocationType.CubeSpotOnPlayerSpeciesCard,
+          player: PlayerColor.Fox,
+          parent: cardsWithCubesAndIndex[0].index
         }),
         PlayerColor.Fox
       )
 
       // Then
-      expect(placeCubeAction.consequences).to.be.an('array').that.has.length(1)
-      expect(discardCardAction.consequences).to.be.an('array').that.has.length(1)
-      expect(drawCubeAction.consequences).to.be.an('array').that.has.length(5)
-      expect(drawCubeAction.consequences[0]).to.satisfy((move: BiotopesMove) => isBiotopesStartRule(move) && move.id === RuleId.ReproductionActionCreateCubes)
-      expect(drawCubeAction.consequences[1]).to.satisfy((move: BiotopesMove) => isBiotopesCreateItemTypeAtOnce(MaterialType.Cube)(move))
-      const createCubeMove = drawCubeAction.consequences[1] as CreateItemsAtOnce<PlayerColor, MaterialType, LocationType>
+      expect(placeCubeAction.consequences).to.be.an('array').that.has.length(2)
+      expect(drawCubeAction.consequences).to.be.an('array').that.has.length(6)
+      expect(drawCubeAction.consequences[1]).to.satisfy((move: BiotopesMove) => isBiotopesStartRule(move) && move.id === RuleId.ReproductionActionCreateCubes)
+      expect(drawCubeAction.consequences[2]).to.satisfy((move: BiotopesMove) => isBiotopesCreateItemTypeAtOnce(MaterialType.Cube)(move))
+      const createCubeMove = drawCubeAction.consequences[2] as CreateItemsAtOnce<PlayerColor, MaterialType, LocationType>
       expect(createCubeMove.items)
         .to.be.an('array')
         .that.has.length(3)
@@ -331,8 +279,8 @@ describe('Reproduction tests', () => {
       )
 
       // Then
-      expect(placeCubeAction.consequences).to.be.an('array').that.has.length(1)
-      expect(rules.rulesStep).to.be.instanceof(DiscardCardToDrawCubeRule).that.has.property('player').which.equals(PlayerColor.Fox)
+      expect(placeCubeAction.consequences).to.be.an('array').that.has.length(2)
+      expect(rules.rulesStep).to.be.instanceof(DrawCubesRule).that.has.property('player').which.equals(PlayerColor.Fox)
       const pendingEffects = rules.remind<BiotopesPendingEffect[]>(Memory.PendingEffects)
       expect(pendingEffects)
         .to.be.an('array')
@@ -362,39 +310,27 @@ describe('Reproduction tests', () => {
           .moveItem({ type: LocationType.CubeSpotOnEcosystemBoard, id: EcosystemActionType.Reproduction, player: PlayerColor.Fox }),
         PlayerColor.Fox
       )
-      playAction(
-        rules,
-        rules
-          .material(MaterialType.SpeciesCard)
-          .location(LocationType.SpeciesDecksSpot)
-          .location((l) => l.y === SpeciesDietType.Herbivore)
-          .deck()
-          .dealOne({ type: LocationType.SpeciesDiscardsSpot, y: SpeciesDietType.Herbivore }),
-        PlayerColor.Fox
-      )
 
       // When
       const firstCreateCubeAction = playAction(
         rules,
-        rules.material(MaterialType.Cube).createItem({
-          id: BiotopeType.Forest,
-          location: {
-            type: LocationType.CubeSpotOnPlayerSpeciesCard,
-            player: PlayerColor.Fox,
-            parent: cardsWithCubesAndIndex[0].index
-          }
+        rules.material(MaterialType.Cube).location(LocationType.CubeStockpileSpot).id(BiotopeType.Forest).moveItem({
+          type: LocationType.CubeSpotOnPlayerSpeciesCard,
+          player: PlayerColor.Fox,
+          parent: cardsWithCubesAndIndex[0].index
         }),
         PlayerColor.Fox
       )
 
       // Then
-      expect(firstCreateCubeAction.consequences).to.be.an('array').that.has.length(1)
-      expect(rules.rulesStep).to.be.instanceof(DiscardCardToDrawCubeRule).that.has.property('player').which.equals(PlayerColor.Fox)
+      expect(firstCreateCubeAction.consequences).to.be.an('array').that.has.length(0)
+      expect(rules.rulesStep).to.be.instanceof(DrawCubesRule).that.has.property('player').which.equals(PlayerColor.Fox)
       const pendingEffects = rules.remind<BiotopesPendingEffect[]>(Memory.PendingEffects)
       expect(pendingEffects)
         .to.be.an('array')
         .that.has.length(1)
-        .and.deep.members([{ type: PendingEffectType.DrawCubes, numberOfCubesToDraw: 1, ruleWhenFinished: RuleId.ReproductionActionCreateCubes }])
+        .and.deep.members([{ type: PendingEffectType.DrawCubes, numberOfCubesToDraw: 2, ruleWhenFinished: RuleId.ReproductionActionCreateCubes }])
+      expect(rules.material(MaterialType.Cube).location(LocationType.CubeStockpileSpot).getQuantity()).to.eqls(2)
     })
 
     test('Given two fecund species are present, and two cubes being placed, the game should create relevant cubes, proceed to the ChooseAction rule with next player active', () => {
@@ -408,7 +344,8 @@ describe('Reproduction tests', () => {
         { card: SpeciesCard.CommonHouseMosquito, cubes: [BiotopeType.Wetland, BiotopeType.Wetland, BiotopeType.Wetland] }
       ]
       const { game, cardsWithCubesAndIndex } = setupGameWithDeckCardsOnTopOfType(cardsWithCubes, [
-        { deck: SpeciesDietType.Herbivore, biotopeTypes: [BiotopeType.Forest, BiotopeType.Meadow] }
+        { deck: SpeciesDietType.Herbivore, biotopeTypes: [BiotopeType.Forest] },
+        { deck: SpeciesDietType.Insectivore, biotopeTypes: [BiotopeType.Meadow] }
       ])
       const rules = new BiotopesRules(game)
       // Place cube on ecosystem board
@@ -420,66 +357,35 @@ describe('Reproduction tests', () => {
           .moveItem({ type: LocationType.CubeSpotOnEcosystemBoard, id: EcosystemActionType.Reproduction, player: PlayerColor.Fox }),
         PlayerColor.Fox
       )
-      // Discard first herbivore card (forest back)
-      playAction(
-        rules,
-        rules
-          .material(MaterialType.SpeciesCard)
-          .location(LocationType.SpeciesDecksSpot)
-          .location((l) => l.y === SpeciesDietType.Herbivore)
-          .deck()
-          .dealOne({ type: LocationType.SpeciesDiscardsSpot, y: SpeciesDietType.Herbivore }),
-        PlayerColor.Fox
-      )
       // Place cube on Wild Boar
       playAction(
         rules,
-        rules.material(MaterialType.Cube).createItem({
-          id: BiotopeType.Forest,
-          location: {
-            type: LocationType.CubeSpotOnPlayerSpeciesCard,
-            player: PlayerColor.Fox,
-            parent: cardsWithCubesAndIndex[0].index
-          }
+        rules.material(MaterialType.Cube).location(LocationType.CubeStockpileSpot).id(BiotopeType.Forest).moveItem({
+          type: LocationType.CubeSpotOnPlayerSpeciesCard,
+          player: PlayerColor.Fox,
+          parent: cardsWithCubesAndIndex[0].index
         }),
-        PlayerColor.Fox
-      )
-      // Discard second Herbivore card (meadow back)
-      playAction(
-        rules,
-        rules
-          .material(MaterialType.SpeciesCard)
-          .location(LocationType.SpeciesDecksSpot)
-          .location((l) => l.y === SpeciesDietType.Herbivore)
-          .deck()
-          .dealOne({
-            type: LocationType.SpeciesDiscardsSpot,
-            y: SpeciesDietType.Herbivore
-          }),
         PlayerColor.Fox
       )
 
       // When
       const lastCreateCubeAction = playAction(
         rules,
-        rules.material(MaterialType.Cube).createItem({
-          id: BiotopeType.Meadow,
-          location: {
-            type: LocationType.CubeSpotOnPlayerSpeciesCard,
-            player: PlayerColor.Fox,
-            parent: cardsWithCubesAndIndex[2].index
-          }
+        rules.material(MaterialType.Cube).location(LocationType.CubeStockpileSpot).id(BiotopeType.Meadow).moveItem({
+          type: LocationType.CubeSpotOnPlayerSpeciesCard,
+          player: PlayerColor.Fox,
+          parent: cardsWithCubesAndIndex[2].index
         }),
         PlayerColor.Fox
       )
 
       // Then
-      expect(lastCreateCubeAction.consequences).to.be.an('array').that.has.length(5)
-      expect(lastCreateCubeAction.consequences[0]).to.satisfy(
+      expect(lastCreateCubeAction.consequences).to.be.an('array').that.has.length(6)
+      expect(lastCreateCubeAction.consequences[1]).to.satisfy(
         (move: BiotopesMove) => isBiotopesStartRule(move) && move.id === RuleId.ReproductionActionCreateCubes
       )
-      expect(lastCreateCubeAction.consequences[1]).to.satisfy((move: BiotopesMove) => isBiotopesCreateItemTypeAtOnce(MaterialType.Cube)(move))
-      const createCubesMove = lastCreateCubeAction.consequences[1] as CreateItemsAtOnce<PlayerColor, MaterialType, LocationType>
+      expect(lastCreateCubeAction.consequences[2]).to.satisfy((move: BiotopesMove) => isBiotopesCreateItemTypeAtOnce(MaterialType.Cube)(move))
+      const createCubesMove = lastCreateCubeAction.consequences[2] as CreateItemsAtOnce<PlayerColor, MaterialType, LocationType>
       expect(createCubesMove.items)
         .to.be.an('array')
         .that.has.length(5)

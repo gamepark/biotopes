@@ -34,11 +34,6 @@ import { SpeciesRiverStrategy } from './strategies/location/SpeciesRiverStrategy
 import { SpeciesStrategy } from './strategies/location/SpeciesStrategy'
 import { ReproductionActionPlaceCubeRule } from './rules/actions/reproduction/ReproductionActionPlaceCubeRule'
 import { ReproductionActionCreateCubesRule } from './rules/actions/reproduction/ReproductionActionCreateCubesRule'
-import { DiscardCardToDrawCubeRule } from './rules/actions/common/DiscardCardToDrawCubeRule'
-import { DrawMountainCubeRule } from './rules/actions/common/DrawMountainCubeRule'
-import { DrawForestCubeRule } from './rules/actions/common/DrawForestCubeRule'
-import { DrawMeadowCubeRule } from './rules/actions/common/DrawMeadowCubeRule'
-import { DrawWetlandCubeRule } from './rules/actions/common/DrawWetlandCubeRule'
 import { DrawCardsRule } from './rules/actions/common/DrawCardsRule'
 import { DiscardCardsFromHandRule } from './rules/actions/common/DiscardCardsFromHandRule'
 import { EndOfActionReplenishRiversAndActivateNextPlayerRule } from './rules/actions/common/EndOfActionReplenishRiversAndActivateNextPlayerRule'
@@ -52,6 +47,7 @@ import { CompetitionActionMoveMountainOpponentToken } from './rules/actions/colo
 import { CompetitionActionMoveMeadowOpponentToken } from './rules/actions/colonization/competition/CompetitionActionMoveMeadowOpponentToken'
 import { CompetitionActionMoveWetlandOpponentToken } from './rules/actions/colonization/competition/CompetitionActionMoveWetlandOpponentToken'
 import { MoveCubeRule } from './rules/actions/common/MoveCubeRule'
+import { DrawCubesRule } from './rules/actions/common/DrawCubesRule'
 
 /**
  * This class implements the rules of the board game.
@@ -117,11 +113,7 @@ export class BiotopesRules
     [RuleId.MigrationActionMoveTerritoryTokenOnWetland]: MigrationActionMoveTerritoryTokenOnWetlandRule,
     [RuleId.ReproductionActionPlaceCube]: ReproductionActionPlaceCubeRule,
     [RuleId.ReproductionActionCreateCubes]: ReproductionActionCreateCubesRule,
-    [RuleId.DiscardCardToDrawCube]: DiscardCardToDrawCubeRule,
-    [RuleId.DrawMountainCube]: DrawMountainCubeRule,
-    [RuleId.DrawForestCube]: DrawForestCubeRule,
-    [RuleId.DrawMeadowCube]: DrawMeadowCubeRule,
-    [RuleId.DrawWetlandCube]: DrawWetlandCubeRule,
+    [RuleId.DrawCubes]: DrawCubesRule,
     [RuleId.DrawCards]: DrawCardsRule,
     [RuleId.DiscardCardsFromHand]: DiscardCardsFromHandRule,
     [RuleId.EndOfActionReplenishRiversAndActivateNextPlayer]: EndOfActionReplenishRiversAndActivateNextPlayerRule,

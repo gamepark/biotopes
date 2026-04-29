@@ -46,12 +46,12 @@ export class ReproductionActionPlaceCubeRule extends PlayerTurnRule<PlayerColor,
           [
             {
               type: PendingEffectType.DrawCubes,
-              numberOfCubesToDraw: fecundSpeciesMaterial.getQuantity() + numberOfCubesFromBoard,
+              numberOfCubesToDraw: Math.min(fecundSpeciesMaterial.getQuantity() + numberOfCubesFromBoard, 3),
               ruleWhenFinished: RuleId.ReproductionActionCreateCubes
             } as BiotopesPendingEffect
           ].concat(currentPendingEffects ?? [])
         )
-        return [this.startRule(RuleId.DiscardCardToDrawCube)]
+        return [this.startRule(RuleId.DrawCubes)]
       }
       return [this.startRule(RuleId.ReproductionActionCreateCubes)]
     }
